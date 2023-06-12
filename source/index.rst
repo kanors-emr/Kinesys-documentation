@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Introduction
-^^^^^^^^^^^^^
+=============
 
 TIAM (the TIMES Integrated Assessment Model) is a bottom-up, technology rich, least-cost optimization, multi-regional global integrated assessment model,
 which is developed using the TIMES model generator of IEA-ETSAP.
@@ -20,7 +20,7 @@ which is developed using the TIMES model generator of IEA-ETSAP.
 
 
 Why KINESYS?
-^^^^^^^^^^^^^
+============
 
 * Model building is time consuming especially with a rich framework like TIMES
 * Energy transition is increasingly complex

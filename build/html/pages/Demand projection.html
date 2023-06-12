@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demand projection &#8212; Kinesys  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Carbon capture and storage (CCS)" href="Carbon%20capture%20and%20storage%20%28CCS%29.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="demand-projection">
+<h1>Demand projection<a class="headerlink" href="#demand-projection" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li><p>As a demand driven model TIAM requires projection of the main demand drivers to project useful energy demands in the future. A list of the demands can be seen in the following table.</p>
+<blockquote>
+<div><table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 70%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Demand</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Unit</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>AGR</p></td>
+<td><p>Agriculture Demand</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-odd"><td><p>CSC</p></td>
+<td><p>Commercial Space Cooling</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-even"><td><p>CCK</p></td>
+<td><p>Commercial Cooking</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-odd"><td><p>CSH</p></td>
+<td><p>Commercial Space Heating</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-even"><td><p>CHW</p></td>
+<td><p>Commercial Hot Water</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-odd"><td><p>CLA</p></td>
+<td><p>Commercial Lighting</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-even"><td><p>COE</p></td>
+<td><p>Commercial Office Equipment</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-odd"><td><p>CRF</p></td>
+<td><p>Commercial Refrigeration</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-even"><td><p>COT</p></td>
+<td><p>Commercial Other</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-odd"><td><p>RSC</p></td>
+<td><p>Residential Space Cooling</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-even"><td><p>RCD</p></td>
+<td><p>Residential Clothes Drying</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-odd"><td><p>RCW</p></td>
+<td><p>Residential Clothes Washing</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-even"><td><p>RDW</p></td>
+<td><p>Residential Dishwashing</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-odd"><td><p>REA</p></td>
+<td><p>Residential Other Electric</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-even"><td><p>RSH</p></td>
+<td><p>Residential Space Heating</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-odd"><td><p>RHW</p></td>
+<td><p>Residential Hot Water</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-even"><td><p>RCK</p></td>
+<td><p>Residential Cooking</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-odd"><td><p>RLI</p></td>
+<td><p>Residential Lighting</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-even"><td><p>RRF</p></td>
+<td><p>Residential Refrigeration</p></td>
+<td><p>PJ</p></td>
+</tr>
+<tr class="row-odd"><td><p>ROT</p></td>
+<td><p>Residential Other</p></td>
+<td><p>PJ</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</li>
+<li><p>Activity drivers such as GDP and population are sourced from SSP database</p></li>
+<li><p>Household estimates are calculated as half the population from 18-65 yo</p></li>
+<li><p>World Bank Development Indicators are used to split the GDP in base year and projected to converge to shares observed in industrialised economies in the long-term</p></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/Kinesys logo.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="../index.html">Kinesys</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Primary%20energy%20supply.html">Primary energy supply</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Power%20sector.html">Power sector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Liquid%20fuels%20processing.html">Liquid fuels processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Hydrogen.html">Hydrogen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Energy%20trades.html">Energy trades</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Transport.html">Transport</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Industry.html">Industry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Residential%20and%20commercial%20buildings.html">Residential and commercial buildings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Agriculture.html">Agriculture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Carbon%20capture%20and%20storage%20%28CCS%29.html">Carbon capture and storage (CCS)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Demand projection</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Carbon%20capture%20and%20storage%20%28CCS%29.html" title="previous chapter">Carbon capture and storage (CCS)</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, KanORS-EMR.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/pages/Demand projection.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

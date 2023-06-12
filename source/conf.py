@@ -52,11 +52,7 @@ exclude_patterns = []
 html_static_path = ['_static']
 
 html_logo = "Kinesys logo.png"
-html_theme_options = {
-    'logo_only': True,
-    'display_version': False
-}
-# html_theme_options = {
-#     'logo_only': True,
-#     'display_version': False,
-# }
+
+html_css_files = [
+    'custom.css',
+]

@@ -2,3 +2,8 @@
     .wy-nav-side {
       background: black;
     }
+
+     /* Sidebar header (and topbar for mobile) */
+    .wy-side-nav-search, .wy-nav-top {
+      background: #00ff00;
+    }

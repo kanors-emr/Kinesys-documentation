@@ -6,7 +6,7 @@
 Introduction
 =============
 
-KINESYS+ (Knowledge based Investigation of Energy system Scenarios) is a bottom-up, technology rich, least-cost optimization, multi-regional global integrated assessment model,
+KINESYS+ (**Knowledge based Investigation of Energy system Scenarios**) is a bottom-up, technology rich, least-cost optimization, multi-regional global integrated assessment model,
 which is developed using the TIMES model generator of IEA-ETSAP.
 
 * Rapid construction of Global TIMES models that focus on particular countries or regions – to serve as worthy starting points for further refinement with country and domain experts.

@@ -53,6 +53,9 @@ html_static_path = ['_static']
 
 html_logo = "Kinesys logo.png"
 
+html_theme_options = {
+    'logo_only': False
+}
 html_css_files = [
     'custom.css',
 ]

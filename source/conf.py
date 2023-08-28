@@ -53,6 +53,8 @@ html_static_path = ['_static']
 
 html_logo = "Kinesys logo.png"
 
+html_theme = "sphinx_rtd_theme"
+
 html_theme_options = {
     'logo_only': True
 }

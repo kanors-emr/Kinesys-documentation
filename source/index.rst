@@ -5,8 +5,10 @@
 
 KiNESYS
 =======
-**A new approach to Global energy systems modeling**
+**Knowledge-based investigation of Energy System scenarios**
 
+   * *Rapid construction of models*
+   * *Online deployment enables direct engagement of stakeholders*
 
 .. toctree::
    :maxdepth: 2
@@ -24,10 +26,3 @@ KiNESYS
    pages/Agriculture
    pages/Carbon capture and storage (CCS)
    pages/Demand projection
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

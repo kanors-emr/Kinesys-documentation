@@ -22,8 +22,8 @@ Need to widen the engagement with models - beyond the core modeling team
 
     Wider Engagement Brings Diverse Perspectives:
 
-        * Cross-Disciplinary Insights: When diverse experts engage with model results, they bring unique perspectives that can lead to more comprehensive insights. For example, a power systems expert might interpret results differently from an energy system modeler, offering valuable insights for the policy makers.
-        * Innovative Problem-Solving: Diverse perspectives often lead to more creative and effective solutions. Different stakeholders might ask varied questions or spot trends that a core modeling team might overlook.
+        * Cross-Disciplinary Insights: When diverse experts engage with model results, they bring unique perspectives that can lead to more comprehensive insights. For example, a power systems expert or a national energy planner might identify anomalies that the core modeling team overlooked, offering valuable insights for the policy makers.
+        * Innovative Problem-Solving: Diverse perspectives often lead to more creative and effective solutions. Different stakeholders might ask varied questions or spot additional trends.
         * Enhanced Understanding and Buy-In: When stakeholders are directly involved in analyzing and interpreting data, they're likely to have a deeper understanding of the results. This can lead to greater acceptance and support for data-driven decisions.
 
     Stakeholders Using Insights More Efficiently:

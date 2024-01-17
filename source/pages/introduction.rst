@@ -43,6 +43,6 @@ Need to widen the engagement with models - beyond the core modeling team
    **The Knowledgebase of KiNESYS**
 
 .. figure:: images/KiNESYS_RES.JPG
-   :scale: 10%
+   :scale: 15%
 
    **Simplified RES of KiNESYS Models**

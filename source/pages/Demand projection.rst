@@ -2,7 +2,7 @@
 Demand projection
 ##################
 
-* As a demand driven model KINESYS requires projection of the main demand drivers to project useful energy demands in the future. A list of the demands can be seen in the following table.
+* As a demand driven model KiNESYS requires projection of the main demand drivers to project useful energy demands in the future. A list of the demands can be seen in the following table.
 
     .. csv-table::
         :file: tables/demands list.csv

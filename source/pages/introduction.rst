@@ -37,12 +37,12 @@ Need to widen the engagement with models - beyond the core modeling team
     <a href="https://vedaonline.cloud/kanors/kinesys.html" target="_blank"><b>Examples</a></b>
 
 
-.. figure:: images/KiNESYS_MIG.JPG
-   :scale: 30%
+.. figure:: images/KiNESYS_KB.JPG
+   :scale: 14%
 
    **The Knowledgebase of KiNESYS**
 
 .. figure:: images/KiNESYS_RES.JPG
-   :scale: 15%
+   :scale: 14%
 
    **Simplified RES of KiNESYS Models**

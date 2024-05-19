@@ -2,16 +2,17 @@
 Power sector
 ############
 
-* Mainly drawn from the International Electricity Market Module (IEMM in the WEPS+ framework) project for Energy Information Administration (EIA – USA)
-* Vintaged buildup of existing stock from Platts database
-* Renewable electricity modeled at a country-level, regardless of the model regional aggregation, for Wind, Solar, Hydro and Biomass
-* Electricity demand load curves: sector load shape archetypes, based on 8760 grid-level data and assumptions based on sector shares
+* Uses the International Electricity Market Module (IEMM in the WEPS+ framework) project for Energy Information Administration (EIA – USA) as the starting point.
+* Vintaged buildup of existing stock from the UDI database
+* Existing Renewable capacity calibrated to IRENA data.
+* Renewable electricity modeled at a country-level, regardless of the model regional aggregation, for Wind, Solar, Hydro, Biomass, and Geothermal.
+* Electricity demand load curves: sector load shape archetypes, based on 8760 grid-level data and assumptions based on sector shares.
 * .. raw:: html
 
     <a href="https://www.eia.gov/analysis/handbook/pdf/weps2021_electricity.pdf" target="_blank"><b>Further details</a></b>
 
 In IEMM, the bound and constraint facilities have been used to construct two sets of limitations to the penetration of variable renewable (VRE) generation. The need for these limits arises because VRE has inherently granular temporal and spatial dependencies. However, detailed the time and space resolution of a global model such as IEMM, it will always be insufficient to capture these dependencies fully. Specifically, we wish to address these two challenges:
-	* Limiting the use of country-level wind and solar penetration in large, possibly multi-country regions
+	* Limiting the use of country-level wind and solar penetration in large, possibly multi-country regions.
 	* Limiting the ability of variable resources to meet average loads in model time slices.
 
 These have been addressed as follows.
@@ -57,5 +58,11 @@ IEMM contains a set of three-step cost curves, similar to the NEMS Electricity M
 
 The current constraint permits additions to capacity to grow at an annual maximum rate of 15% without incurring additional cost. Further steps of 70% and another 15% are available at an extra cost to the model.
 
+Cooling Technoloiges
+^^^^^^^^^^^^^^^^^^^^
+Cooling technologies are identified for the existing thermal power plants. This enables water withdrawal and consumption accounting, and creating scenarios where their operation might be curtailed due to water shortages.
 
-
+    .. csv-table::
+        :file: tables/PowerPlants_CoolingTechs.csv
+        :widths: 90,10
+        :header-rows: 1

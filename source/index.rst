@@ -25,4 +25,4 @@ KiNESYS
    pages/Residential and commercial buildings
    pages/Agriculture
    pages/Carbon capture and storage (CCS)
-   pages/Demand projection
+   pages/Demand_projection

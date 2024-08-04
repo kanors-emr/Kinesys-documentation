@@ -11,6 +11,7 @@ CSH,Commercial space heating,PJ,GDP Service,GDP Service
 ICH,Chemicals,PJ,GDP Industry,GDP Industry
 ICH_Feedstock,Chemical Feedstock,PJ,GDP Industry,GDP Industry
 IFP,Food processing,PJ,GDP per Household,GDP per Household
+IIS,Iron and Steel,mt,GDP Industry,GDP Industry
 ILP,Pulp and Paper,mt,GDP Industry,GDP Industry
 IMC,Mining and Construction,PJ,GDP Industry,GDP Industry
 INF,Non-ferrous metals,mt,GDP Manufacturing,GDP Manufacturing

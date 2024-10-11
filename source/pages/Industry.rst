@@ -19,9 +19,9 @@ Industry
 * Physical production of industries sourced from USGS and FAOStats
 * New technologies (producing energy services) sourced from EPA-US9r model
 
-Technology explicit representation of the Petrochemical sector
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-*The development occurred in October 2024*
+Petrochemical sector
+^^^^^^^^^^^^^^^^^^^^
+*This development occurred in October 2024*
 
 The petrochemical model within **KiNESYS** provides a detailed representation of global **petrochemical production**, capturing key commodities and processes across various regions. It aims to support the exploration of **decarbonization pathways** by modeling the sector's dependence on different **feedstocks** and **energy sources**, and assessing the impact of **alternative technologies** and **policy measures**. The model includes a range of processes and products essential to the petrochemical industry, allowing for a comprehensive analysis of **emissions reduction strategies**.
 

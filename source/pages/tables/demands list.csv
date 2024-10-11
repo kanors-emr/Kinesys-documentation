@@ -9,14 +9,13 @@ CRF,Commercial refrigeration,PJ,GDP Service,GDP Service
 CSC,Commercial space cooling,PJ,GDP Service,GDP Service
 CSH,Commercial space heating,PJ,GDP Service,GDP Service
 IFP,Food processing,PJ,GDP per Household,GDP per Household
-IIS,Iron and Steel,mt,GDP Industry,GDP Industry
 ILP,Pulp and Paper,mt,GDP Industry,GDP Industry
 IMC,Mining and Construction,PJ,GDP Industry,GDP Industry
 INF,Non-ferrous metals,mt,GDP Manufacturing,GDP Manufacturing
 INM,Non-metals,mt,GDP Industry,GDP Industry
 IOI,Other,PJ,GDP Industry,GDP Industry
 IPC,Petrochemicals (multiple products),mt,GDP Industry,GDP Industry
-IS_,Iron and Steel,mt,GDP Industry,GDP Industry
+IS[_],Iron and Steel,mt,GDP Industry,GDP Industry
 ITM,Transport and machinery,PJ,GDP Manufacturing,GDP Manufacturing
 NEU,Other non-energy,PJ,GDP,GDP
 ONO,Other non-specified,PJ,GDP Industry,GDP Industry

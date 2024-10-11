@@ -1,5 +1,5 @@
 KiNESYS Industry,Units,Description,IEA FLOW
-ICH,Petajoules,Chemicals,CHEMICAL
+IPC,mt,Petrochemicals - multiple products with different technologies with feedstock and fuel input,CHEMICAL
 IFP,Petajoules,Food processing,FOODPRO
 IIS,mt,Iron and Steel,IRONSTL
 ILP,mt,Pulp and Paper,PAPERPRO
@@ -8,5 +8,4 @@ INF,mt,Non-ferrous metals,NONFERR
 INM,mt,Non-metals,NONMET
 IOI,Petajoules,Other,"INONSPEC,TEXTILES,WOODPRO"
 ITM,Petajoules,Transport equip and machinery,"MACHINE,TRANSEQ"
-ICH_Feedstock,Petajoules,Chemical Feedstock,NECHEM
 ONO,Petajoules,Other non-specified,ONONSPEC

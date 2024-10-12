@@ -1,5 +1,5 @@
-KiNESYS Industry,Units,Description,IEA FLOW
-IPC,mt,Petrochemicals - multiple products with different technologies with feedstock and fuel input,CHEMICAL
+KiNESYS,Units,Description,IEA FLOW
+IPC,mt,Petrochemicals - multiple products with different technologies with feedstock and fuel input,"CHEMICAL,NECHEM"
 IFP,Petajoules,Food processing,FOODPRO
 IIS,mt,Iron and Steel,IRONSTL
 ILP,mt,Pulp and Paper,PAPERPRO

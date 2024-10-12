@@ -1,0 +1,21 @@
+﻿Material/Technology,Ref (2030),Ref (2040),Ref (2050),NZ (2030),NZ (2040),NZ (2050)
+,,,,,,
+HOT METAL,,,,,,
+Blast Furnace (BF),1098 Mt,1012 Mt,1001 Mt,678 Mt,24 Mt,24 Mt
+,,,,,,
+SPONGE IRON,,,,,,
+Coal-DRI,30 Mt,30 Mt,30 Mt,,,
+Gas-DRI,29 Mt,29 Mt,29 Mt,29 Mt,29 Mt,9 Mt
+Best Available Tech Gas-DRI,70 Mt,70 Mt,70 Mt,70 Mt,63 Mt,23 Mt
+Best Available Tech Gas-DRI with CCS,,,,,63 Mt,42 Mt
+,,,,,,
+CRUDE STEEL,,,,,,
+Basic Oxygen Furnace (BOF),1156 Mt,1064 Mt,1053 Mt,714 Mt,26 Mt,26 Mt
+Electric Arc Furnace (EAF),373 Mt,373 Mt,350 Mt,375 Mt,259 Mt,219 Mt
+Best Available BF-BOF,11 Mt,11 Mt,11 Mt,11 Mt,8 Mt,5 Mt
+Best Available BF-BOF with CCS,,,,,12 Mt,166 Mt
+DRI-Melt-BOF,1 Mt,11 Mt,24 Mt,238 Mt,213 Mt,166 Mt
+DRI-Melt-BOF with CCS,,,,42 Mt,552 Mt,688 Mt
+Hydrogen-based DRI-Melt-BOF,,,,,20 Mt,20 Mt
+Melt-BOF,90 Mt,109 Mt,114 Mt,60 Mt,66 Mt,64 Mt
+Smelting Reduction BOF with CCS,,,,43 Mt,59 Mt,60 Mt

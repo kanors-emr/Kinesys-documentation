@@ -4,20 +4,89 @@ Industry
 
 * Fuel consumption by sub-sector sourced from IEA energy balance. The breakdown of the industrial sectors can be seen below, together with the correspondence with the sectoral breakdown used in the IEA energy balances
 
-    .. csv-table::
+    .. csv-table:: Industry sub-sectors represented in KiNESYS
         :file: tables/industrial sectors breakdown.csv
-        :widths: 10,20,40,30
+        :widths: 10,20,45,25
         :header-rows: 1
 
 * End-use fuel consumption splits into energy services sourced from 2018 MECS
 
-    .. csv-table::
+    .. csv-table:: Energy services in KiNESYS
         :file: tables/MECS services.csv
         :widths: 10,30,60
         :header-rows: 1
 
 * Physical production of industries sourced from USGS and FAOStats
 * New technologies (producing energy services) sourced from EPA-US9r model
+
+Iron and Steel Sector
+^^^^^^^^^^^^^^^^^^^^^
+
+The steel sector is a critical component of the global economy and plays a significant role in industrial emissions. The KiNESYS Global Energy System Model provides a comprehensive framework for analyzing the steel industry’s production, energy consumption, and CO₂ emissions across different regions and technologies. This section outlines the extent to which the near-term projections reflect current ground realities and how the model explores low-carbon pathways for future steel production.
+
+Alignment with Near-Term Realities
+----------------------------------
+
+The KiNESYS model’s near-term projections for steel production capacity, energy inputs, and outputs are calibrated to align closely with recent industrial data. The model incorporates up-to-date information from various sources, including:
+
+- **Historical Production Capacities**: Installed capacities for steel production technologies such as Blast Furnace-Basic Oxygen Furnace (BF-BOF), Electric Arc Furnace (EAF), and Direct Reduced Iron (DRI) reflect actual industry data for 2019. These figures are region-specific and account for differences in technology adoption across major steel-producing regions such as China, the European Union, India, and North America.
+- **Energy Consumption and Input Data**: The model uses detailed input data for raw materials like iron ore, scrap, coal, and natural gas. Near-term values for energy consumption in Petajoules (PJ) are consistent with historical energy use in the steel sector, ensuring that the model accurately captures current efficiencies and practices in steel production.
+- **Emissions Data**: Near-term emissions estimates are based on well-established emissions factors for each steelmaking process, including both process and combustion-related CO₂ emissions. The model’s outputs for 2019 to 2025 closely mirror observed emissions levels from national inventories and industry reports, providing a reliable baseline for future projections.
+
+This close alignment with real-world data ensures that the KiNESYS model provides a credible representation of current industry trends. The calibrated near-term data also improves the accuracy of long-term projections and scenario analyses.
+
+Exploring Low-Carbon Pathways for Steel Production
+--------------------------------------------------
+
+The KiNESYS model is designed to explore low-carbon pathways for steel production, allowing users to assess the impact of technological and policy shifts on the sector’s emissions and energy use. The model covers multiple low-carbon technologies and scenarios that offer insights into the future of decarbonized steelmaking.
+
+Technology Granularity
+~~~~~~~~~~~~~~~~~~~~~~
+
+KiNESYS includes a wide range of steel production technologies, both conventional and low-carbon:
+
+- **Conventional Technologies**:
+
+  - **Blast Furnace-Basic Oxygen Furnace (BF-BOF)** remains the dominant technology, but the model also incorporates existing alternative technologies such as **Electric Arc Furnaces (EAF)**, which use scrap steel, and **Direct Reduced Iron (DRI)**, which can be produced using natural gas or coal.
+
+  - **Best Available Technology BF-BOF (BAT_BF-BOF)** is also represented to capture the improvements in efficiency and emissions reductions from deploying the latest technologies.
+
+- **Low-Carbon Innovations**:
+
+  - **Hydrogen-based DRI (H2-DRI)** represents a significant future potential, where hydrogen replaces natural gas or coal as the reducing agent. This technology has a smaller footprint in the early years but grows substantially in the **Net-Zero** scenario.
+
+  - **Carbon Capture and Storage (CCS)**: Integrated with both BF-BOF and DRI technologies, the model includes CCS options, such as **Gas-DRI with CCS (Gas-DRI_ccs)** and **DRI-Melt-BOF with CCS (DRI-Melt-BOF_ccs)**, which drastically reduce process emissions.
+
+The following table provides **indicative results** for **Hot Metal**, **Sponge Iron**, and **Crude Steel** production by technology for 2030, 2040, and 2050 in two scenarios:
+
+    .. csv-table:: Indicative results (Global numbers)
+        :file: tables/indicativeresults.csv
+        :widths: 34,11,11,11,11,11,11
+        :header-rows: 1
+
+Scenario Analysis for Decarbonization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The KiNESYS model explores different policy scenarios, including a **No Policy Reference** scenario and a **Net-Zero** scenario for 2050:
+
+- **No Policy Reference**: The steel industry remains largely dependent on traditional high-emission technologies like **Blast Furnace (BF)** and **Basic Oxygen Furnace (BOF)**, with minimal adoption of low-carbon innovations.
+
+- **Net-Zero Scenario**: The industry transitions to low-carbon technologies such as **Hydrogen-based DRI** and **DRI with CCS**, leading to a significant reduction in emissions. **BF** and **BOF** usage drops sharply, while technologies like **DRI-Melt-BOF with CCS** play a dominant role, with 688 Mt of production.
+
+Key Technology Substitutions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- **BF to EAF**: In the **Net-Zero** scenario, the **BF-BOF** technology, producing over 2000 Mt globally in 2019, is expected to be replaced by **EAF**, which grows from 350 Mt in the **No Policy** scenario to almost 850 Mt in the **Net-Zero** scenario by 2050. This shift reflects increased scrap availability and electrification trends.
+
+- **Gas-DRI to H2-DRI**: The model shows a key substitution from **Gas-DRI** to **Hydrogen-based DRI (H2-DRI)**, reflecting the deployment of hydrogen as a low-carbon alternative in steelmaking. While **Gas-DRI** production remains significant in the **No Policy** scenario, it reduces dramatically in **Net-Zero**, with hydrogen taking over part of the production.
+
+- **CCS Integration**: A significant feature of the **Net-Zero** scenario is the widespread deployment of **CCS** technologies. **DRI-Melt-BOF_ccs** alone accounts for 688 Mt of production, showing that CCS could be a viable route for maintaining steel production while reducing emissions.
+
+Appropriateness of Results
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The KiNESYS model results align well with industry trends and expert analyses of decarbonization pathways for the steel sector.
+The increased adoption of **EAF** and **Hydrogen-based DRI** reflects industry expectations for shifts towards low-carbon technologies in the coming decades.
 
 Petrochemical sector
 ^^^^^^^^^^^^^^^^^^^^

@@ -127,3 +127,57 @@ Key Features for Decarbonization Analysis
 The petrochemical model is designed to support **decarbonization pathway analysis** by providing insights into the **energy and carbon intensity** of different production processes. It helps identify **carbon reduction opportunities** across the sector, evaluate the impact of **alternative technologies**, and understand the role of **regional policies** in shaping the future of petrochemical production.
 
 The model’s ability to represent a range of **feedstock choices**, **emerging technologies**, and **carbon management strategies** makes it a valuable tool for exploring **net-zero goals** and supporting policy development in the context of **global decarbonization**.
+
+Glass and Ceramics
+^^^^^^^^^^^^^^^^^^
+
+The **KiNESYS** model now includes a detailed and granular representation of **glass and ceramics production**, capturing the energy consumption, CO₂ emissions from chemical reactions,
+and the CAPEX/OPEX across different technologies.
+
+Glass Production Technologies
+------------------------------
+
+The model covers three main types of glass production: **fiberglass**, **flat glass**, and **blown glass**. Each type is modeled with a range of traditional and emerging decarbonization technologies:
+
+- **Natural Gas Furnaces**: Widely used for all types of glass, this technology relies on fossil fuels, contributing to both energy consumption and CO₂ emissions. However, it remains the dominant technology in many regions due to existing infrastructure.
+
+- **Oxy-Fuel Furnaces**: These offer an improvement over traditional natural gas furnaces by using pure oxygen to enhance combustion efficiency. This results in lower fuel consumption but still relies on natural gas as a primary energy source.
+
+- **Electric Furnaces**: Fully electrified furnaces use electricity to achieve the high temperatures needed for melting raw materials. These furnaces have the potential to achieve near-zero emissions if powered by green electricity.
+
+- **Hydrogen Co-firing Furnaces**: Hydrogen, either mixed with or replacing natural gas, offers a significant decarbonization opportunity by reducing CO₂ emissions from combustion. Green hydrogen can further lower the carbon footprint.
+
+- **Bioenergy Furnaces**: Biomass replaces natural gas as the fuel, offering a carbon-neutral pathway if sustainably sourced.
+
+Ceramics Production Technologies
+---------------------------------
+
+Ceramics production is modeled with similar detail to glass, capturing the diversity of technologies across tiles, sanitary ware, and other ceramic products. The main technologies represented include:
+
+- **Tunnel and Roller Kilns**: These traditional kilns are widely used for tiles and bricks, primarily relying on natural gas for heating. Roller kilns offer higher efficiency and shorter firing cycles than tunnel kilns.
+
+- **Electric Kilns**: Often used for sanitary ware, electric kilns provide precise temperature control and reduce reliance on fossil fuels. Decarbonization potential is high when powered by renewable electricity.
+
+- **Hybrid Kilns (Hydrogen Co-firing)**: Co-firing natural gas with hydrogen provides a pathway to reducing emissions, with the potential for fully green hydrogen use in the future.
+
+- **Bioenergy Kilns**: These kilns replace natural gas with biomass, providing a carbon-neutral option for firing ceramics.
+
+Solvay Process for Soda Ash Production
+--------------------------------------
+
+Soda ash is a crucial input in both glass and ceramics production, and its production is modeled via the **Solvay process**. This energy-intensive process uses **salt (NaCl)**, **limestone (CaCO₃)**, and **ammonia** to produce soda ash. The calcination of limestone releases **200-250 kg CO₂/ton** of soda ash produced, contributing significantly to the carbon footprint of the glass and ceramics industries.
+
+Energy Consumption and CO₂ Emissions
+------------------------------------
+
+The KiNESYS model tracks the **energy consumption** (GJ/ton or MWh/ton) and **CO₂ emissions from chemical reactions** (kg CO₂/ton) for each technology, focusing on the emissions from raw material decomposition, such as the calcination of limestone in both glass and ceramics production.
+
+Decarbonization Pathways
+-------------------------
+
+The glass and ceramics sectors offer several pathways for decarbonization, including:
+
+- **Switching to green hydrogen or biomass** to replace natural gas in furnaces.
+- **Electrification** of production processes, coupled with decarbonized grids, to reduce emissions.
+- **Carbon capture technologies** for processes like the Solvay process to mitigate CO₂ emissions from chemical reactions.
+- **Increased recycling** of cullet in glass production, which reduces the energy required for melting.

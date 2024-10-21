@@ -2,8 +2,8 @@
 Transport
 ###########
 
-Road Transportation in KiNESYS
-==============================
+Road Transportation
+===================
 
 The KiNESYS framework models road transportation by capturing a wide range of vehicle types, fuel sources, and technological transitions. It enables users to explore how different policy measures, fuel mixes, and technologies can influence the energy use and emissions of the transport sector. By simulating multiple pathways toward decarbonization, KiNESYS provides valuable insights into how the transport sector can evolve over time, with a focus on electrification, biofuels, and hydrogen as key components of the energy transition.
 
@@ -48,8 +48,8 @@ While the overall structure of the transport sector is consistent across regions
 
 - **North America**: The transition to clean fuels is slower initially, with oil products remaining dominant in freight and aviation. However, by mid-century, hydrogen becomes a key player in decarbonizing heavy-duty trucks, and electric cars and light trucks see widespread adoption, particularly in urban areas.
 
-Non-Road Transportation in KiNESYS
-==================================
+Non-Road Transportation
+=======================
 
 In KiNESYS, non-road transportation sectors—such as rail, aviation, and shipping—are modeled exogenously. Due to the elaborate infrastructure requirements and distinct sectoral considerations, these sectors are treated as fixed energy demands. While there is some responsiveness to price signals, the shares of key fuels like electricity, hydrogen, and green ammonia are determined based on predefined storylines that capture regional and global decarbonization narratives.
 

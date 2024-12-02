@@ -706,7 +706,7 @@ Scope and Coverage
     - **Greenhouse Gas Emissions**:
 
        - Process emissions from carbon anode consumption in smelting.
-       - CO₂ and perfluorocarbon (PFC) emissions during electrolysis.
+       - CO₂ emissions during electrolysis.
        - Combustion emissions from refining and calcination.
     - **By-products**:
 

@@ -19,8 +19,8 @@ Industry
 * Physical production of industries sourced from USGS and FAOStats
 * New technologies (producing energy services) sourced from EPA-US9r model
 
-Petrochemicals Sector
-=====================
+Petrochemicals
+==============
 
 The petrochemical industry is a cornerstone of modern economies, providing essential materials for plastics, fertilizers, and synthetic chemicals. However, it is also a significant source of greenhouse gas emissions. KiNESYS models the petrochemicals sector in detail, capturing the complex processes, energy requirements, and potential pathways for decarbonization.
 
@@ -165,8 +165,8 @@ Driving Change in the Petrochemical Industry
 
 The KiNESYS platform enables detailed analysis of the petrochemical sector, balancing its critical role in modern economies with the urgent need for decarbonization. By modeling advanced technologies and energy optimization strategies, it supports the transition to a sustainable future.
 
-Iron and Steel Sector
-=====================
+Iron and Steel
+==============
 
 The Iron and Steel sector is a cornerstone of industrial activity, with extensive energy and material demands. KiNESYS captures this sector in detail, enabling nuanced analysis of its current state and decarbonization pathways.
 
@@ -274,8 +274,8 @@ Building a Low-Carbon Future for Iron and Steel
 
 The KiNESYS platform provides a robust framework for modeling the Iron and Steel sector, offering detailed insights into energy use, emissions, and decarbonization strategies. By enabling analysis of advanced technologies and system-wide integration, it supports the transition to a sustainable, low-carbon industry.
 
-Cement Sector
-=============
+Cement
+======
 
 Cement is a critical material for infrastructure development but is also one of the most carbon-intensive industrial products. The KiNESYS platform captures the nuances of this sector, enabling an in-depth analysis of its production processes and pathways for decarbonization.
 
@@ -400,8 +400,8 @@ Making Cement Cleaner
 The KiNESYS platform provides an essential toolkit for exploring decarbonization in the cement sector. By capturing every aspect of production, emissions, and potential innovation, it empowers stakeholders to craft actionable strategies for reducing the sector’s environmental impact.
 
 
-Ceramics Sector
-===============
+Ceramics
+========
 
 The ceramics sector is diverse, spanning applications from construction to advanced technologies. KiNESYS models this complexity, capturing the energy-intensive processes, material flows, and potential for decarbonization across various sub-sectors.
 
@@ -537,8 +537,8 @@ Shaping a Sustainable Future for Ceramics
 KiNESYS provides a powerful platform for analyzing the ceramics sector, offering granular insights into its processes, energy use, and emissions. By modeling innovative technologies and advanced materials, it supports the development of robust decarbonization pathways.
 
 
-Glass Sector
-============
+Glass
+======
 
 The glass industry is pivotal for sectors such as construction, packaging, and automotive. KiNESYS models the nuances of glass production with a focus on energy use, material flows, and emissions. This enables stakeholders to explore decarbonization pathways tailored to the unique needs of the sector.
 
@@ -666,8 +666,8 @@ Advancing Sustainability in Glass Production
 KiNESYS provides a robust framework for analyzing the glass sector, capturing its intricate processes, energy demands, and emissions. By modeling innovative technologies and energy optimization strategies, it supports the development of actionable roadmaps for a sustainable glass industry.
 
 
-Aluminium Sector
-================
+Aluminium
+==========
 
 Aluminium production is a critical industrial activity due to its versatility and widespread applications in sectors such as transportation, construction, and packaging. However, it is also highly energy-intensive, particularly in the smelting process. KiNESYS provides a detailed framework to model the aluminium sector, addressing its unique energy needs and emissions challenges.
 

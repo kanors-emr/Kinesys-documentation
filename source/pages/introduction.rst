@@ -2,10 +2,18 @@
 Introduction
 ############
 
-KiNESYS+ (**Knowledge based Investigation of Energy system Scenarios**) is a bottom-up, technology rich, least-cost optimization, multi-regional global energy system model,
-which is developed using the TIMES model generator of IEA-ETSAP.
+KiNESYS+ (**Knowledge based Investigation of Energy system Scenarios**) is an innovative data warehouse and data management system that supports the creation of energy models through a
+highly configurable and modular framework. It provides a centralized environment where energy system data, assumptions, and configurations are stored, managed, and transformed into fully operational models. The system
+grows with each new engagement and the non-confidential data enriches future and, potentially, even the existing instances.
+**The framework is developed and managed exclusively by KanORS-EMR**, and is based on its decades of experience with Global, regional, and national models like SAGE, TIAM, Pan-EU TIMES, and FACETS.
 
-Energy system models need to be built faster and better
+Users access pre-configured instances of KiNESYS models, tailored to specific regional, national, or sectoral contexts.
+These instances are designed to address particular modeling objectives and are just as flexible as any well built Veda-TIMES model. However, KanORS can reprocess them through the framework - making even deep structural changes relatively easy.
+
+Motivation
+----------
+
+*Energy system models need to be built faster and better*
     The need for energy system modeling is increasing due to rapid transitions in the energy sector. Understanding cross-sector interactions is crucial for driving system change.
     There's a need to address urgent short-term issues within a long-term context, considering multiple intersecting uncertainties. To tackle these challenges, the ability to envision,
     explore, and communicate disruptive scenarios is crucial.
@@ -18,7 +26,7 @@ Energy system models need to be built faster and better
     Whether it's exploring global hydrogen scenarios, understanding LNG supply, demand, and trade, or ensuring energy security in specific regions,
     a one-size-fits-all model with static regional and temporal aggregation is not the best option.
 
-Need to widen the engagement with models - beyond the core modeling team
+*Need to widen the engagement with models - beyond the core modeling team*
 
     Wider Engagement Brings Diverse Perspectives:
 
@@ -31,10 +39,19 @@ Need to widen the engagement with models - beyond the core modeling team
         * Direct Engagement with Models: Allowing stakeholders to interact with models directly can significantly shorten the decision-making process. Instead of waiting for analyses from the core team, they can query the model and get insights relevant to their specific concerns.
         * Tailored Insights for Specific Needs: Different stakeholders might have varied informational needs. Direct access to models allows them to extract the specific data points that are most relevant to their tasks or decisions.
 
-The KiNESYS methodology introduces a transformative solution to the two challenges outlined above - their complexity and the difficulty in accessibility for non-specialists.
-This approach is designed to make energy system modeling more intuitive, flexible, and open, thereby enhancing its utility for policy formulation and energy research.
+*Modeling teams need to collaborate*
 
-Development of the KiNESYS Framework
+    Isolated energy modeling teams can be suboptimal due to the immense detail embedded in these models - across regions, sectors, and technologies. No single team can thoroughly explore every modeling dimension, validate all assumptions, or identify all potential oversights.
+    Streamlined sharing of data improvements and modeling practices would greatly improve the quality of models and modeling.
+
+The KiNESYS methodology introduces a transformative solution to the three challenges outlined above. This approach is designed to make energy system modeling more intuitive, flexible, and open, thereby enhancing its utility for policy formulation and energy research. The vision is to make complex energy system models
+accessible to domain experts and stakeholders with even a high level understanding of modeling.
+
+The three pillars of KiNESYS+ approach
+--------------------------------------
+
+Creating instances of KiNESYS models
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     * **Granular Data for Comprehensive Analysis**: At its core, KiNESYS utilizes a relational database to store data at the finest granularity, such as energy balances on a national or regional level, specific details of energy supply infrastructure, and hourly profiles for electricity demand and renewable energy resources. This granular approach ensures that models accurately reflect the intricacies of real-world energy systems, providing a solid foundation for policy and research analysis.
 
@@ -51,11 +68,19 @@ Development of the KiNESYS Framework
 
    **The Knowledgebase of KiNESYS**
 
+All this continuously expanding granular data from various sources is aggregated and transformed via SQL scripts and other tools to populate Veda templates. The sectoral coverage of a typical model is shown below.
+
+.. figure:: images/KiNESYS_RES.JPG
+   :scale: 14%
+
+   **Simplified RES of KiNESYS Models**
+
 Deployment via Online Platforms
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 KiNESYS models are developed under Veda2.0 and deployed on Veda Online (VO). VO provides an interactive online platform that enables direct access to model inputs and outputs, facilitating real-time analysis and collaboration. This online accessibility ensures that complex models are within reach of a wider audience, empowering policymakers and researchers with the tools needed for detailed energy system analysis.
 
-Engaging Process for Continuous Improvement
+Engaging process for progressive fine-tuning of KiNESYS instances
 
     * **Verification and Calibration**: KiNESYS prioritizes confidence in model outcomes through rigorous calibration checks and comparisons with external benchmarks. This process ensures the reliability of model predictions, serving as a dependable basis for policy development and academic research.
 
@@ -65,10 +90,8 @@ Engaging Process for Continuous Improvement
 
 In essence, the KiNESYS approach democratizes energy system modeling for policymakers and energy researchers, offering a powerful tool for exploring complex energy dynamics and informing strategic decisions. Through its innovative framework, KiNESYS facilitates a deeper understanding of energy systems, empowering stakeholders to craft policies and research agendas that effectively address the challenges and opportunities of sustainable energy transitions.
 
-.. figure:: images/KiNESYS_RES.JPG
-   :scale: 14%
-
-   **Simplified RES of KiNESYS Models**
+Collective learning opportunity
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. raw:: html
 

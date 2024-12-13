@@ -7,8 +7,9 @@ KiNESYS
 =======
 **Knowledge-based investigation of Energy System scenarios**
 
-   * *Rapid construction of models*
-   * *Online deployment enables direct engagement of stakeholders*
+   * **Nimble:** *Rapid Creation of Bespoke Models*
+   * **Evidence based decisions:** *Online Deployment for Wider Engagement*
+   * **KAIZEN++:** *Collective Learning for Continuous Improvement*
 
 .. toctree::
    :maxdepth: 2

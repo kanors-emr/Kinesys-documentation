@@ -10,6 +10,10 @@ grows with each new engagement and the non-confidential data enriches future and
 Users access pre-configured instances of KiNESYS models, tailored to specific regional, national, or sectoral contexts.
 These instances are designed to address particular modeling objectives and are just as flexible as any well built Veda-TIMES model. However, KanORS can reprocess them through the framework - making even deep structural changes relatively easy.
 
+A KiNESYS instance is an ideal starting point for users new to Veda-TIMES, especially those interested in conducting sectoral or regional deep dives using normative (policy objectives) or
+simulation (policy measures) scenarios. **It is particularly suited for users whose primary goal is not to become modeling experts but to effectively use a robust energy model
+to inform policy development, strategic planning, or investment analysis.**
+
 Motivation
 ----------
 

@@ -176,8 +176,8 @@ KiNESYS creates a **connected ecosystem** where enhancements can be shared natur
 
     This process does not happen **automatically**. **Knowledge transfer** across KiNESYS instances is managed by the KanORS team. Updates and assumptions are only shared when teams **agree** to incorporate them, ensuring model integrity and team-specific customizations.
 
-**KiNESYS+ Analogy: The Kitchen, Custom Dishes, and Fine Tableware**
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KiNESYS+ Analogy: The Kitchen, Custom Dishes, and Fine Tableware
+----------------------------------------------------------------
 
 **KiNESYS+ Platform: The Kitchen Operated by KanORS**
     Think of **KiNESYS+** as a **high-end kitchen** managed by KanORS. In this kitchen, expert chefs (the KanORS team) work with a wide range of **premium ingredients** (global energy datasets)

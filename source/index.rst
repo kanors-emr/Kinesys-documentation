@@ -3,13 +3,21 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-KiNESYS
-=======
-**Knowledge-based investigation of Energy System scenarios**
+KiNESYS+
+========
+*KiNESYS+ (Knowledge-Based Investigation of Energy System Scenarios) is a pioneering data management system that creates rich, tailored models with distinct regional or sectoral focuses.
+By making energy system modeling better, faster, and more accessible, KiNESYS+ empowers impactful decisions at global, regional, and national levels.
+It revolutionizes the way we explore energy transition scenarios using energy system models.*
 
-   * **Nimble:** *Rapid creation of rich bespoke models.*
-   * **Accessible:** *Online deployment with intuitive layers that are accessible even to non-modelers.* Makes evidence-based decision making possible.
-   * **KAIZEN++:** *Collective Learning and Continuous Improvement.*
+**Nimble**
+   Effortlessly enabling the rapid creation of tailored energy models, KiNESYS ensures agility in responding to diverse policy, technology, and market scenarios. This streamlined process prioritizes actionable insights, allowing users to focus on decision-making rather than technical complexity.
+
+**Accessible**
+   Designed for inclusivity, KiNESYS leverages intuitive online interfaces that lower barriers to entry for non-modelers. It empowers stakeholders at all levels to interact with model output and input directly.
+
+**KAIZEN++**
+   Rooted in the philosophy of continuous improvement and collective learning, KiNESYS fosters collaborative exploration and iteration. With each use and adaptation, the platform evolves, integrating feedback to enhance functionality and refine insights, ensuring it stays ahead in addressing complex energy challenges.
+
 
 .. toctree::
    :maxdepth: 2

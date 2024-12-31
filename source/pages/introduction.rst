@@ -180,6 +180,139 @@ KiNESYS creates a **connected ecosystem** where enhancements can be shared natur
 
     This process does not happen **automatically**. **Knowledge transfer** across KiNESYS instances is managed by the KanORS team. Updates and assumptions are only shared when teams **agree** to incorporate them, ensuring model integrity and team-specific customizations.
 
+Model Setup and Collaboration
+-----------------------------
+
+The process for setting up and collaborating on KiNESYS models is streamlined for efficiency, control, and flexibility. Here are the steps:
+
+1. Repository Creation and Access
+    - KanORS creates a private GitHub repository containing the necessary model files.
+    - Users are added as collaborators with **read/write privileges**.
+
+2. Local Cloning and Tool Integration
+    - Clone the repository locally using GitHub or a Git client.
+    - Use the repository with **Veda2.0** for local modeling tasks.
+    - Provide access to the repository for **VedaOnline** using a **Personal Access Token (PAT)**.
+    - Create a model on Veda online to browse input, create cases, run, and analyse model output.
+
+3. Model Updates
+    - KanORS pushes updates to the model periodically.
+    - Users can pull these updates locally to keep their models synchronized.
+    - Similarly, changes can be pulled on Veda online to keep VO version of the model in sync.
+
+4. User Contributions and Reviews
+    - Users can make changes or enhancements to the model files and push updates to the repository.
+    - KanORS reviews these changes to ensure they align with model requirements.
+
+5. Branching for Experimentation
+    - Users are encouraged to work on **separate branches** when testing deeper modifications.
+    - This practice ensures the stability of the main branch while enabling innovative exploration.
+
+This workflow ensures efficient collaboration, version control, and model integrity while empowering users to experiment and enhance their models.
+
+.. figure:: images/collaborative_use.jpg
+   :scale: 40%
+
+   **Collaborative use of a KiNESYS instance**
+
+.. note::
+
+    Veda2.0 is not a strict requirement but it is recommended when users make structural modifications to models. It is a Windows application and does not work on Mac OS.
+
+
+Basic GitHub Operations for KiNESYS Workflow
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Users working with KiNESYS models need to perform several key GitHub operations for collaboration and model management. Below is a summary of the basic operations and how GitHub Desktop simplifies them, along with installation instructions.
+
+Key GitHub Operations
+~~~~~~~~~~~~~~~~~~~~~
+
+1. **Clone a Repository**
+    - Download the model files (Excel files) from the GitHub repository to your local computer.
+    - In GitHub Desktop:
+        - Click **File > Clone Repository**.
+        - Select the repository from your GitHub account or enter the URL.
+        - Choose a local folder for the repository.
+
+2. **Fetch and Pull Updates**
+    - Keep your local copy updated with changes from the remote repository.
+    - In GitHub Desktop:
+        - Click **Fetch Origin** to check for updates.
+        - Click **Pull Origin** to download changes to your local repository.
+
+3. **Commit Changes**
+    - Save your modifications (updates to Excel files) locally before sharing them.
+    - In GitHub Desktop:
+         - Stage the changes by selecting modified files.
+         - Add a commit message summarizing your changes.
+         - Click **Commit to <branch>**.
+
+4. **Push Changes**
+    - Share your local changes with the remote repository.
+    - In GitHub Desktop:
+         - Click **Push Origin** to upload your changes.
+
+5. **Branch Management**
+    - Create branches to experiment with new scenarios or modify Excel files independently.
+    - In GitHub Desktop:
+         - Click **Current Branch > New Branch**.
+         - Name your branch and start working.
+    - Switch branches to merge or review changes.
+
+6. **Merge Branches**
+    - Combine changes from a feature branch into the main branch.
+    - In GitHub Desktop:
+         - Switch to the main branch.
+         - Click **Branch > Merge into Current Branch** and select the branch to merge.
+
+7. **Resolve Conflicts**
+    - Handle conflicts if changes to Excel files overlap.
+    - In GitHub Desktop:
+        - Open the conflicting Excel file in your spreadsheet editor (e.g., Excel).
+        - Resolve the differences and save the file.
+        - Commit the resolved changes.
+
+.. tip::
+
+    Always pull from the GitHub remote **before** you start making changes - to minimize the chances of conflicts.
+
+
+Installing GitHub Desktop
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Follow these steps to install GitHub Desktop:
+
+1. **Download the App**
+   - Go to `GitHub Desktop's website <https://desktop.github.com/>`_.
+   - Click **Download for [Your OS]** (Windows or macOS).
+
+2. **Install the App**
+    - **Windows**:
+        - Run the `.exe` file and follow the installation prompts.
+    - **macOS**:
+        - Open the `.dmg` file and drag GitHub Desktop to your Applications folder.
+
+3. **Log In to GitHub**
+   - Open GitHub Desktop.
+   - Click **Sign in to GitHub.com**.
+   - Enter your GitHub credentials.
+
+4. **Set Up Your Local Environment**
+   - Configure the default spreadsheet editor (e.g., Excel) for opening and editing model files.
+   - Select a location for cloning repositories.
+
+Why GitHub Desktop?
+~~~~~~~~~~~~~~~~~~~
+
+- **User-Friendly**: Intuitive interface for managing Git operations.
+- **Simplified Collaboration**: Easy branch and merge management.
+- **Cross-Platform**: Available for Windows and macOS.
+- **Perfect for Beginners**: Minimal setup and clear workflows.
+
+Using GitHub Desktop, KiNESYS users can efficiently manage their repositories of Excel model files without needing advanced Git knowledge, ensuring smooth collaboration and model integrity.
+
+
 KiNESYS+ Analogy: The Kitchen, Custom Dishes, and Fine Tableware
 ----------------------------------------------------------------
 

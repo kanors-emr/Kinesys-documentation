@@ -35,3 +35,4 @@ It revolutionizes the way we explore energy transition scenarios using energy sy
    pages/Agriculture
    pages/Carbon capture and storage (CCS)
    pages/Demand_projection
+   pages/The ZEN of GESM

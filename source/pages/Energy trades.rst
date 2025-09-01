@@ -23,7 +23,7 @@ Gas Infrastructure Details
     Natural gas pipeline modeling uses Global Energy Monitor (GEM) data on existing and planned pipeline projects. Pipeline capacities are aggregated from country-level data to model regional trade flows, with capacity calculations for operating, under construction, and proposed projects.
 
 **LNG Trade System**  
-    LNG trade modeling incorporates detailed terminal data from Global Energy Monitor covering both liquefaction (export) and regasification (import) facilities. The model includes existing LNG supply contracts from the Gas Liquefaction contracts database that provide baseline trade flows.
+    LNG trade modeling incorporates detailed terminal data from Global Energy Monitor covering both liquefaction (export) and regasification (import) facilities.
 
 Hydrogen Trade Infrastructure
 =============================

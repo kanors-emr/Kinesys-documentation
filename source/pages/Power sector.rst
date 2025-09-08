@@ -19,25 +19,116 @@ These have been addressed as follows.
 
 Controlling use of country-level VRE potential
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 IEMM contains country-level wind and solar potentials, but models demand at a regional level. In multi-country regions, as well as in large countries, resources may not be located near loads, and transmission capacity may not exist from resources to load. We do not want the model satisfying an unrealistic portion of regional load with renewables that may be located in a small and potentially distant portion of the region.
-To provide a generic structure to control the penetration of these technologies, IEMM allows each country to produce a maximum level of generation from wind-plus-solar before it has to incur a grid extension cost. To allow generation beyond that limit, three levels of "grid extension" investment, notionally representing short distance, medium distance, and long distance transmission, have been provided each with assumed bounds and investment costs.
-The bounds for the initial maximum generation and the three levels of grid extension are initially driven by projected country load, based upon a logistic curve that is fitted to minimize the sum of squared errors of per capita consumption from historical values and population projections.
 
-For each country n, a user constraint requires:
-    .. math::
-        Annual Generation from VRE_n ≤ δ×ProjectedLoad_n+(SDGrid_n+ MDGrid_n+ LDGrid_n)×8.76
+**Grid Extension Methodology:**
 
-The maximum capacity of each of the three additional "grids" is bounded as a share of ProjectedLoad:
-    .. math::
-        SDGrid_n ≤ α ×PMHG_n⁄8.76
+To provide a generic structure to control the penetration of these technologies, IEMM uses a **penalty block system** that models increasing costs of renewable energy deployment as penetration rises. This creates a supply curve where additional renewable capacity requires progressively higher investment costs due to grid extension requirements.
 
-        MDGrid_n ≤ β ×PMHG_n⁄8.76
+**System Overview:**
 
-        LDGrid_n ≤ γ ×PMHG_n⁄8.76
+The system uses **10 penalty blocks** with increasing cost penalties:
 
-Values δ, α, β, and γ  and the investment cost of each grid are under user control and can be changed in the model instance generator.
-Note that these constraints are implemented at the country level, regardless of how countries are aggregated into model regions. They are intended to prevent, for example, Iceland's abundant wind resources from powering all of Europe's load, without appropriate transmission investment.
-Similar constraints may be added to prevent over-utilization of hydro resources in countries with large potential, without corresponding transmission investment.
+1. **Base Block**: Initial renewable generation at base cost (typically 30% of projected generation)
+2. **Penalty Blocks**: Additional capacity at increasing cost penalties (25% increments)
+3. **Export Blocks**: Capacity beyond 100% of domestic generation for cross-border trade
+
+**Mathematical Formulation:**
+
+For each country n, the total renewable generation is constrained by:
+
+.. math::
+    Annual Generation from VRE_n ≤ ProjectedGeneration_n + Σ(i=1 to N) GridExt_i × Share_i × 8.76
+
+Where:
+- **ProjectedGeneration_n**: Projected total generation for country n (Column Q)
+- **GridExt_i**: Capacity in penalty block i
+- **Share_i**: Share of projected generation for block i
+- **8.76**: Conversion from annual to hourly capacity (8760 hours/year)
+
+**Data Structure:**
+- **Column Q**: Projected generation values (TWh) - e.g., Iceland: 23.194 TWh, Kazakhstan: 176.077 TWh
+- **Column R**: ISO country codes
+- **Column S**: Years (2020-2095)
+
+**Penalty Block Structure:**
+
+The system uses 10 penalty blocks with the following characteristics:
+
+.. csv-table:: Penalty Block Configuration
+    :header: Block,Share of Projected Generation,Cost Penalty,Description
+    :widths: 10,25,20,45
+
+    1,30%,$0/kW,Base renewable capacity
+    2,60%,$25/kW,Short-distance grid extension
+    3,90%,$50/kW,Medium-distance grid extension
+    4,120%,$75/kW,Long-distance grid extension
+    5,150%,$100/kW,Regional transmission
+    6,180%,$125/kW,Cross-border transmission
+    7,210%,$150/kW,International transmission
+    8,240%,$175/kW,Continental transmission
+    9,270%,$200/kW,Global transmission
+    10,300%,$225/kW,Maximum export capacity
+
+**Economic Logic:**
+
+- **Grid Requirements**: As renewable penetration increases, additional transmission infrastructure is needed
+- **Cost Escalation**: Each penalty block represents higher investment costs for grid extension
+- **Export Potential**: Blocks beyond 100% enable cross-border renewable energy trade
+- **Capacity Constraints**: Total renewable generation is limited by the sum of all penalty block capacities
+
+**Country-Specific Implementation:**
+
+Each country has a **projected total generation** (column Q) that varies based on:
+- Renewable resource potential
+- Grid integration challenges
+- Policy targets
+- Geographic constraints
+
+**Examples:**
+
+*Iceland (High Export Potential):*
+- Projected total generation: 23.194 TWh (in 2050)
+- Domestic capacity: ~100% of local demand (Blocks 1-3)
+- Export potential: 390% of projected generation (Blocks 4-10) for embedded exports
+- Note: Iceland cannot produce much more than its projected local demand domestically
+- The 300%+ capacity represents potential for embedded exports
+
+*Kazakhstan (High Export Potential):*
+- Projected total generation: 176.077 TWh (in 2050)
+- Abundant renewable resources
+- Without constraints: Could power much of the region
+- With penalty blocks: Limited to realistic deployment levels
+- Prevents unrealistic regional demand satisfaction
+
+*Kenya (Very High Export Potential):*
+- Projected total generation: 69.729 TWh (in 2050)
+- Excellent solar and wind resources
+- Without constraints: Could power neighboring countries
+- With penalty blocks: Realistic deployment with export economics
+- Models transmission investment requirements
+
+**Process Naming Convention:**
+
+Renewable energy processes follow the pattern:
+- **<ISO>-Step1**: Base renewable capacity (e.g., MAR-Step1, CHL-Step1)
+- **<ISO>-Step2**: First penalty block
+- **<ISO>-Step3**: Second penalty block
+- **<ISO>-Step4**: Third penalty block
+- **<ISO>-Step5**: Fourth penalty block
+- **<ISO>-Step6**: Fifth penalty block
+- **<ISO>-Step7**: Sixth penalty block
+- **<ISO>-Step8**: Seventh penalty block
+- **<ISO>-Step9**: Eighth penalty block
+- **<ISO>-Step10**: Maximum export capacity
+
+**Implementation Notes:**
+
+- These constraints are implemented at the country level, regardless of how countries are aggregated into model regions
+- They prevent unrealistic scenarios like Iceland's abundant wind resources powering all of Europe's load without appropriate transmission investment
+- The penalty block system provides a realistic representation of grid extension costs and export potential
+- Similar constraints may be added to prevent over-utilization of hydro resources in countries with large potential, without corresponding transmission investment
 
 Bounding time-sliced generation from VRE sources
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -25,7 +25,7 @@ It revolutionizes the way we explore energy transition scenarios using energy sy
 
    pages/introduction
    pages/Primary energy supply
-   pages/Power sector
+   pages/power_sector
    pages/Liquid fuels processing
    pages/Hydrogen
    pages/Energy trades

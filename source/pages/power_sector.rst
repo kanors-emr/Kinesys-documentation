@@ -39,18 +39,13 @@ The system uses **10 penalty blocks** with increasing cost penalties:
 For each country n, the total renewable generation is constrained by:
 
 .. math::
-    Annual Generation from VRE_n ≤ ProjectedGeneration_n + Σ(i=1 to N) GridExt_i × Share_i × 8.76
+    Annual Generation from VRE_n ≤  + Σ(i=1 to N) GridExt_i × Share_i × ProjectedGeneration_n × 8.76
 
 Where:
 - **ProjectedGeneration_n**: Projected total generation for country n (Column Q)
 - **GridExt_i**: Capacity in penalty block i
 - **Share_i**: Share of projected generation for block i
-- **8.76**: Conversion from annual to hourly capacity (8760 hours/year)
-
-**Data Structure:**
-- **Column Q**: Projected generation values (TWh) - e.g., Iceland: 23.194 TWh, Kazakhstan: 176.077 TWh
-- **Column R**: ISO country codes
-- **Column S**: Years (2020-2095)
+- **8.76**: Conversion from GW to TWh
 
 **Penalty Block Structure:**
 

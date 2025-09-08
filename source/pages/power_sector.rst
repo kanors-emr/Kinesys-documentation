@@ -39,7 +39,7 @@ The system uses **10 penalty blocks** with increasing cost penalties:
 For each country n, the total renewable generation is constrained by:
 
 .. math::
-    Annual Generation from VRE_n ≤  + Σ(i=1 to N) GridExt_i × Share_i × ProjectedGeneration_n × 8.76
+    Annual Generation from VRE_n  ≤  Σ(i=1 to N) GridExt_i × Share_i × ProjectedGeneration_n × 8.76
 
 Where:
 - **ProjectedGeneration_n**: Projected total generation for country n (Column Q)

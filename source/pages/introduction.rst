@@ -135,6 +135,11 @@ Engaging process for progressive fine-tuning of KiNESYS instances
 
 In essence, the KiNESYS approach democratizes energy system modeling for policymakers and energy researchers, offering a powerful tool for exploring complex energy dynamics and informing strategic decisions. Through its innovative framework, KiNESYS facilitates a deeper understanding of energy systems, empowering stakeholders to craft policies and research agendas that effectively address the challenges and opportunities of sustainable energy transitions.
 
+.. seealso::
+
+   For concrete examples of how this online deployment has enabled World Bank CCDRs, corporate transition planning, and multi-model research, 
+   see :doc:`Applications_and_Impact`.
+
 Collective Learning and Continuous Model Enhancement
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -179,6 +184,11 @@ KiNESYS creates a **connected ecosystem** where enhancements can be shared natur
 .. note::
 
     This process does not happen **automatically**. **Knowledge transfer** across KiNESYS instances is managed by the KanORS team. Updates and assumptions are only shared when teams **agree** to incorporate them, ensuring model integrity and team-specific customizations.
+
+.. seealso::
+
+   The collective learning pillar is demonstrated in practice through applications like the World Bank CCDRs and BP bioresource analysis, 
+   where assumption refinements in one project benefited others. See :doc:`Applications_and_Impact` for specific examples.
 
 Model Setup and Collaboration
 -----------------------------
@@ -323,23 +333,26 @@ KiNESYS+ Analogy: The Kitchen, Custom Dishes, and Fine Tableware
 
 **KiNESYS Instances: Custom Dishes Prepared for Guests**
     The **KiNESYS instances** are the **custom dishes** prepared in this expert kitchen. Each dish is carefully tailored to meet the **unique tastes** and **dietary preferences** of specific guests (energy modeling teams, policymakers, researchers).
+    
     Each dish is:
-        - **Custom-Made:** Every instance is built according to a specific recipe designed for the guest’s needs.
-        - **Expertly Crafted:** No guesswork – each dish follows the best available recipes refined through years of experience.
-        - **Continuously Improved:** As the chefs discover better techniques and ingredients, all future dishes benefit from these upgrades.
+    
+    - **Custom-Made:** Every instance is built according to a specific recipe designed for the guest's needs.
+    - **Expertly Crafted:** No guesswork – each dish follows the best available recipes refined through years of experience.
+    - **Continuously Improved:** As the chefs discover better techniques and ingredients, all future dishes benefit from these upgrades.
 
 **Veda Online: Fine Tableware with Perfectly Paired Wines**
 
     The **VedaOnline platform** is like **special tableware** and **perfectly paired wines**, designed to **enhance the dining experience** (intuitive exploration of model output). It ensures that the **complex flavors of each dish** (model insights) are fully **appreciated and understood**:
-
-        - **Elegant Presentation:** VedaOnline displays results in a clear, intuitive format, making even complex energy models digestible.
-        - **Flavor Enhancement:** Advanced visualization tools highlight important trends and trade-offs, much like a fine wine elevates the flavors of a gourmet meal.
-        - **Interactive Tasting:** Users can explore model results interactively, uncovering deeper insights with every click, just as a wine connoisseur savors every sip.
+    
+    - **Elegant Presentation:** VedaOnline displays results in a clear, intuitive format, making even complex energy models digestible.
+    - **Flavor Enhancement:** Advanced visualization tools highlight important trends and trade-offs, much like a fine wine elevates the flavors of a gourmet meal.
+    - **Interactive Tasting:** Users can explore model results interactively, uncovering deeper insights with every click, just as a wine connoisseur savors every sip.
 
 **In Summary**
-    - **The Kitchen (KiNESYS+):** A centralized platform managed by KanORS, ensuring expert-driven, efficient, and high-quality preparation.
-    - **The Dishes (KiNESYS Instances):** Custom-built energy models ready for consumption, tailored to exact requirements and delivered with minimal wait time.
-    - **The Tableware & Wines (VedaOnline):** The intuitive exploration platform that enhances the entire experience, helping users savor and interpret complex model outputs with ease.
+
+- **The Kitchen (KiNESYS+):** A centralized platform managed by KanORS, ensuring expert-driven, efficient, and high-quality preparation.
+- **The Dishes (KiNESYS Instances):** Custom-built energy models ready for consumption, tailored to exact requirements and delivered with minimal wait time.
+- **The Tableware & Wines (VedaOnline):** The intuitive exploration platform that enhances the entire experience, helping users savor and interpret complex model outputs with ease.
 
 .. note::
 

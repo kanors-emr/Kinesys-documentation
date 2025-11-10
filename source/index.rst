@@ -24,6 +24,7 @@ It revolutionizes the way we explore energy transition scenarios using energy sy
    :caption: Contents:
 
    pages/introduction
+   pages/Applications_and_Impact
    pages/Primary energy supply
    pages/power_sector
    pages/Liquid fuels processing

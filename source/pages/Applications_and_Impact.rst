@@ -69,6 +69,7 @@ co-create policy pathways — adjusting carbon pricing, renewable targets, or te
 World Bank reports using KiNESYS include:
 
 * `Croatia CCDR (2025) <https://www.worldbank.org/en/country/croatia/publication/croatia-country-climate-and-development-report>`_ [KiNESYS_Croatia]
+* `Kyrgyz Republic CCDR (2025) <http://documents.worldbank.org/curated/en/099110325151085270>`_ [KiNESYS_CenAsia]
 * `Poland CCDR (2024) <https://www.worldbank.org/en/country/poland/publication/poland-country-climate-and-development-report>`_ [KiNESYS_Poland]
 * `Western Balkans-6 CCDR (2024) <https://www.worldbank.org/en/region/eca/publication/western-balkans-6-ccdr>`_ [KiNESYS_WB6]
 * `Uzbekistan CCDR (2023) <https://api.mf.uz/media/document_files/file_F2XaRnt.pdf>`_ [KiNESYS_CenAsia]

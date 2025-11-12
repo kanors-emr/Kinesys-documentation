@@ -70,16 +70,14 @@ World Bank reports using KiNESYS include:
 
 * `Croatia CCDR (2025) <https://www.worldbank.org/en/country/croatia/publication/croatia-country-climate-and-development-report>`_ [KiNESYS_Croatia]
 * `Kyrgyz Republic CCDR (2025) <http://documents.worldbank.org/curated/en/099110325151085270>`_ [KiNESYS_CenAsia]
-* `Poland CCDR (2024) <https://www.worldbank.org/en/country/poland/publication/poland-country-climate-and-development-report>`_ [KiNESYS_Poland]
+* `Poland CCDR (2024) <https://openknowledge.worldbank.org/entities/publication/1396095d-dbc1-4c7d-a19e-188171cc5950>`_ [KiNESYS_Poland]
 * `Western Balkans-6 CCDR (2024) <https://www.worldbank.org/en/region/eca/publication/western-balkans-6-ccdr>`_ [KiNESYS_WB6]
 * `Uzbekistan CCDR (2023) <https://api.mf.uz/media/document_files/file_F2XaRnt.pdf>`_ [KiNESYS_CenAsia]
-* `Net Zero Energy by 2060: Charting the Path of Europe and Central Asia <https://www.worldbank.org/en/region/eca/publication/net-zero-energy-by-2060>`_ [KiNESYS_ECA]
-* `Enhancing Transport Decarbonization in the European Union (2024) <https://www.worldbank.org/en/region/eca/publication/enhancing-transport-decarbonization-in-the-european-union>`_ [KiNESYS_ECA]
+* `Net Zero Energy by 2060: Charting the Path of Europe and Central Asia <https://openknowledge.worldbank.org/entities/publication/eb0f9895-360f-4a0b-8b9f-277b289bc06a>`_ [KiNESYS_ECA]
+* `Enhancing Transport Decarbonization in the European Union (2024) <https://www.worldbank.org/en/region/eca/publication/eu-transport-decarbonization>`_ [KiNESYS_ECA]
 
 These models are collectively redefining how the World Bank conducts system-level policy dialogue — moving from static reports 
 to **iterative, interactive decision environments**.
-
-For more information, visit the `ECA CCDR Hub <https://www.worldbank.org/en/region/eca/publications>`_.
 
 Research Integration — Multi-Model SDG Analysis
 ================================================

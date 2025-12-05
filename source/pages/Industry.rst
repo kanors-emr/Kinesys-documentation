@@ -168,111 +168,283 @@ The KiNESYS platform enables detailed analysis of the petrochemical sector, bala
 Iron and Steel
 ==============
 
-The Iron and Steel sector is a cornerstone of industrial activity, with extensive energy and material demands. KiNESYS captures this sector in detail, enabling nuanced analysis of its current state and decarbonization pathways.
+The iron and steel sector is fundamental to modern infrastructure and industrial development, yet it remains one of the most energy-intensive and carbon-intensive industries globally. Within its multi-sector global energy system framework, KiNESYS models this sector with detailed representation of production routes, material flows, and decarbonization pathways. This granularity—embedded alongside power, transport, buildings, and other industrial sectors—enables integrated analysis of transition strategies from today's high-emission processes to tomorrow's low-carbon alternatives.
 
 
 Scope and Coverage
 ------------------
 
-**Processes and Technologies**
+**Production Routes**
 
-    1. **Steel Production Technologies**:
+KiNESYS models three distinct steelmaking pathways, each with unique characteristics, emission profiles, and decarbonization opportunities:
 
-       - **Blast Furnace-Basic Oxygen Furnace (BF-BOF)**: Represents traditional, high-emission steel production methods.
-       - **Electric Arc Furnace (EAF)**: Focuses on secondary steel production using recycled scrap, significantly less energy-intensive.
-       - **Direct Reduced Iron (DRI)**: Explores cleaner production methods using natural gas or hydrogen instead of coke.
+    1. **Blast Furnace - Basic Oxygen Furnace (BF-BOF) Route**:
 
-    2. **Ancillary Processes**:
+       - The traditional, carbon-intensive pathway using iron ore and metallurgical coke
+       - Modern BF: Advanced blast furnaces with improved efficiency and reduced emissions
+       - Modern BF with CCS: Blast furnaces equipped with carbon capture and storage
+       - Conventional BOF: Traditional basic oxygen furnaces for refining pig iron
+       - Conventional BOF with CCS: BOF systems integrated with carbon capture technology
+       - Coke ovens: Convert coking coal to metallurgical coke, producing valuable by-products
 
-       - Tracks sintering, pelletizing, and rolling mill operations.
-       - Includes material preparation processes like coke-making.
+    2. **Direct Reduced Iron (DRI) Route**:
+
+       - Cleaner alternative to blast furnaces, producing sponge iron for electric arc furnaces
+       - Natural Gas-Based Midrex: Uses natural gas as the primary reducing agent
+       - Natural Gas-Based Midrex with CCS: Midrex process with integrated carbon capture
+       - Coal-Based Rotary Kiln: Uses coal for reduction in regions with limited gas access
+       - Coal-Based Rotary Kiln with CCS: Coal-based DRI with emissions capture
+       - Hydrogen-Based Reduction: Revolutionary pathway using green hydrogen for near-zero emissions
+
+    3. **Electric Arc Furnace (EAF) Route**:
+
+       - Predominantly scrap-based steelmaking with significantly lower emissions
+       - Electric Arc Furnace: Primary technology for melting scrap and DRI
+       - Induction Furnace: Smaller-scale, high-quality steel production
+       - Ladle Refining Furnace: Secondary refining for precise composition control
+       - Continuous Casting: Efficient conversion of molten steel to semi-finished products
+
+**Supporting Infrastructure**
+
+The model captures essential upstream and downstream processes:
+
+    - **Ore Preparation**:
+       - Pelletizing plants: Transform concentrated ore into pellets for blast furnaces or DRI
+       - Sintering plants: Agglomerate iron ore fines for blast furnace feed
+       - Crushing and beneficiation: Prepare raw ore for processing
+
+    - **Material Handling**:
+       - Cooling systems: Cool hot DRI for safe handling and transport
+       - Briquetting: Compact DRI to improve density and handling characteristics
+       - Transport logistics: Rail and truck transport of materials
 
 **Feedstock and Energy Inputs**
 
     - **Primary Raw Materials**:
-       - Tracks the flow of iron ore, coal, and limestone in the production process.
+       - Iron ore (various grades and concentrations)
+       - Coking coal for coke production
+       - Limestone and dolomite as fluxing agents
+       - Steel scrap (quality-graded for different applications)
+
     - **Alternative Inputs**:
-       - Includes natural gas, hydrogen, and biomass as potential substitutes for carbon-intensive coke.
+       - Natural gas for DRI production
+       - Green hydrogen for zero-emission reduction
+       - Biomass and alternative fuels for process heat
+
     - **Energy Systems**:
-       - Tracks electricity, fuel, and thermal energy use at each stage of production.
+       - Electricity: Critical for EAF route and hydrogen production
+       - Process heat: Steam and thermal energy across production stages
+       - By-product gases: Coke oven gas, blast furnace gas for energy recovery
+
+**Material Flows and Commodities**
+
+The model tracks over 25 distinct material commodities through the steel production chain:
+
+    - Upstream: Iron ore, concentrated ore, pellets, sinter, coke
+    - Intermediate: Pig iron, sponge iron (DRI), molten steel
+    - Downstream: Refined steel, slabs, finished products
+    - Additives: Fluxes, ferroalloys, refining agents
+    - By-products: Slag, process gases, waste heat
 
 **Emissions and By-products**
 
     - **Greenhouse Gas Emissions**:
 
-       - Process emissions from sintering, reduction, and energy use.
-       - Combustion emissions from fossil fuels.
-    - **By-products**:
+       - Process emissions from iron ore reduction (CO₂ from coke combustion)
+       - Calcination emissions from limestone decomposition
+       - Combustion emissions from fossil fuel use in heating and processing
+       - Indirect emissions from electricity generation
 
-       - Tracks slag and its potential for reuse in construction and other industries.
+    - **Valuable By-products**:
+
+       - Coke oven gas: High-energy gas for process heating or power generation
+       - Blast furnace gas: Lower-energy gas suitable for heating applications
+       - Slag: Reusable in cement production and construction
+       - Waste heat: Recoverable for district heating or power generation
 
 
 Key Features for Decarbonization Analysis
 -----------------------------------------
 
-1. **Energy Transition Pathways**
+This granular representation enables exploration of questions along multiple dimensions:
 
-   - **Hydrogen-based DRI**: Explores the integration of hydrogen as a reducing agent, offering a pathway to near-zero emissions when powered by renewable energy.
-   - **Electrification of Processes**: Analyzes the impact of replacing fossil fuels with electricity in auxiliary systems like rolling mills and furnace heating.
-   - **Biomass Substitution**: Evaluates the use of biochar or biomass pellets in place of traditional coke.
+1. **Hydrogen-Based Direct Reduction**
+
+   - **Green Hydrogen Integration**:
+
+        - Models the complete replacement of natural gas or coal with hydrogen in DRI production
+        - Produces high-purity sponge iron with near-zero direct CO₂ emissions
+        - Requires integration with renewable electricity for hydrogen production
+        - Tracks infrastructure requirements and scaling challenges
+
+   - **Technology Readiness**:
+
+        - Evaluates pilot-scale demonstrations and commercial deployment timelines
+        - Analyzes cost trajectories as hydrogen production scales
+        - Assesses regional suitability based on renewable energy availability
 
 2. **Carbon Capture and Storage (CCS)**
 
-   - Models the application of CCS in BF-BOF systems, where it can capture up to 90% of CO₂ emissions.
-   - Analyzes cost and efficiency implications for retrofitting existing plants.
+   - **BF-BOF with CCS**:
 
-3. **Material Efficiency**
+        - Captures up to 90% of process emissions from blast furnaces and steel plants
+        - Models both post-combustion and pre-combustion capture technologies
+        - Tracks retrofitting costs for existing facilities
+        - Analyzes energy penalties and efficiency impacts
 
-   - Tracks improvements in material efficiency, such as optimizing steel usage in downstream applications.
-   - Quantifies the impacts of lightweight design and increased product lifespans on demand reduction.
+   - **DRI with CCS**:
 
-4. **Regional Contextualization**
+        - Captures emissions from natural gas or coal-based DRI production
+        - Evaluates technical feasibility and economic viability
+        - Models integration with CO₂ transport and storage infrastructure
 
-   - Reflects regional variations in resource availability, such as access to high-grade iron ore or renewable energy for hydrogen production.
-   - Customizes decarbonization pathways to local policy environments, infrastructure readiness, and market dynamics.
+3. **Scrap-Based Steelmaking**
+
+   - **EAF Route Expansion**:
+
+        - Tracks the evolution of scrap availability across 30 global regions
+        - Models scrap quality grades and their suitability for different steel products
+        - Analyzes the ~70% emissions reduction compared to primary steelmaking
+        - Projects scrap supply growth based on historical steel production and stock accumulation
+
+   - **Scrap Availability Dynamics**:
+
+        - Time horizon: 2019-2050 with annual resolution
+        - Regional differentiation: China, India, USA, EU, Brazil, and 25 other regions
+        - Quality considerations: Obsolete scrap, prompt scrap, and home scrap
+        - Circularity constraints: Physical limits on scrap-based production
+
+4. **Process Efficiency Improvements**
+
+   - **Modern Technologies**:
+
+        - Advanced blast furnaces with pulverized coal injection
+        - Top-pressure recovery turbines for energy efficiency
+        - Optimized coke oven designs with improved thermal efficiency
+        - High-efficiency electric arc furnaces with scrap preheating
+
+   - **Energy Recovery**:
+
+        - Waste heat recovery from coke ovens, blast furnaces, and steel furnaces
+        - By-product gas utilization for power generation
+        - Integration with industrial symbiosis networks
+
+5. **Material Efficiency**
+
+   - **Yield Optimization**:
+
+        - Improved casting technologies to reduce material losses
+        - Near-net-shape manufacturing to minimize downstream processing
+        - Precision steel grades to reduce over-specification
+
+   - **Circular Economy**:
+
+        - Slag valorization for cement and construction applications
+        - Dust and sludge recycling within steel plants
+        - Extended product lifespans through high-performance steel grades
+
+6. **Regional Contextualization**
+
+   - **Technology Costs**:
+
+        - Regional variations in capital costs (CAPEX) and operating costs (OPEX)
+        - Reflects differences in labor costs, equipment prices, and financing conditions
+        - Captures economies of scale and learning rates
+
+   - **Resource Endowments**:
+
+        - Iron ore quality and accessibility (Australia, Brazil, India)
+        - Coking coal availability and quality
+        - Natural gas infrastructure for DRI production
+        - Renewable energy potential for green hydrogen
+
+   - **Infrastructure Readiness**:
+
+        - Electricity grid capacity for EAF expansion
+        - CO₂ transport and storage infrastructure for CCS
+        - Hydrogen production and distribution networks
+        - Scrap collection and processing systems
 
 
 Model Outputs
 -------------
 
+Different types of outputs can be readily configured on dashboards that hold output from rich scenario experiments—ready for what-if analysis with presolved cases by diverse stakeholders and domain experts:
+
 - **Energy and Emissions Profiles**:
 
-   - Detailed breakdowns of energy inputs by type (electricity, fossil fuels, hydrogen).
-   - Comprehensive emission metrics for each process stage.
+   - Detailed energy consumption by source (electricity, coal, natural gas, hydrogen)
+   - Comprehensive emissions accounting: direct process emissions, combustion emissions, indirect emissions
+   - Technology-specific emission intensities (kg CO₂/ton steel)
+   - Regional emission profiles reflecting local energy mixes
 
 - **Technology Adoption Scenarios**:
 
-   - Insights into how quickly hydrogen-based steelmaking can scale.
-   - Analysis of costs and impacts of electrification and CCS retrofits.
+   - Penetration rates for hydrogen-based DRI under different policy scenarios
+   - CCS deployment timelines and capacity additions
+   - EAF capacity expansion constrained by scrap availability
+   - Investment requirements and financing needs
 
 - **Cost and Competitiveness Analysis**:
 
-   - Tracks the economic implications of decarbonization strategies.
-   - Compares production costs under business-as-usual and low-carbon scenarios.
+   - Production cost breakdowns by technology route
+   - Impact of carbon pricing on technology competitiveness
+   - Green premium for low-carbon steel
+   - Trade implications under carbon border adjustment mechanisms
+
+- **Material Flow Analysis**:
+
+   - Iron ore demand projections by region and quality grade
+   - Coking coal requirements and potential for substitution
+   - Scrap flows and circularity rates
+   - Hydrogen demand for steel sector decarbonization
 
 
 Depth of Analysis
 ------------------
 
-1. **Detailed Decarbonization Strategies**:
+1. **Comprehensive Technology Portfolio**:
 
-   - From electrification to CCS, the model captures every feasible route for reducing emissions.
+   - Models the full spectrum from conventional high-emission routes to breakthrough technologies
+   - Captures technology-specific parameters: energy inputs, material coefficients, costs, emissions
+   - Reflects regional variations in technology performance and economics
+   - Tracks technology evolution through learning curves and efficiency improvements
 
-2. **Scenario Exploration**:
+2. **Integrated Decarbonization Pathways**:
 
-   - Simulates the impact of policies like carbon pricing or subsidies for hydrogen infrastructure.
-   - Evaluates international trade dynamics under a decarbonized market scenario.
+   - Analyzes synergies and trade-offs between different decarbonization strategies
+   - Models competition for limited resources (scrap, hydrogen, CO₂ storage capacity)
+   - Evaluates timing and sequencing of technology transitions
+   - Assesses system-wide implications for energy demand and infrastructure
 
-3. **Systemic Insights**:
+3. **Policy and Market Dynamics**:
 
-   - Highlights the interdependence of the Iron and Steel sector with energy, transport, and construction systems.
-   - Enables integrated assessments of cross-sectoral decarbonization.
+   - Simulates impacts of carbon pricing, emissions trading, and regulatory mandates
+   - Models subsidies and incentives for low-carbon technologies
+   - Analyzes trade flows under differentiated carbon policies
+   - Evaluates competitiveness impacts and carbon leakage risks
+
+4. **Systemic Integration**:
+
+   - Links steel production with upstream mining and downstream manufacturing
+   - Connects with electricity systems for EAF demand and hydrogen production
+   - Integrates with hydrogen economy for green steel pathways
+   - Couples with CO₂ transport and storage infrastructure for CCS
+
+5. **Scenario Exploration**:
+
+   - Net-zero pathways: Technology mixes and timelines to achieve zero emissions
+   - Resource constraints: Scrap availability, hydrogen production capacity, CCS potential
+   - Regional transitions: Different pathways for China, India, EU, USA based on local conditions
+   - Disruptive innovation: Breakthrough technologies and accelerated deployment scenarios
 
 
 Building a Low-Carbon Future for Iron and Steel
 -----------------------------------------------
 
-The KiNESYS platform provides a robust framework for modeling the Iron and Steel sector, offering detailed insights into energy use, emissions, and decarbonization strategies. By enabling analysis of advanced technologies and system-wide integration, it supports the transition to a sustainable, low-carbon industry.
+Within KiNESYS's multi-sector global energy system optimization framework, the steel sector representation captures the complete production chain—from iron ore to finished steel—across multiple technology routes and 30 regions. The model includes emerging technologies like hydrogen-based DRI and CCS-equipped facilities, alongside realistic constraints on scrap availability and infrastructure development.
+
+This level of sectoral detail, integrated within a comprehensive energy system model that simultaneously optimizes power generation, transport, buildings, and other industries, enables analysis of cross-sectoral interactions and competition for limited resources. The steel sector doesn't operate in isolation—it competes for electricity, hydrogen, biomass, and CO₂ storage capacity with other sectors, and these interactions shape realistic decarbonization pathways. Whether analyzing national strategies, technology investments, or industrial policies, the integrated multi-sector approach provides insights into the feasibility and system-wide implications of steel sector transitions.
 
 Cement
 ======

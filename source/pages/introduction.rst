@@ -172,13 +172,15 @@ Conventional models tend to be rigid and isolated, limiting systematic interacti
    The collective learning pillar is demonstrated in practice through applications like the World Bank CCDRs and BP bioresource analysis, where assumption refinements in one project benefited others. See :doc:`Applications_and_Impact` for specific examples.
 
 
-.. topic:: The Kitchen Analogy
+.. container:: analogy-box
 
-    Another way to think about KiNESYS+: imagine a **well-equipped kitchen** managed by KanORS. In this kitchen, experienced chefs work with **quality ingredients** (global energy datasets) and **tested recipes** (SQL scripts and Veda-TIMES configurations) to prepare tailored meals for each guest.
+    The Kitchen Analogy
 
-    - **The Kitchen (KiNESYS+):** A centralized platform managed by KanORS, ensuring consistent, high-quality preparation.
-    - **The Dishes (KiNESYS Instances):** Custom-built energy models tailored to specific requirements.
-    - **The Tableware (VedaOnline):** The presentation layer that helps users appreciate and explore model insights.
+    Another way to think about KiNESYS+: imagine a well-equipped kitchen managed by KanORS. In this kitchen, experienced chefs work with quality ingredients (global energy datasets) and tested recipes (SQL scripts and Veda-TIMES configurations) to prepare tailored meals for each guest.
+
+    - The Kitchen (KiNESYS+): A centralized platform managed by KanORS, ensuring consistent, high-quality preparation.
+    - The Dishes (KiNESYS Instances): Custom-built energy models tailored to specific requirements.
+    - The Tableware (VedaOnline): The presentation layer that helps users appreciate and explore model insights.
 
     Guests can order the dishes and use the tableware, but the kitchen stays with KanORS.
 

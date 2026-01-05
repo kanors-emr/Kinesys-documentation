@@ -15,3 +15,30 @@ h1 {font-size: 40px;}
 h2 {font-size: 30px;}
 
 h3 { font-size: 20px; }
+
+/* Analogy box styling - for illustrative asides */
+.analogy-box {
+    background-color: #f8f9fa;
+    border-left: 4px solid #6c757d;
+    padding: 1.2em 1.5em;
+    margin: 2em 0;
+    font-style: italic;
+    color: #495057;
+}
+
+.analogy-box p:first-child {
+    font-style: normal;
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 0.8em;
+    font-size: 1.05em;
+}
+
+.analogy-box ul {
+    font-style: italic;
+    margin-top: 0.8em;
+}
+
+.analogy-box li {
+    margin-bottom: 0.3em;
+}

@@ -37,3 +37,4 @@ It revolutionizes the way we explore energy transition scenarios using energy sy
    pages/Carbon capture and storage (CCS)
    pages/Demand_projection
    pages/The ZEN of GESM
+   pages/GitHub_Desktop_Guide

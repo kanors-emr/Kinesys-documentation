@@ -65,7 +65,7 @@ Creating Instances of KiNESYS Models
         - **Renewable Resource Data:** Solar/wind potentials from ESMAP, MERRA2 solar/wind profiles, and load shape data.
         - **Sectoral Data:** Renewable power capacities from IRENA, vehicle stocks, industrial production statistics from USGS and FAOStats.
 
-    Data is stored in a **relational database** in its **native form**, ensuring easy updates and smooth incorporation of new versions. **SQL scripts** process this data into Veda-compatible Excel input files, supporting custom regional aggregation and configuration.
+    Data is stored in a **relational database** in its **native form**, ensuring easy updates and smooth incorporation of new versions. **SQL scripts** process this data into Veda-compatible Excel input files, supporting custom regional aggregation and configuration. See :doc:`Data_sources` for a complete list.
 
 **Demand Projection Methodology**
     Energy demands are projected using econometrically estimated elasticities that link sectoral demands to macroeconomic drivers (GDP, population, households, and derived indicators). The appropriate driver for each region-sector combination is determined empirically based on historical fit, ensuring that projections reflect observed relationships rather than theoretical assumptions. See :doc:`Demand_projection` for details.

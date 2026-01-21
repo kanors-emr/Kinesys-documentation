@@ -27,6 +27,7 @@ It revolutionizes the way we explore energy transition scenarios using energy sy
    pages/Applications_and_Impact
    pages/Primary energy supply
    pages/power_sector
+   pages/electricity_load_shapes
    pages/Liquid fuels processing
    pages/Hydrogen
    pages/Energy trades

@@ -130,6 +130,114 @@ Bounding time-sliced generation from VRE sources
 As described in Section 2, model time slices are designed to capture two important types of temporal variation in load and generation: seasonal and time-of-day. They do not capture day-to-day variation within seasons. Rather they average over such variation. When penetrations of VRE sources become large relative to total load, such averaging may run the risk of implicitly assuming free storage between days or even hours within the same time slice.
 To avoid such an outcome, user constraints have been implemented that limit the maximum share of total electricity production in each region and time slice from VRE sources. Output from storage technologies is included in the denominator of the constraint, resulting in a requirement for storage investment and operation when VRE penetrations become very high. The default maximum VRE share is set at 65%. This value can be changed in the model instance generator template.
 
+Electricity Demand Load Shapes and Timeslice Design
+====================================================
+
+KiNESYS models electricity demand with hourly granularity (8760 hours per year), capturing both seasonal and diurnal variation across different consumer sectors. This temporal resolution is critical for accurately representing the value of flexible resources, storage, renewable integration, and system adequacy. The hourly profiles are then aggregated into model timeslices (typically 12-24 slices per year) that preserve key temporal characteristics while maintaining computational tractability.
+
+For detailed methodology, mathematical formulations, and validation results, see :doc:`electricity_load_shapes`.
+
+Data Sources and Integration
+-----------------------------
+
+**ERA5 Climate Reanalysis**
+    ECMWF ERA5 provides modeled hourly electricity load curves for 211 countries based on temperature-driven demand patterns. This ensures globally consistent coverage for the standard weather year (2013).
+
+**Actual Load Data Where Available**
+    When high-quality measured data exists, it replaces modeled estimates:
+    
+    - **China**: Provincial hourly load data (2016-2020) from Zenodo repository, aggregated to national level
+    - **Europe**: ENTSO-E transparency platform data for validation and quality assessment
+
+**Sectoral Consumption Shares**
+    IEA Energy Balances provide annual electricity consumption by sector (industrial, commercial, residential), which are used to disaggregate total load into sectoral components.
+
+Sectoral Disaggregation Approach
+---------------------------------
+
+Total hourly load is decomposed into three main sectors using assumptions about sector-specific temporal patterns:
+
+**Industrial Sector**
+    Industrial loads exhibit less diurnal variation than other sectors due to continuous-process operations (chemicals, refining, metals). However, batch manufacturing and shift-based operations create systematic time-of-day patterns, particularly in manufacturing-heavy economies.
+    
+    The methodology applies **adaptive damping factors** that vary by region based on industrial electricity share:
+    
+    .. csv-table:: Regional Industrial Load Variation
+        :header: "Industrial Share", "Damping Factor", "Typical Load Variation", "Example Regions"
+        :widths: 20, 20, 25, 35
+        
+        "< 40%", "0.10", "Minimal (1.1-1.2x)", "USA, France, UK"
+        "40-60%", "0.15", "Moderate (1.2-1.4x)", "Germany, India, Brazil"
+        "60-70%", "0.20", "Significant (1.4-1.7x)", "Poland, Turkey, Austria"
+        "> 70%", "0.25", "High (1.5-2.0x)", "China, Iceland"
+    
+    This approach reflects empirical findings from industrial load factor studies:
+    
+    - Continuous processes: 60-90% load factor → minimal diurnal variation
+    - Batch manufacturing: 40-70% load factor → significant time-of-day patterns
+    - Shift-based operations: 20-40% overnight load reduction in manufacturing economies
+    
+    For very high-industrial regions (>60% share), additional hour-of-day adjustment factors capture two-shift operational patterns common in manufacturing sectors.
+
+**Commercial Sector**
+    Commercial loads follow strong business-hours patterns with peak demand during daytime. An hour-of-day factor increases load during business hours (6 AM - 10 PM) and reduces it overnight, reflecting office buildings, retail, and service sector operations.
+
+**Residential Sector**
+    Residential loads are computed as the residual after subtracting industrial and commercial components. This approach ensures mass balance while capturing the characteristic dual-peak pattern (morning and evening) driven by household activities, cooking, lighting, and heating/cooling.
+
+Timeslice Aggregation
+---------------------
+
+Hourly load shapes are aggregated into model timeslices that balance temporal resolution with computational efficiency. Three essential parameters are computed for each region, sector, and timeslice:
+
+**COM_FR (Commodity Fraction)**
+    The fraction of annual energy consumed in each timeslice:
+    
+    .. math::
+    
+        \text{COM\_FR}_{r,s,ts} = \frac{\sum_{h \in ts} \text{Load}_{r,s,h}}{\sum_{h=1}^{8760} \text{Load}_{r,s,h}}
+    
+    These fractions ensure that sector-specific seasonal and diurnal patterns are preserved in the optimization model. COM_FR values sum to 1.0 for each region-sector combination.
+
+**COM_PKFLX (Peak Flexibility)**
+    Measures the ratio of peak-to-average load within each timeslice, computed for total electricity demand:
+    
+    .. math::
+    
+        \text{COM\_PKFLX}_{r,ts} = \frac{\max_h(\text{Load}_{r,h}) - \text{avg}_h(\text{Load}_{r,h})}{\text{avg}_h(\text{Load}_{r,h})} \quad \text{for } h \in ts
+    
+    This parameter enables the model to properly value peaking capacity, storage, and demand response resources based on their ability to serve within-timeslice peak demands.
+
+**G_YRFR (Year Fraction)**
+    The fraction of total annual hours in each timeslice:
+    
+    .. math::
+    
+        \text{G\_YRFR}_{ts} = \frac{\text{hours in timeslice}}{8760}
+
+Validation and Quality Control
+-------------------------------
+
+All generated load shapes undergo rigorous validation:
+
+- **Mass Balance**: COM_FR values sum to 1.0 (±0.001) for each region-sector combination
+- **Non-Negativity**: All sectoral loads remain positive at every hour
+- **Cross-Region Consistency**: Load patterns checked against empirical studies and actual data
+- **Timeslice Adequacy**: Peak demands within timeslices reflect realistic system stress periods
+
+When actual load data is available (China, Europe), generated profiles are validated against measured patterns to ensure methodology accuracy.
+
+Regional Customization
+----------------------
+
+Load shapes can be generated for any regional aggregation defined in KiNESYS mapping files:
+
+- **Single countries**: Individual country load profiles with national characteristics
+- **Multi-country regions**: Aggregated profiles capturing diverse load patterns
+- **Custom aggregations**: Flexible regional definitions for specific analytical needs
+
+The temporal representation automatically adjusts to match the spatial scope of the model instance, ensuring consistency between regional aggregation and load curve detail.
+
 Constraints on capacity rate of change
 ======================================
 IEMM contains constraints on capacity contraction and expansion intended to represent real-world costs and inertias that limit capacity rate of change. These are implemented as decay constraints and build rate growth constraints and cost steps.

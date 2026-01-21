@@ -133,3 +133,35 @@ Climate Data
 
 **IEA/KAPSARC Heating and Cooling Degree Days**
     Population-weighted heating degree days (HDD) and cooling degree days (CDD) by country. Used to inform space heating and cooling demand and fuel-to-end-use splits in buildings.
+
+
+Electricity Demand Load Curves
+===============================
+
+**ECMWF ERA5 Climate Reanalysis (2013)**
+    Modeled hourly electricity load for 211 countries based on temperature-driven demand patterns. Provides globally consistent 8760-hour load profiles for weather year 2013. Used as the primary source for countries without high-quality measured data.
+    
+    *Reference: Hersbach et al. (2020), Quarterly Journal of the Royal Meteorological Society*
+    
+    *Update frequency: Available for multiple weather years, 2013 as standard*
+
+**WuHaochi China Provincial Load Data (2016-2020)**
+    Actual hourly electricity load by province (31 provinces). Aggregated to national level to replace ERA5 modeled data for China, ensuring realistic representation of industrial and residential patterns in the world's largest electricity consumer.
+    
+    *Source: Zenodo open data repository*
+    
+    *Coverage: 5 years of provincial data, 43,800 hourly observations per province*
+
+**ENTSO-E Transparency Platform**
+    Actual hourly load data for European countries and bidding zones. Used for ERA5 validation, quality assessment, and as reference for evaluating sectoral disaggregation methodology accuracy.
+    
+    *Update frequency: Real-time, historical archives available from 2015*
+    
+    *Coverage: 35+ European countries with transmission system operator data*
+
+**Atlite Hourly Capacity Factor Profiles (2013)**
+    Solar photovoltaic and wind (onshore/offshore) generation profiles at country level derived from MERRA2 and ERA5 climate reanalysis. Provides synchronized temporal correlation between renewable generation potential and electricity demand.
+    
+    *Reference: Based on Atlite toolkit for renewable energy modeling*
+    
+    *Resolution: Country-level aggregation of grid-cell capacity factors*

@@ -130,6 +130,103 @@ Bounding time-sliced generation from VRE sources
 As described in Section 2, model time slices are designed to capture two important types of temporal variation in load and generation: seasonal and time-of-day. They do not capture day-to-day variation within seasons. Rather they average over such variation. When penetrations of VRE sources become large relative to total load, such averaging may run the risk of implicitly assuming free storage between days or even hours within the same time slice.
 To avoid such an outcome, user constraints have been implemented that limit the maximum share of total electricity production in each region and time slice from VRE sources. Output from storage technologies is included in the denominator of the constraint, resulting in a requirement for storage investment and operation when VRE penetrations become very high. The default maximum VRE share is set at 65%. This value can be changed in the model instance generator template.
 
+
+Renewable Resource Characterization (2026 Enhancement)
+======================================================
+
+KiNESYS employs a sophisticated spatial clustering approach to represent variable renewable energy (VRE) resources. Rather than treating each country as a single homogeneous resource, the methodology captures the diversity of solar and wind resource quality through fine-grained spatial analysis.
+
+**Key Features:**
+
+- **50km² grid-cell resolution**: Atlite/REZoning data provides hourly capacity factors at high spatial resolution
+- **Smart clustering**: Grid cells with similar hourly profiles are grouped into representative clusters
+- **Configurable granularity**: 2,700 to 9,000 clusters globally (controlled by exponent parameter)
+- **Multi-year weather support**: Weather years 2010, 2013, 2016, and 2019 available for climate sensitivity analysis
+
+**Technologies Covered:**
+
+.. csv-table::
+    :header: "Technology", "Code", "Min CF Threshold", "Typical Global Clusters"
+    :widths: 25, 15, 20, 40
+
+    "Solar PV", "spv", "5%", "~1,200 (n=0.4) to ~4,000 (n=0.6)"
+    "Wind Onshore", "won", "8%", "~1,000 (n=0.4) to ~3,500 (n=0.6)"
+    "Wind Offshore", "wof", "20%", "~400 (n=0.4) to ~1,500 (n=0.6)"
+
+**Clustering Methodology:**
+
+The clustering algorithm groups grid cells with similar generation profiles:
+
+1. **PCA reduction**: 8760-hour profiles reduced to 50 principal components
+2. **Spatial weighting**: Coordinates added to encourage geographic coherence
+3. **Ward's clustering**: Hierarchical clustering minimizing within-cluster variance
+4. **Capacity-weighted profiles**: Cluster profiles are MW-weighted averages of member cells
+
+**Firmness Coefficients:**
+
+In addition to energy shares (COM_FR), the model computes firmness metrics that quantify dispatchable backup and storage requirements:
+
+- **DEF (Deficit Energy)**: Energy shortfall below timeslice average — represents backup dispatch requirement
+- **ELC_4H**: Surplus energy capturable by 4-hour duration storage
+- **ELC_8H**: Surplus energy capturable by 8-hour duration storage
+
+These metrics enable accurate representation of VRE integration costs at high penetrations, ensuring the model properly values flexible generation, storage, and demand response.
+
+**Connection Costs:**
+
+Each cluster includes distance-based connection costs computed from the cluster centroid to the nearest major city (demand center proxy). This creates realistic supply curves where remote resources incur higher transmission investment.
+
+For detailed methodology, mathematical formulations, and implementation details, see :doc:`renewable_energy_characterization`.
+
+
+Conventional Technology Characterization
+========================================
+
+KiNESYS represents new investment options for conventional (dispatchable) power generation, CCS-equipped plants, and battery storage. Technology costs and performance parameters are regionally differentiated and provided at three uncertainty levels (hi/mid/lo) to support parametric scenario analysis.
+
+Data Sources and Compilation Strategy
+--------------------------------------
+
+The techno-economic dataset is compiled from two primary sources:
+
+- **IEA Global Energy and Climate (GEC) Model (WEO 2023)** — provides regionally differentiated overnight capital costs, fixed O&M, thermal efficiency, and capacity factors under the Stated Policies (STEPS) scenario across 9 world regions (European Union, United States, Japan, Russia, China, India, Middle East, Africa, Brazil) at three time points (2022, 2030, 2050).
+
+- **NREL Annual Technology Baseline (ATB) 2024v3** — provides US-specific cost projections under Conservative, Moderate, and Advanced scenarios. These are used to derive hi/lo spread multipliers that are applied to the IEA regional mid values, preserving regional cost differentiation while adding uncertainty characterization. ATB is also the sole source for battery storage costs.
+
+All costs are overnight costs in USD 2022. Construction time is provided separately; TIMES computes interest during construction endogenously where applicable. Data points are kept at native source years with no interpolation — TIMES handles internal interpolation.
+
+An earlier approach using IPCC AR6 scenario database costs was abandoned due to model heterogeneity, missing technologies, and implausible entries (particularly for offshore wind).
+
+Technology Menu
+----------------
+
+The dataset covers 26 technologies organized into the following groups:
+
+**Gas** — CCGT, open-cycle gas turbine (peaking), CCGT-CHP (combined heat and power), gas fuel cell, and CCGT with CCS. CCGT-CHP co-produces electricity and useful heat; its reported efficiency reflects total energy output on an LHV basis. CHP plants are assigned to the CHP model set with both electricity and heat commodity outputs.
+
+**Coal** — Four unabated steam cycle variants (subcritical, supercritical, ultra-supercritical, IGCC) and three CCS-equipped variants (post-combustion, oxyfuel, IGCC+CCS). CCS variants carry a significant capital cost premium and an efficiency penalty relative to their unabated counterparts.
+
+**Nuclear** — A single large-reactor technology with the longest construction time and economic lifetime in the dataset. Regional cost differentiation is particularly wide for nuclear.
+
+**Bioenergy** — Large-scale biomass, biomass cofiring (incremental investment for blending in existing coal plants), biomass CHP, and biomass with CCUS (BECCS) for negative emissions.
+
+**Battery storage** — 4-hour and 8-hour utility-scale Li-ion, sourced entirely from ATB. The same cost trajectory is applied across all regions, reflecting the globally traded nature of battery cells.
+
+**Renewables** — Solar PV, CSP, wind onshore, wind offshore, hydropower (large and small scale), and geothermal. These base cost assumptions complement the spatially detailed resource characterization described in :doc:`renewable_energy_characterization`, which provides cluster-specific capacity factors, connection costs, and firmness metrics.
+
+Regional Differentiation
+--------------------------
+
+Costs vary substantially across the 9 IEA regions, driven by differences in labour costs, materials supply chains, regulatory environments, and construction productivity. In general, China and India have the lowest costs, the EU and Japan the highest, with other regions in between. The pattern is broadly consistent across technology groups, though nuclear exhibits particularly wide regional dispersion.
+
+Cost Uncertainty
+-----------------
+
+For each technology, the **mid** scenario equals the IEA GEC STEPS value directly. The **hi** and **lo** scenarios are computed by multiplying the mid value by the ratio of ATB Conservative (or Advanced) to ATB Moderate costs for the corresponding technology. This produces three internally consistent cost trajectories per region. Technologies without a direct ATB match use mid-only (no spread).
+
+The detailed compilation methodology, technology-by-technology parameter values, and full regional coverage are documented in ``METHODOLOGY.md`` within the reference costs directory.
+
+
 Electricity Demand Load Shapes and Timeslice Design
 ====================================================
 

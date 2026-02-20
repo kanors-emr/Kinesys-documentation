@@ -47,9 +47,29 @@ Power Sector
     *Update frequency: Annual*
 
 **IEA World Energy Outlook**
-    Technology cost assumptions and regional scenario projections. Used for technology costs and scenario benchmarking (Stated Policies, Announced Pledges, Net Zero scenarios).
+    Technology cost assumptions and regional scenario projections. Used for scenario benchmarking (Stated Policies, Announced Pledges, Net Zero scenarios).
     
     *Update frequency: Annual*
+
+**IEA Global Energy and Climate (GEC) Model Dataset (WEO 2023)**
+    Regionally differentiated techno-economic parameters for 26 power generation technologies across 9 world regions under the Stated Policies (STEPS) scenario. Provides overnight capital costs, fixed O&M, thermal efficiency, capacity factors, and construction times. Primary source for regional absolute cost levels used in the unified reference cost dataset.
+    
+    *Technologies:* Gas (CCGT, gas turbine, CCGT-CHP, fuel cell, CCGT+CCS), Coal (subcritical, supercritical, ultra-supercritical, IGCC, three CCS variants), Nuclear, Renewables (solar PV, CSP, wind on/offshore, hydro, biomass, geothermal)
+    
+    *Regions:* European Union, United States, Japan, Russia, China, India, Middle East, Africa, Brazil
+    
+    *Time points:* 2022, 2030, 2050
+    
+    *Currency:* USD 2022
+
+**NREL Annual Technology Baseline (ATB) 2024v3**
+    US-specific technology cost projections under Conservative, Moderate, and Advanced scenarios reflecting different rates of technological progress. Used to derive hi/lo cost uncertainty spread multipliers (ratio of Conservative/Advanced to Moderate) applied to IEA GEC regional costs. Also the sole source for utility-scale battery storage costs (4-hour and 8-hour Li-ion), which are applied uniformly across all regions.
+    
+    *Technologies:* All major generation technologies plus utility-scale battery storage
+    
+    *Time points:* Annual from 2022 to 2050
+    
+    *Currency:* USD 2022
 
 
 Gas and LNG Infrastructure
@@ -118,6 +138,48 @@ Renewable Energy Potential
 
 **CM SAF SARAH + ECMWF ERA5**
     Satellite-derived solar irradiance (SARAH) and reanalysis wind speed (ERA5) data. Provides hourly capacity factor profiles for solar and wind resources at grid-cell level.
+
+
+Renewable Resource Characterization
+===================================
+
+KiNESYS employs detailed spatial data for renewable energy characterization, enabling cluster-specific generation profiles and supply curves.
+
+**Atlite Grid-Cell Capacity Factors**
+    Hourly capacity factor profiles (8760 hours) for solar, wind onshore, and wind offshore at 50km² grid-cell resolution. Derived from ERA5 (wind) and SARAH (solar) reanalysis data through the Atlite library.
+    
+    *Technologies*: Solar PV, Wind Onshore, Wind Offshore
+    
+    *Resolution*: 50km² grid cells, hourly (8760 values per cell per year)
+    
+    *Weather Years*: 2010, 2013 (default), 2016, 2019
+    
+    *Coverage*: Global, 211 countries
+    
+    *Reference*: Hofmann et al. (2021), Journal of Open Source Software
+
+**REZoning Economic Potential Database**
+    Grid-cell level renewable energy potential by cost class, including land availability after exclusions (protected areas, urban, water bodies), terrain factors, and grid connection distance estimates. Derived from PyPSA-Earth preprocessing methodology.
+    
+    *Attributes per cell*: Technical potential (MW), cost class tier, coordinates, land availability
+    
+    *Technologies*: Solar PV, Wind Onshore, Wind Offshore
+    
+    *Source*: KanORS-EMR compilation based on PyPSA-Earth methodology
+
+**IRENA Renewable Capacity and Generation Statistics**
+    National-level installed renewable electricity capacity and annual generation by technology. Used for base year calibration, validation of potential estimates, and allocation of existing capacity to spatial clusters.
+    
+    *Technologies*: Solar PV, Wind Onshore, Wind Offshore, Hydro, Biomass, Geothermal
+    
+    *Update frequency*: Annual
+    
+    *Usage*: Existing capacity allocation to clusters based on capacity factor matching
+
+**City Population Database**
+    Coordinates and population of major cities (>100,000 population) worldwide. Used to compute connection costs from renewable resource clusters to nearest demand centers.
+    
+    *Source*: Natural Earth / UN World Urbanization Prospects
 
 
 Carbon Capture and Storage

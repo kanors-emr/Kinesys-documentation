@@ -246,6 +246,20 @@ The model tracks over 25 distinct material commodities through the steel product
     - Additives: Fluxes, ferroalloys, refining agents
     - By-products: Slag, process gases, waste heat
 
+**International Trade of Steel-Related Commodities**
+
+Steel decarbonization is as much a story about restructuring global trade as it is about changing technology. KiNESYS explicitly models international trade for five key steel-sector commodities, each flowing through a global market mechanism across all regions:
+
+    - **Iron ore** — the dominant seaborne commodity today (~1,580 Mt/yr), connecting mines in Australia, Brazil, and Africa to blast furnaces and DRI plants worldwide
+    - **Coking coal** — essential feedstock for the BF-BOF route (~330 Mt/yr traded), highly concentrated among a few exporters
+    - **Steel scrap** — increasingly traded as EAF capacity grows; availability constrained by accumulated steel stock in each region
+    - **Sponge iron (DRI)** — a commodity that barely features in today's trade (~12 Mt) but emerges as a major flow under decarbonization, as DRI production gravitates to regions with cheap natural gas or renewable hydrogen and ships the intermediate product to steelmakers elsewhere
+    - **Crude steel** — traded as semi-finished product; subject to configurable trade constraints to reflect real-world frictions such as reheating costs, quality-control requirements, and industrial policy preferences
+
+Trade constraints can be applied at the commodity level to test the sensitivity of results to trade openness. For example, restricting crude steel trade forces the model to use sponge iron as the primary mechanism for international material flows — a choice with profound implications for port infrastructure, shipping patterns, and regional industrial structure.
+
+The model reports regional exports (``VAR_FIn`` on global market processes) and imports (``VAR_FOut``), enabling analysis of bilateral trade patterns, net trade positions, and the geopolitical implications of different decarbonization pathways.
+
 **Emissions and By-products**
 
     - **Greenhouse Gas Emissions**:
@@ -298,6 +312,10 @@ This granular representation enables exploration of questions along multiple dim
         - Evaluates technical feasibility and economic viability
         - Models integration with CO₂ transport and storage infrastructure
 
+   - **CCS as an infrastructure-preservation choice**:
+
+        - A distinguishing feature of KiNESYS's integrated approach: CCS availability does not merely reduce emissions — it determines whether the entire incumbent raw-material complex (iron ore mining, coking coal supply chains, blast furnace infrastructure, associated port and shipping capacity) survives the transition. Two pathways with identical carbon prices and similar emissions outcomes can produce completely different industrial structures depending on CCS availability, with far-reaching consequences for trade flows, regional employment, and infrastructure investment
+
 3. **Scrap-Based Steelmaking**
 
    - **EAF Route Expansion**:
@@ -312,7 +330,7 @@ This granular representation enables exploration of questions along multiple dim
         - Time horizon: 2019-2050 with annual resolution
         - Regional differentiation: China, India, USA, EU, Brazil, and 25 other regions
         - Quality considerations: Obsolete scrap, prompt scrap, and home scrap
-        - Circularity constraints: Physical limits on scrap-based production
+        - Circularity constraints: Physical limits on scrap-based production — model results consistently show scrap-EAF capping at around 40–45% of global crude steel demand even under maximum decarbonization, confirming that there is no purely circular future for steel. The remaining demand must be met by primary iron (via DRI or BF-BOF), which in turn drives continued iron ore trade
 
 4. **Process Efficiency Improvements**
 
@@ -399,6 +417,41 @@ Different types of outputs can be readily configured on dashboards that hold out
    - Scrap flows and circularity rates
    - Hydrogen demand for steel sector decarbonization
 
+- **Visualisation and Communication**:
+
+   - Sankey diagrams of material flows (raw materials → steelmaking routes → crude steel, with CO₂ exit flows) for any scenario and region, enabling direct visual comparison of structurally distinct futures
+   - Time-series trajectory charts showing how key metrics (production, CO₂ intensity, route shares, hydrogen consumption, steel cost, trade volumes) evolve from present to 2050 across large scenario ensembles
+   - Trade composition charts decomposing global steel-related seaborne trade by commodity, revealing how the cargo on ships changes under different policy settings
+   - Regional trade butterfly charts showing net exporter/importer positions for each commodity under multiple scenarios, exposing the geopolitical dimension of decarbonization
+
+
+Illustrative Findings
+---------------------
+
+The following results illustrate the type of insight the model produces when scenario dimensions (carbon price, CCS availability, technology cost assumptions) are varied systematically. These are representative, not prescriptive — actual results depend on the specific scenario configuration and regional calibration.
+
+.. figure:: images/steel_sankey_quartet.png
+   :width: 100%
+   :align: center
+
+   **Sankey quartet — four structurally distinct steel futures at 2050.** Each panel traces material flows from raw inputs (left) through steelmaking routes (centre) to crude steel output (right), with CO₂ exit flows shown upward. The 2023 baseline (top-left) is dominated by blast furnaces; the four 2050 scenarios show how the system transforms under different carbon price and CCS availability assumptions. Panels sharing the same carbon price (bottom pair) achieve similar emissions reductions but with completely different supply chains.
+
+**Structurally distinct futures at the same carbon price.** Under a moderate carbon price with CCS available, the BF-BOF route can survive — preserving the iron ore and coking coal supply chain, with CCS capturing several hundred Mt CO₂. Under the same carbon price without CCS, blast furnaces are eliminated entirely: DRI-EAF and Scrap-EAF dominate, coal disappears, and the energy mix shifts to gas, hydrogen, and electricity. Both pathways achieve comparable emissions reductions (75–85% below baseline), but the industrial structures — and therefore the infrastructure, trade, and employment implications — are completely different.
+
+.. figure:: images/steel_trade_composition.png
+   :width: 100%
+   :align: center
+
+   **Global steel-related trade composition — from today to five carbon-price futures.** Each bar decomposes total seaborne trade by commodity. Iron ore (blue) dominates today; under decarbonization, coking coal disappears, sponge iron (teal) surges, and the total initially rises before falling. Crude steel trade is constrained to reflect reheating and quality frictions.
+
+**Trade reshuffling, not just trade reduction.** Steel-related global trade (iron ore + coking coal + sponge iron + scrap + crude steel) can initially *increase* under low-to-moderate carbon prices as DRI production concentrates in gas- and renewables-rich regions and ships sponge iron globally. At higher carbon prices, total trade volumes decline — but the composition is unrecognisable: coking coal disappears, iron ore demand halves, and sponge iron becomes the dominant traded intermediate. The model shows that the decarbonization pathway chosen determines whether the world preserves the incumbent raw-material shipping complex or rewires it.
+
+**Bounded green premium.** Across a wide range of scenarios, the model-implied cost of crude steel (shadow price from the optimisation) increases by roughly 20–35% under ambitious decarbonization relative to a no-policy baseline. This is significant for a commodity-grade product but far below the 2–3× premiums sometimes cited in public discourse.
+
+**No purely circular future.** Even under maximum scrap utilisation, EAF-based production from scrap caps at around 40–45% of global crude steel demand — constrained by the physics of steel stock accumulation and scrap availability. The remaining 55–60% must come from primary iron, which means iron ore continues to be mined and traded in all futures. The question is whether that ore feeds blast furnaces or DRI plants.
+
+**Hydrogen consumption at scale.** Deep decarbonization scenarios imply hydrogen consumption by the steel sector alone on the order of 25–60 Mt H₂ per year by 2050 — a substantial fraction of projected global clean hydrogen supply and a critical input for hydrogen infrastructure planning.
+
 
 Depth of Analysis
 ------------------
@@ -433,18 +486,22 @@ Depth of Analysis
 
 5. **Scenario Exploration**:
 
+   - **Multi-dimensional scenario design**: Carbon price levels, CCS availability toggles, technology cost assumptions, and trade regime constraints can be combined to generate large scenario ensembles, enabling systematic exploration of the solution space
    - Net-zero pathways: Technology mixes and timelines to achieve zero emissions
    - Resource constraints: Scrap availability, hydrogen production capacity, CCS potential
-   - Regional transitions: Different pathways for China, India, EU, USA based on local conditions
+   - Regional transitions: Different pathways for each of the 30+ regions based on local resource endowments, existing infrastructure, and accumulated steel stock
    - Disruptive innovation: Breakthrough technologies and accelerated deployment scenarios
+   - **Country-level deep dives**: The model supports extraction and visualisation of results for individual regions, revealing how global decarbonization pathways translate into country-specific industrial transformations — including stranding risk for existing capacity, shifts in import dependency, and changes in trade partnerships
 
 
 Building a Low-Carbon Future for Iron and Steel
 -----------------------------------------------
 
-Within KiNESYS's multi-sector global energy system optimization framework, the steel sector representation captures the complete production chain—from iron ore to finished steel—across multiple technology routes and 30 regions. The model includes emerging technologies like hydrogen-based DRI and CCS-equipped facilities, alongside realistic constraints on scrap availability and infrastructure development.
+Within KiNESYS's multi-sector global energy system optimization framework, the steel sector representation captures the complete production chain — from iron ore to finished steel — across multiple technology routes and 30+ regions, with explicit international trade of five key commodities. The model includes emerging technologies like hydrogen-based DRI and CCS-equipped facilities, alongside realistic constraints on scrap availability, trade frictions, and infrastructure development.
 
-This level of sectoral detail, integrated within a comprehensive energy system model that simultaneously optimizes power generation, transport, buildings, and other industries, enables analysis of cross-sectoral interactions and competition for limited resources. The steel sector doesn't operate in isolation—it competes for electricity, hydrogen, biomass, and CO₂ storage capacity with other sectors, and these interactions shape realistic decarbonization pathways. Whether analyzing national strategies, technology investments, or industrial policies, the integrated multi-sector approach provides insights into the feasibility and system-wide implications of steel sector transitions.
+This level of sectoral detail, integrated within a comprehensive energy system model that simultaneously optimizes power generation, transport, buildings, and other industries, enables analysis of cross-sectoral interactions and competition for limited resources. The steel sector doesn't operate in isolation — it competes for electricity, hydrogen, biomass, and CO₂ storage capacity with other sectors, and these interactions shape realistic decarbonization pathways.
+
+A key insight from this integrated approach: steel decarbonization is as much a story about relocating industrial production and restructuring global trade as it is about deploying new technology. The chosen pathway determines whether the world preserves the incumbent iron ore and coking coal shipping complex or rewires it around sponge iron and clean hydrogen. KiNESYS is uniquely positioned to explore these trade-offs because it models both the technology transitions and the trade flows simultaneously, within a single optimisation framework.
 
 Cement
 ======

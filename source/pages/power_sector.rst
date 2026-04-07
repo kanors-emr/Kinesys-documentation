@@ -14,7 +14,7 @@ The existing generation fleet is constructed from plant-level databases with vin
 
 - **Thermal and nuclear plants**: Built up from the S&P Global Platts WEPP (World Electric Power Plants) database, which provides unit-level details including capacity, fuel type, technology subtype, commissioning year, and cooling technology. Each plant enters the model at its actual commissioning year with technology-specific efficiency and cost parameters, preserving the vintage structure of the fleet.
 
-- **Existing renewable capacity**: Calibrated to IRENA Renewable Capacity Statistics at the country and technology level. Existing capacity is allocated to spatial resource clusters based on capacity factor matching (see Renewable Resource Characterization below).
+- **Existing renewable capacity**: Individual solar and wind plants are mapped to REZoning grid cells using the Global Energy Monitor (GEM) power trackers, enabling plant-level spatial allocation. Their capacity is subtracted from grid-cell technical potential before clustering to avoid double-counting in supply curves. National totals are calibrated to IRENA Renewable Capacity Statistics, with existing capacity allocated to clusters based on capacity factor matching (see :doc:`renewable_energy_characterization`).
 
 Cooling Technologies
 --------------------

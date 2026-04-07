@@ -56,14 +56,14 @@ The complete RE characterization process follows a multi-stage pipeline:
     |                    STAGE 1: DATA ACQUISITION                       |
     +--------------------------------------------------------------------+
     |                                                                    |
-    |   Atlite Hourly         REZoning             IRENA                 |
-    |   Capacity Factors  +   Economic      +     Existing               |
-    |   (50km² cells)         Potential           Capacity               |
+    |   Atlite Hourly       REZoning         IRENA        GEM            |
+    |   Capacity Factors +  Economic    +   Existing  +  Existing        |
+    |   (50km² cells)       Potential       Capacity     RE Plants       |
+    |                                                    (unit-level)    |
+    |   ↓                   ↓               ↓            ↓               |
     |                                                                    |
-    |   ↓                     ↓                   ↓                      |
-    |                                                                    |
-    |   8760-hour profiles    MW by cost class    National totals        |
-    |   per grid cell         per grid cell       by technology          |
+    |   8760-hour profiles  MW by cost      National     MW per          |
+    |   per grid cell       class per cell  totals       grid cell       |
     |                                                                    |
     +--------------------------------------------------------------------+
                                     ↓
@@ -74,11 +74,13 @@ The complete RE characterization process follows a multi-stage pipeline:
     |   For each ISO + Technology:                                       |
     |                                                                    |
     |   1. Filter cells by minimum CF threshold                          |
-    |   2. PCA reduction of 8760-hour profiles to 50 components          |
-    |   3. Ward's hierarchical clustering with spatial weighting         |
-    |   4. n_clusters = n_cells^exponent (configurable granularity)      |
+    |   2. Subtract existing GEM capacity from REZoning potential        |
+    |      per cell (greenfield adjustment)                              |
+    |   3. PCA reduction of 8760-hour profiles to 50 components          |
+    |   4. Ward's hierarchical clustering with spatial weighting         |
+    |   5. n_clusters = n_cells^exponent (configurable granularity)      |
     |                                                                    |
-    |   Output: Cell → Cluster assignments                               |
+    |   Output: Cell → Cluster assignments (with greenfield potential)   |
     |                                                                    |
     +--------------------------------------------------------------------+
                                     ↓
@@ -109,6 +111,8 @@ The complete RE characterization process follows a multi-stage pipeline:
                                     ↓
                           MODEL-READY PARAMETERS
                     (COM_FR, Firmness, Connection Costs)
+
+**Greenfield adjustment in Stage 2**: Before clustering, the installed capacity of existing solar, onshore wind, and offshore wind plants (from the Global Energy Monitor) is subtracted from each grid cell's REZoning technical potential. Each GEM unit is mapped to its nearest REZoning cell within the same country. The deduction is applied at the grid-cell level so that the resulting cluster-level GW limits (``cap_bnd``) represent only the remaining buildable potential, preventing double-counting between existing stock and new investment options in the model's supply curves.
 
 
 Data Sources
@@ -164,6 +168,21 @@ IRENA Renewable Capacity Statistics
     - Validation of cluster potential estimates
     - Allocation of existing capacity to clusters based on capacity factor matching
     - Base year calibration of installed RE capacity
+
+
+Global Energy Monitor (GEM) Existing Renewable Installations
+-------------------------------------------------------------
+
+**Source**: Global Energy Monitor - Global Solar Power Tracker / Global Wind Power Tracker
+
+**Coverage**: Unit-level solar, onshore wind, and offshore wind plants worldwide
+
+**Attributes per unit**:
+    - Capacity (MW), commissioning status, coordinates
+    - Mapped to nearest REZoning grid cell within the same country (via ``update_gem_re_units_cf_location.py``)
+    - Technology classification: solar, windon, windoff
+
+**Usage**: Existing installed capacity is subtracted from REZoning technical potential at the grid-cell level before clustering, so that supply curves represent only the remaining greenfield potential. See `Greenfield Potential Adjustment`_ below.
 
 
 Clustering Methodology
@@ -476,12 +495,46 @@ Processing Approach
 Existing Capacity Allocation
 ============================
 
-Existing renewable capacity (from IRENA statistics) must be allocated to the newly defined clusters for base year calibration.
+Two distinct mechanisms handle existing renewable capacity at different stages of the pipeline, serving different purposes.
 
-Methodology
------------
 
-**Capacity Factor Matching**:
+.. _Greenfield Potential Adjustment:
+
+Greenfield Potential Adjustment (GEM)
+--------------------------------------
+
+**Stage**: Before clustering (inside ``extract_cell_profiles()``)
+
+**Purpose**: Ensure that supply curve potentials represent only the remaining buildable capacity, not capacity that has already been installed.
+
+**Data source**: Global Energy Monitor (GEM) Solar and Wind Power Trackers, mapped to REZoning grid cells via ``update_gem_re_units_cf_location.py``.
+
+**Methodology**:
+
+For each ISO, technology, and grid cell, existing installed capacity is subtracted from the REZoning technical potential:
+
+.. math::
+
+    P_{greenfield,i} = \max\left(0,\; P_{REZoning,i} - \sum_{u \in \text{GEM}_i} C_u\right)
+
+where:
+    - :math:`P_{REZoning,i}` = REZoning technical potential (MW) for grid cell *i*
+    - :math:`C_u` = installed capacity (MW) of GEM unit *u* mapped to cell *i*
+    - :math:`P_{greenfield,i}` = remaining buildable potential, floored at zero
+
+The adjusted per-cell potentials flow into clustering, so that cluster-level ``total_re_capacity_mw`` (and the VEDA ``cap_bnd`` parameter) reflect only the greenfield potential. This prevents the model from double-counting existing stock as available new investment.
+
+
+Base Year Calibration (IRENA)
+------------------------------
+
+**Stage**: After clustering
+
+**Purpose**: Allocate national existing capacity totals to specific clusters for model initialization and base year calibration.
+
+**Data source**: IRENA Renewable Capacity Statistics (national totals by technology).
+
+**Methodology -- Capacity Factor Matching**:
 
 For each ISO and technology, the existing IRENA capacity is assigned to the cluster with the closest average capacity factor:
 

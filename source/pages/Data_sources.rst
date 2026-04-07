@@ -176,6 +176,13 @@ KiNESYS employs detailed spatial data for renewable energy characterization, ena
     
     *Usage*: Existing capacity allocation to clusters based on capacity factor matching
 
+**Global Energy Monitor - Solar and Wind Power Trackers**
+    Unit-level existing and planned solar PV, onshore wind, and offshore wind installations worldwide. Provides coordinates, capacity (MW), status, and technology type. Each unit is mapped to its nearest REZoning grid cell within the same country, and its capacity is subtracted from the cell's technical potential before clustering to ensure supply curves reflect only greenfield potential.
+    
+    *Update frequency*: Quarterly
+    
+    *Usage*: Greenfield potential adjustment (existing capacity deduction from REZoning grid cells)
+
 **City Population Database**
     Coordinates and population of major cities (>100,000 population) worldwide. Used to compute connection costs from renewable resource clusters to nearest demand centers.
     

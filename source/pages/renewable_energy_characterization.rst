@@ -112,7 +112,7 @@ The complete RE characterization process follows a multi-stage pipeline:
                           MODEL-READY PARAMETERS
                     (COM_FR, Firmness, Connection Costs)
 
-**Greenfield adjustment in Stage 2**: Before clustering, the installed capacity of existing solar, onshore wind, and offshore wind plants (from the Global Energy Monitor) is subtracted from each grid cell's REZoning technical potential. Each GEM unit is mapped to its nearest REZoning cell within the same country. The deduction is applied at the grid-cell level so that the resulting cluster-level GW limits (``cap_bnd``) represent only the remaining buildable potential, preventing double-counting between existing stock and new investment options in the model's supply curves.
+**Greenfield adjustment in Stage 2**: Before clustering, the installed capacity of existing solar, onshore wind, and offshore wind plants (from the Global Energy Monitor) is subtracted from each grid cell's REZoning technical potential. Each GEM unit is mapped to its nearest REZoning cell within the same country. The deduction is applied at the grid-cell level so that the resulting cluster-level capacity bounds represent only the remaining buildable potential, preventing double-counting between existing stock and new investment options in the model's supply curves.
 
 
 Data Sources
@@ -179,8 +179,8 @@ Global Energy Monitor (GEM) Existing Renewable Installations
 
 **Attributes per unit**:
     - Capacity (MW), commissioning status, coordinates
-    - Mapped to nearest REZoning grid cell within the same country (via ``update_gem_re_units_cf_location.py``)
-    - Technology classification: solar, windon, windoff
+    - Mapped to nearest REZoning grid cell within the same country
+    - Technology classification: solar, wind onshore, wind offshore
 
 **Usage**: Existing installed capacity is subtracted from REZoning technical potential at the grid-cell level before clustering, so that supply curves represent only the remaining greenfield potential. See `Greenfield Potential Adjustment`_ below.
 
@@ -479,17 +479,9 @@ Processing Approach
 - Valid comparison of resource variability
 - Reduced computational overhead (clustering runs once)
 
-**Year-Specific Profiles**: Hourly profiles are regenerated for each weather year using the fixed cluster assignments:
+**Year-Specific Profiles**: Hourly profiles are regenerated for each weather year using the fixed cluster assignments. The process loads weather data for the target year, applies the saved cluster assignments, computes capacity-weighted cluster profiles, and aggregates to timeslice-level COM_FR and firmness metrics.
 
-1. Load Atlite data for target year
-2. Apply saved cluster assignments
-3. Compute capacity-weighted cluster profiles
-4. Aggregate to timeslice COM_FR and firmness metrics
-
-**Output Files**:
-    - ``{ISO}_{year}_cluster_profiles.parquet`` - 8760-hour profiles
-    - ``cluster_com_fr_ts12t_{year}.csv`` - Timeslice energy shares
-    - ``cluster_firmness_ts12t_{year}.csv`` - Firmness metrics
+**Outputs per weather year**: 8760-hour cluster profiles, timeslice energy shares (COM_FR), and firmness coefficients.
 
 
 Existing Capacity Allocation
@@ -503,11 +495,11 @@ Two distinct mechanisms handle existing renewable capacity at different stages o
 Greenfield Potential Adjustment (GEM)
 --------------------------------------
 
-**Stage**: Before clustering (inside ``extract_cell_profiles()``)
+**Stage**: Before clustering
 
 **Purpose**: Ensure that supply curve potentials represent only the remaining buildable capacity, not capacity that has already been installed.
 
-**Data source**: Global Energy Monitor (GEM) Solar and Wind Power Trackers, mapped to REZoning grid cells via ``update_gem_re_units_cf_location.py``.
+**Data source**: Global Energy Monitor (GEM) Solar and Wind Power Trackers, with each unit mapped to its nearest REZoning grid cell within the same country.
 
 **Methodology**:
 
@@ -522,7 +514,7 @@ where:
     - :math:`C_u` = installed capacity (MW) of GEM unit *u* mapped to cell *i*
     - :math:`P_{greenfield,i}` = remaining buildable potential, floored at zero
 
-The adjusted per-cell potentials flow into clustering, so that cluster-level ``total_re_capacity_mw`` (and the VEDA ``cap_bnd`` parameter) reflect only the greenfield potential. This prevents the model from double-counting existing stock as available new investment.
+The adjusted per-cell potentials flow into clustering, so that cluster-level capacity bounds reflect only the greenfield potential. This prevents the model from double-counting existing stock as available new investment.
 
 
 Base Year Calibration (IRENA)
@@ -602,83 +594,19 @@ Naming Convention
 Computational Implementation
 ============================
 
-Scripts and Pipeline
---------------------
+The entire RE characterization pipeline -- from raw data acquisition through clustering, profile aggregation, firmness analysis, and VEDA output generation -- is implemented as a guided automation workflow. This ensures consistent, reproducible, and error-free processing across all countries and weather years, while allowing the user to configure granularity and other parameters through simple settings.
 
-The RE characterization is implemented in the ``6kinesys_development/re_characterization/`` directory:
+The processing covers all available ISOs in a single batch run. Users can select the clustering granularity (coarse, balanced, or fine) and choose which weather years to process. The automation handles data loading, quality filtering, greenfield potential adjustment, clustering, profile weighting, timeslice aggregation, firmness computation, and final Excel generation without manual intervention.
 
-**Main Processing Scripts**:
-    - ``run_all_isos.py`` - Main entry point for global processing
-    - ``global_renewable_processor.py`` - Core processing logic
-    - ``create_re_subres_excel.py`` - VEDA Excel output generation
-
-**Analysis Scripts** (in ``scripts/`` subdirectory):
-    - ``compute_cluster_firmness.py`` - Firmness coefficient calculation
-    - ``create_cluster_com_fr.py`` - COM_FR timeslice aggregation
-    - ``allocate_existing_to_clusters.py`` - IRENA capacity allocation
-    - ``visualize_cluster_firmness_map.py`` - Interactive map generation
-
-
-Command-Line Usage
-------------------
-
-**Process all ISOs with default settings**:
-
-.. code-block:: bash
-
-    python run_all_isos.py
-
-**Process with specific granularity**:
-
-.. code-block:: bash
-
-    # Coarse clustering (faster, ~2,700 clusters)
-    python run_all_isos.py --exponent 0.4
-    
-    # Fine clustering (detailed supply curves, ~9,000 clusters)
-    python run_all_isos.py --exponent 0.6
-
-**Process multiple weather years**:
-
-.. code-block:: bash
-
-    python run_all_isos.py --exponent 0.5 --years 2010 2013 2016 2019
-
-
-Output Directory Structure
---------------------------
-
-.. code-block:: text
-
-    output/
-    ├── n0.4/                           # Coarse granularity
-    │   ├── DEU/                        # Per-ISO folders
-    │   │   ├── DEU_2013_cluster_profiles.parquet
-    │   │   ├── cluster_summary_spv.csv
-    │   │   └── ...
-    │   ├── CHN/
-    │   ├── USA/
-    │   ├── cluster_com_fr_ts12t_2013.csv
-    │   ├── cluster_firmness_ts12t_2013.csv
-    │   └── SubRES_REZoning_Atlite.xlsx
-    ├── n0.5/                           # Medium granularity
-    └── n0.6/                           # Fine granularity
-
-
-Performance
------------
-
-**Typical Processing Times** (single weather year):
+**Typical Processing Times** (single weather year, all ISOs):
 
 .. csv-table::
     :header: "Granularity", "Global Processing", "Per-ISO Average"
     :widths: 20, 40, 40
 
-    "n=0.4", "~30 minutes", "~15 seconds"
-    "n=0.5", "~45 minutes", "~20 seconds"
-    "n=0.6", "~60 minutes", "~25 seconds"
-
-**Memory Usage**: ~4 GB for global processing (dominated by Atlite data loading)
+    "Coarse (n=0.4)", "~30 minutes", "~15 seconds"
+    "Balanced (n=0.5)", "~45 minutes", "~20 seconds"
+    "Fine (n=0.6)", "~60 minutes", "~25 seconds"
 
 
 Visualization
@@ -689,18 +617,12 @@ Interactive maps and visualizations help interpret the RE characterization resul
 Cluster Firmness Maps
 ---------------------
 
-Point maps showing cluster locations colored by deficit share:
+Interactive point maps show cluster locations colored by deficit share:
 
 - **Low deficit (green)**: Consistent resource, minimal backup required
 - **High deficit (red)**: Variable resource, significant backup needs
 
-Maps are generated as interactive HTML files using Plotly:
-
-.. code-block:: bash
-
-    python scripts/visualize_cluster_firmness_map.py
-
-**Output**: ``cluster_firmness_map_{tech}.html``
+These maps are generated automatically as part of the processing pipeline, producing interactive HTML files for each technology.
 
 
 Technology Comparison Views
@@ -726,7 +648,6 @@ References
 
 **Clustering Methods**:
     - Ward, J. H. (1963). "Hierarchical Grouping to Optimize an Objective Function." Journal of the American Statistical Association.
-    - Scikit-learn documentation on hierarchical clustering.
 
 **Climate Data**:
     - Hersbach, H., et al. (2020). "The ERA5 global reanalysis." Quarterly Journal of the Royal Meteorological Society.

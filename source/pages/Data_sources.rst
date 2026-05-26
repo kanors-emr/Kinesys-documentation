@@ -85,6 +85,24 @@ Gas and LNG Infrastructure
     Liquefaction and regasification terminal capacity by country. Used for LNG trade infrastructure.
 
 
+Electricity Transmission and Trade
+==================================
+
+**ENTSO-E Net Transfer Capacity (NTC)**
+    Official forward and reverse net transfer capacities for European bidding zones and neighbouring interconnectors. Primary source for European electricity trade links in KiNESYS. Processed from ``NTSOe_NetTransferCap.xlsx`` with base-year and incremental 2025/2030 vintages.
+
+**Global Transmission Database (GTD v1.0)**
+    Comprehensive global dataset of existing and planned cross-border electricity transmission capacities (MW), collated from TSO reports, regulatory filings, and academic sources. Used for all non-ENTSO-E trade links and for Europe–non-Europe borders not covered by NTC.
+    
+    *Reference: Brinkerink et al. (2024), Data in Brief, doi:10.1016/j.dib.2024.110420*
+    
+    *Repository: https://zenodo.org/doi/10.5281/zenodo.10063445*
+    
+    *Coverage: 164 countries; national aggregation; existing (~2023) and planned capacities with commissioning years*
+    
+    *Stored in VerveStacks: ``data/Electricity Transmission Database/``*
+
+
 Oil and Gas Supply
 ==================
 

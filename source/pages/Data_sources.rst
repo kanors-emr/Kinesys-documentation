@@ -210,8 +210,51 @@ KiNESYS employs detailed spatial data for renewable energy characterization, ena
 Carbon Capture and Storage
 ==========================
 
-**ETSAP-TIAM CO2 Storage Assessment**
-    Global CO2 storage potential by storage type (saline aquifers, depleted oil/gas fields, coal seams). Based on Hendriks et al. (2004) and Dooley et al. (2005), downscaled to national level using weighting factors (coastline, area, cumulative fossil production).
+The legacy ETSAP-TIAM storage assessment (Hendriks 2004 / Dooley 2005 downscaling) has been
+replaced by a supply-curve dataset built from the sources below. See the
+:doc:`CCS chapter <Carbon capture and storage (CCS)>` and
+``VerveStacks/data/co2_storage_transport/DATASET_DOCUMENTATION.md`` for methods.
+
+**OGCI CO2 Storage Resource Catalogue (Cycle 5, 2025)**
+    Site-level global storage capacity assessments (P10/P50/P90) with coordinates, formation type, basin, and discovery status. The capacity spine of the dataset.
+
+    *Repository: https://www.ogci.com/ccus/co2-storage-catalogue*
+
+**Gidden et al. (2025) — Prudent Planetary Limit for Geologic Carbon Storage**
+    Country-level nesting of technical potential, suitability-screened (prudent) limit, and O&G-infrastructure-overlapped potential, on/offshore; plus a 0.01° global raster of sedimentary basin footprints (assessed/unassessed classes). Used for quality-tier quantification, capacity gap-fill, and sink geometry.
+
+    *Reference: Gidden et al. (2025), Nature 645; data: doi:10.5281/zenodo.15657542*
+
+**Smith, Hampson & Krevor (2024) — Pressure-Limited Global Storage Analysis**
+    765-basin global skeleton (SI mmc1: names, centroids, countries, data sufficiency) and published global physical maxima used as the Tier-1 calibration anchor; country result tables used for validation. Basin-level parameters are proprietary (Wood Mackenzie) and are re-derived from open sources instead.
+
+    *Reference: Smith et al. (2024), IJGGC 137*
+
+**CO2BLOCK (De Simone & Krevor 2021)**
+    Analytical basin-scale pressure-buildup model; run with open parameters (CO2StoP, NatCarb, OGCI site kh, CRUST1.0 sediment thickness, IHFC heat flow) to derive pressure-limited injection-rate ceilings per basin.
+
+    *Repository: https://github.com/co2block/CO2BLOCK*
+
+**Zhang, Jackson & Krevor (2024) — CCS Deployment Growth Model**
+    Monte Carlo logistic-growth fits of storage deployment by country and scenario. Calibrates the global Tier-2 build-rate ramp (Low/Central/High).
+
+    *Reference: Nature Communications 15; code+data: doi:10.5281/zenodo.11446272*
+
+**Fan et al. (2025) — China Fine-Grid Storage Dataset**
+    5-km gridded storage potential and explicit injection-rate capacity for China (24 basins, 1,181 oilfields). Used as an explicit override for China.
+
+    *Reference: Scientific Data 12*
+
+**CO2StoP (EU JRC), NETL NatCarb, OGIM v2.7**
+    EU storage-unit reservoir properties (depth/thickness/porosity/permeability); US saline polygons and grids; global oil & gas field geometries for depleted-field proxies and basin areas.
+
+**Global Energy Monitor — Steel, Cement, and Power Plant Trackers**
+    Plant coordinates and capacities for the capturable-emitter side of the source-sink matching (7,529 plants; route-resolved emission factors; grinding-only cement plants excluded).
+
+    *Update frequency: Quarterly/semi-annual*
+
+**Transport & storage cost literature**
+    Pipeline engineering economics: McCoy & Rubin (2008), diameter tiers Kim et al. (2024), regional factors Baek et al. (2026); storage unit costs ZEP (2011), NETL (2017); shipping chains Element Energy/BEIS (2018), VITO. All constants transcribed with citations in ``scripts/ts_cost_params.py``.
 
 
 

@@ -115,11 +115,10 @@ with the finding that whether transport matters is strongly geography-dependent.
 Validation
 ==========
 
-The dataset is validated against seven benchmarks (see ``VALIDATION_REPORT.md`` in the
-VerveStacks data repository): the NZA US deployment rate and well arithmetic, Lin et al.
-(2024) China steel T&S component, the Smith & Herzog cost envelope, announced-hub locations
-falling in the cheapest steps, ceiling-ordering checks, and the Smith et al. (2024)
-cross-country distribution of pressure-limited resources.
+The dataset is validated against seven benchmarks: the NZA US deployment rate and well
+arithmetic, Lin et al. (2024) China steel T&S component, the Smith & Herzog cost envelope,
+announced-hub locations falling in the cheapest steps, ceiling-ordering checks, and the
+Smith et al. (2024) cross-country distribution of pressure-limited resources.
 
 Known limitations
 =================
@@ -130,12 +129,8 @@ representation question, not a dataset property; offshore permeability priors ar
 North Sea, Red Sea, and NW Shelf, making UK/Norway/Yemen/Australia Tier-1 ceilings
 conservative.
 
-Data sources and further documentation
-======================================
-
-Full dataset documentation, schema reference, and reproduction pipeline:
-``VerveStacks/data/co2_storage_transport/DATASET_DOCUMENTATION.md``; design rationale and
-decision log: ``CCS_SUPPLY_CURVES_METHODOLOGY.md`` (same folder).
+Data sources
+============
 
 Key sources: OGCI CO2 Storage Resource Catalogue Cycle 5; Smith, Hampson & Krevor (2024,
 IJGGC); De Simone & Krevor (2021, IJGGC — CO2BLOCK); Gidden et al. (2025, Nature); Zhang,

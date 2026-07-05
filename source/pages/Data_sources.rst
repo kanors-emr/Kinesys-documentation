@@ -212,8 +212,7 @@ Carbon Capture and Storage
 
 The legacy ETSAP-TIAM storage assessment (Hendriks 2004 / Dooley 2005 downscaling) has been
 replaced by a supply-curve dataset built from the sources below. See the
-:doc:`CCS chapter <Carbon capture and storage (CCS)>` and
-``VerveStacks/data/co2_storage_transport/DATASET_DOCUMENTATION.md`` for methods.
+:doc:`CCS chapter <Carbon capture and storage (CCS)>` for methods.
 
 **OGCI CO2 Storage Resource Catalogue (Cycle 5, 2025)**
     Site-level global storage capacity assessments (P10/P50/P90) with coordinates, formation type, basin, and discovery status. The capacity spine of the dataset.
@@ -254,7 +253,7 @@ replaced by a supply-curve dataset built from the sources below. See the
     *Update frequency: Quarterly/semi-annual*
 
 **Transport & storage cost literature**
-    Pipeline engineering economics: McCoy & Rubin (2008), diameter tiers Kim et al. (2024), regional factors Baek et al. (2026); storage unit costs ZEP (2011), NETL (2017); shipping chains Element Energy/BEIS (2018), VITO. All constants transcribed with citations in ``scripts/ts_cost_params.py``.
+    Pipeline engineering economics: McCoy & Rubin (2008), diameter tiers Kim et al. (2024), regional factors Baek et al. (2026); storage unit costs ZEP (2011), NETL (2017); shipping chains Element Energy/BEIS (2018), VITO.
 
 
 

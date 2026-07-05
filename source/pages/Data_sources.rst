@@ -133,10 +133,10 @@ Industrial Sector
     
     *Update frequency: Annual*
 
-**Global Energy Monitor - Global Steel Infrastructure Tracker**
-    *Source to be confirmed: Global Energy Monitor Steel Tracker / World Steel Association / Custom compilation*
+**Global Energy Monitor - Global Steel Plant Tracker**
+    Steel plant capacities by technology route (BF-BOF, EAF, DRI) with coordinates. Used for steel sector calibration and as the steel emitter set in the CCS supply curves (see below).
     
-    Steel plant capacities by technology route (BF-BOF, EAF, DRI). Used for steel sector calibration.
+    *Update frequency: Semi-annual*
 
 
 Transport
@@ -231,7 +231,7 @@ replaced by a supply-curve dataset built from the sources below. See the
     *Reference: Smith et al. (2024), IJGGC 137*
 
 **CO2BLOCK (De Simone & Krevor 2021)**
-    Analytical basin-scale pressure-buildup model; run with open parameters (CO2StoP, NatCarb, OGCI site kh, CRUST1.0 sediment thickness, IHFC heat flow) to derive pressure-limited injection-rate ceilings per basin.
+    Analytical basin-scale pressure-buildup model; run with open parameters (CO2StoP reservoir properties, OGCI site kh, CRUST1.0 sediment thickness, IHFC heat flow) to derive pressure-limited injection-rate ceilings per basin.
 
     *Repository: https://github.com/co2block/CO2BLOCK*
 
@@ -246,7 +246,7 @@ replaced by a supply-curve dataset built from the sources below. See the
     *Reference: Scientific Data 12*
 
 **CO2StoP (EU JRC), NETL NatCarb, OGIM v2.7**
-    EU storage-unit reservoir properties (depth/thickness/porosity/permeability); US saline polygons and grids; global oil & gas field geometries for depleted-field proxies and basin areas.
+    EU storage-unit reservoir properties (depth/thickness/porosity/permeability); US saline polygons and grids (informational cross-check only); global oil & gas field geometries for depleted-field proxies and basin areas.
 
 **Global Energy Monitor — Steel, Cement, and Power Plant Trackers**
     Plant coordinates and capacities for the capturable-emitter side of the source-sink matching (7,529 plants; route-resolved emission factors; grinding-only cement plants excluded).

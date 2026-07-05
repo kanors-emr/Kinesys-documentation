@@ -5,7 +5,7 @@ Carbon capture and storage (CCS)
 KiNESYS represents CO2 transport and storage (T&S) with country-level **supply curves** built
 from plant-level emitter locations and site-level storage geometries, and constrains CO2
 injection with **pressure-limited physics** — replacing the legacy treatment (global potentials
-from Hendricks 2004 / Dooley 2005 downscaled by weight attributes, flat cost steps, no
+from Hendriks 2004 / Dooley 2005 downscaled by weight attributes, flat cost steps, no
 injection-rate constraint).
 
 Three features distinguish this treatment from standard global ESOM practice:
@@ -52,10 +52,11 @@ Each country's storage is broken into steps of
      - Onshore pipeline; offshore pipeline; offshore ship
 
 Capacity is anchored on the OGCI CO2 Storage Resource Catalogue (Cycle 5, site-level
-P10/P50/P90), with CO2StoP (EU), NatCarb (US), the Fan et al. (2025) fine-grid dataset
-(China), and oil & gas field proxies (OGIM) — tier discounts and thin-catalogue gap-fill are
-quantified on the Gidden et al. (2025) nesting of technical potential, prudent
-(suitability-screened) limit, and O&G-infrastructure overlap.
+P10/P50/P90), with CO2StoP (EU), the Fan et al. (2025) fine-grid dataset (China), and
+oil & gas field proxies (OGIM) — tier discounts and thin-catalogue gap-fill are quantified
+on the Gidden et al. (2025) nesting of technical potential, prudent (suitability-screened)
+limit, and O&G-infrastructure overlap. NatCarb (US) serves as an informational cross-check
+only.
 
 Injection-rate constraints — two tiers
 ======================================
@@ -88,7 +89,7 @@ is decisive for coastal emitters far from onshore basins (Japan, Korea). Countri
 CCS policy restrictions (per Gidden et al. S4) have onshore storage demoted. Storage unit
 costs use ZEP/NETL anchors by category and tier.
 
-Resulting country averages (emissions-weighted) span roughly $6/t (USA) to $26/t (Japan) with
+Resulting country averages (emissions-weighted) span roughly $7/t (USA) to $28/t (Japan) with
 ship-dominated Korea higher — consistent with the Smith & Herzog (2021) $4–45/t envelope, and
 with the finding that whether transport matters is strongly geography-dependent.
 
@@ -99,8 +100,9 @@ with the finding that whether transport matters is strongly geography-dependent.
    Country T&S supply curves (steps colored by quality tier, hatched by offshore mode).
    Four archetypes: the US is cheap and assessed (Q1/Q2); India is cheap on distance but
    unassessed (Q3 dominates — screening, not resource, binds); Germany is policy-restricted
-   onshore with a North Sea offshore option; Japan escalates into offshore-pipe and ship
-   steps beyond ~65% of its capturable emissions.
+   onshore with a North Sea offshore option; Japan puts 40% of its capturable emissions on
+   offshore pipelines and moves onto ship for the ~16% beyond the ship crossover (~80% of
+   the curve).
 
 .. figure:: images/ccs_country_costs_ranked.png
    :width: 90%

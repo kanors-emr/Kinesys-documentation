@@ -253,7 +253,20 @@ replaced by a supply-curve dataset built from the sources below. See the
     *Update frequency: Quarterly/semi-annual*
 
 **Transport & storage cost literature**
-    Pipeline engineering economics: McCoy & Rubin (2008), diameter tiers Kim et al. (2024), regional factors Baek et al. (2026); storage unit costs ZEP (2011), NETL (2017); shipping chains Element Energy/BEIS (2018), VITO.
+    Pipeline engineering economics: McCoy & Rubin (2008), diameter tiers Kim et al. (2024), regional factors Baek et al. (2026); storage unit costs ZEP (2011), NETL (2017); shipping chains Element Energy/BEIS (2018), VITO. The pessimistic cost scenario additionally draws on Anderson (2019/2020) for active pressure management and the Rubin FOAK/NOAK convention (overrun evidence per Rasool 2025).
+
+**IEA CCUS Projects Database (2026 edition)**
+    1,110 announced/operating CCUS projects with capacities, status, and operation year. The storage-side pipeline (Storage, T&S, Full-chain projects) anchors the 2030 point of the per-country deployment ceilings.
+
+**Kazlou, Cherp & Jewell (2024) — CCS Feasibility and Growth Analogs**
+    Historical CCS project attrition and technology-analog growth ladders (wind, nuclear). Sets the growth phase of the deployment ceilings; attrition weighting supported by Abdulla et al. (2020) and Wang et al. (2021).
+
+    *Reference: Nature Climate Change 14*
+
+**Gütschow et al. (2021) — Country-Resolved SSP Emission Pathways**
+    PRIMAP-downscaled SSP scenarios for all countries (SSP2 baseline used). Projects the capturable-emissions asymptotes of the deployment ceilings.
+
+    *Reference: Earth System Science Data 13, 1005-1040; data: doi:10.5281/zenodo.3638137*
 
 
 

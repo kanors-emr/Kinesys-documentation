@@ -392,7 +392,7 @@ Interpretation
 Connection Costs
 ================
 
-Renewable resources distant from demand centers incur additional transmission costs. KiNESYS estimates connection costs based on distance to the nearest major city.
+Renewable resources distant from demand centers incur additional transmission costs. KiNESYS estimates connection costs based on distance to the nearest major city and adds them to each cluster's INVCOST. These adders are the model's grid-connection cost; there is no separate national staircase.
 
 Methodology
 -----------

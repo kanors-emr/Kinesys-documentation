@@ -70,7 +70,7 @@ These metrics enable accurate representation of VRE integration costs at high pe
 
 **Connection Costs:**
 
-Each cluster includes distance-based connection costs computed from the cluster centroid to the nearest major city (demand center proxy). This creates realistic supply curves where remote resources incur higher transmission investment.
+Each cluster includes distance-based connection costs computed from the cluster centroid to the nearest major city (demand center proxy), added to cluster INVCOST. These adders are the model's grid-connection cost; there is no separate national staircase.
 
 For detailed methodology, mathematical formulations, and implementation details, see :doc:`renewable_energy_characterization`.
 
@@ -238,81 +238,12 @@ Operational Constraints and Integration Limits
 KiNESYS includes several constraint mechanisms that represent real-world limits on VRE integration, capacity expansion, and fleet retirement. These operate alongside the technology characterization and demand representation described above.
 
 
-Grid Extension Penalty Blocks
-------------------------------
+ISO VRE Market-Share Caps
+-------------------------
 
-KiNESYS contains country-level wind and solar potentials, but models demand at a regional level. In multi-country regions, resources may not be located near loads, and transmission capacity may not exist from resources to load centres. To prevent the model from satisfying an unrealistic portion of regional load with renewables located in a small or distant part of the region, a **penalty block system** models increasing costs of renewable deployment as penetration rises.
+When ISO-level VRE clusters are aggregated into multi-country model regions, a small high-resource country can otherwise flood the regional copper plate. Cluster INVCOST already prices the spur to the nearest demand centre. The remaining limit is a share cap: ``PRC_MARK`` (UP) on ``elcagg_spv_{ISO}``, ``elcagg_won_{ISO}``, and ``elcagg_wof_{ISO}`` together against regional ``ELC``, with group item ``{ISO}_vre_gen``.
 
-This mechanism complements the distance-based connection costs in the spatial RE clustering (see Renewable Resource Characterization above). While connection costs capture the cost of linking individual clusters to nearby demand centres, the penalty block system constrains the aggregate volume of country-level VRE that can serve regional load.
-
-The system uses **10 penalty blocks** with increasing cost penalties:
-
-1. **Base Block**: Initial renewable generation at base cost (typically 30% of projected generation)
-2. **Penalty Blocks**: Additional capacity at increasing cost penalties (25% increments)
-3. **Export Blocks**: Capacity beyond 100% of domestic generation for cross-border trade
-
-**Mathematical Formulation:**
-
-For each country n, the total renewable generation is constrained by:
-
-.. math::
-    Annual Generation from VRE_n  ≤  Σ(i=1 to N) GridExt_i × Share_i × ProjectedGeneration_n × 8.76
-
-Where:
-
-- **ProjectedGeneration_n**: Projected total generation for country n
-- **GridExt_i**: Capacity in penalty block i
-- **Share_i**: Share of projected generation for block i
-- **8.76**: Conversion from GW to TWh
-
-**Penalty Block Structure:**
-
-.. csv-table:: Penalty Block Configuration
-    :header: Block,Share of Projected Generation,Cost Penalty,Description
-    :widths: 10,25,20,45
-
-    1,30%,$0/kW,Base renewable capacity
-    2,60%,$25/kW,Short-distance grid extension
-    3,90%,$50/kW,Medium-distance grid extension
-    4,120%,$75/kW,Long-distance grid extension
-    5,150%,$100/kW,Regional transmission
-    6,180%,$125/kW,Cross-border transmission
-    7,210%,$150/kW,International transmission
-    8,240%,$175/kW,Continental transmission
-    9,270%,$200/kW,Global transmission
-    10,300%,$225/kW,Maximum export capacity
-
-Each country has a projected total generation that varies based on renewable resource potential, grid integration challenges, policy targets, and geographic constraints.
-
-**Examples:**
-
-*Iceland (High Export Potential):*
-
-- Projected total generation: 23.194 TWh (in 2050)
-- Domestic capacity: ~100% of local demand (Blocks 1-3)
-- Export potential: 390% of projected generation (Blocks 4-10) for embedded exports
-
-*Kazakhstan (High Export Potential):*
-
-- Projected total generation: 176.077 TWh (in 2050)
-- Without constraints: Could power much of the region
-- With penalty blocks: Limited to realistic deployment levels
-
-*Kenya (Very High Export Potential):*
-
-- Projected total generation: 69.729 TWh (in 2050)
-- Without constraints: Could power neighbouring countries
-- With penalty blocks: Realistic deployment with export economics
-
-**Process Naming Convention:**
-
-Renewable energy processes follow the pattern ``<ISO>-Step1`` through ``<ISO>-Step10`` (e.g., MAR-Step1, CHL-Step1), where Step1 is the base block and Step10 is the maximum export capacity.
-
-**Implementation Notes:**
-
-- These constraints are implemented at the country level, regardless of how countries are aggregated into model regions
-- They prevent unrealistic scenarios such as Iceland's abundant wind resources powering all of Europe's load without appropriate transmission investment
-- Similar constraints may be added for hydro resources in countries with large potential
+The cap is the ISO's last complete Ember generation share of the region, or its SSP2 GDP|PPP share if that is larger (or if Ember is missing). Caps are independent (they are not renormalized). Singleton regions are omitted.
 
 Capacity Decay Constraints
 ---------------------------

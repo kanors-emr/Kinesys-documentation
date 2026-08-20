@@ -1,0 +1,13 @@
+season,months,days,block,clock_hours,hours,share_of_year
+S1,"Dec, Jan, Feb",90 d,H1,00–08,8 h,8.22%
+S1,"Dec, Jan, Feb",90 d,H2,08–18,10 h,10.27%
+S1,"Dec, Jan, Feb",90 d,H3,18–00,6 h,6.16%
+S2,"Mar, Apr, May",92 d,H1,00–08,8 h,8.40%
+S2,"Mar, Apr, May",92 d,H2,08–18,10 h,10.50%
+S2,"Mar, Apr, May",92 d,H3,18–00,6 h,6.30%
+S3,"Jun, Jul, Aug",92 d,H1,00–08,8 h,8.40%
+S3,"Jun, Jul, Aug",92 d,H2,08–18,10 h,10.50%
+S3,"Jun, Jul, Aug",92 d,H3,18–00,6 h,6.30%
+S4,"Sep, Oct, Nov",91 d,H1,00–08,8 h,8.31%
+S4,"Sep, Oct, Nov",91 d,H2,08–18,10 h,10.39%
+S4,"Sep, Oct, Nov",91 d,H3,18–00,6 h,6.23%

@@ -126,7 +126,7 @@ The detailed compilation methodology, technology-by-technology parameter values,
 Electricity Demand Load Shapes and Timeslice Design
 ====================================================
 
-KiNESYS models electricity demand with hourly granularity (8760 hours per year), capturing both seasonal and diurnal variation across different consumer sectors. This temporal resolution is critical for accurately representing the value of flexible resources, storage, renewable integration, and system adequacy. The hourly profiles are then aggregated into model timeslices (typically 12-24 slices per year) that preserve key temporal characteristics while maintaining computational tractability.
+KiNESYS models electricity demand with hourly granularity (8760 hours per year), capturing both seasonal and diurnal variation across different consumer sectors. This temporal resolution is critical for accurately representing the value of flexible resources, storage, renewable integration, and system adequacy. The hourly profiles are then aggregated into a chosen timeslice definition (12 to 72 slices per year) that preserves key temporal characteristics while remaining computationally tractable. See :doc:`timeslice_definitions` for the catalog and how a definition is chosen.
 
 For detailed methodology, mathematical formulations, and validation results, see :doc:`electricity_load_shapes`.
 
@@ -181,7 +181,7 @@ Total hourly load is decomposed into three main sectors using assumptions about 
 Timeslice Aggregation
 ---------------------
 
-Hourly load shapes are aggregated into model timeslices that balance temporal resolution with computational efficiency. Three essential parameters are computed for each region, sector, and timeslice:
+Hourly load shapes are aggregated into the instance's timeslice definition (see :doc:`timeslice_definitions`). Three essential parameters are computed for each region, sector, and timeslice:
 
 **COM_FR (Commodity Fraction)**
     The fraction of annual energy consumed in each timeslice:

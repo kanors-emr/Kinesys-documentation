@@ -73,6 +73,7 @@ Creating Instances of KiNESYS Models
 **Model Customization**
     - **Supply Side:** Asset-level modeling allows customization by plant size, cooling technology, and more.
     - **Demand Side:** Sectors like industry and transport can be modeled with aggregated or detailed assumptions, balancing model complexity and output precision.
+    - **Temporal resolution:** KiNESYS instances are not locked to one timeslice structure. Each model is built with a definition chosen for the question being asked, the time available to solve, and the size of the instance (regions × technologies). The catalog runs from 12 slices for screening and large models to 72 for questions that need the shape of the day. See :doc:`timeslice_definitions`.
 
 **Scenario Exploration Types:**
     1. **Normative Scenarios:** Identify cost-effective pathways to achieve policy targets like emissions reductions.

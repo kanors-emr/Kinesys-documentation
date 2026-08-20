@@ -286,7 +286,7 @@ For a cluster with hourly capacity factor profile :math:`CF_h` (h = 0 to 8759):
 
     \text{COM\_FR}_{cluster,ts} = \frac{\sum_{h \in ts} CF_h}{\sum_{h=0}^{8759} CF_h}
 
-where :math:`ts` represents a timeslice (e.g., "WD" for Winter Day).
+where :math:`ts` represents a timeslice (e.g. ``S1.H2`` under ``ts_12``). Aggregation uses the instance's timeslice definition; see :doc:`timeslice_definitions`.
 
 **Key Property**: COM_FR values sum to 1.0 for each cluster:
 
@@ -295,58 +295,32 @@ where :math:`ts` represents a timeslice (e.g., "WD" for Winter Day).
     \sum_{ts} \text{COM\_FR}_{cluster,ts} = 1.0
 
 
-Timeslice Definition (ts_12t)
------------------------------
+Timeslice definition
+--------------------
 
-KiNESYS uses a 12-timeslice definition with 4 seasons × 3 times of day:
-
-**Seasons**:
-
-.. csv-table::
-    :header: "Code", "Season", "Months"
-    :widths: 15, 25, 60
-
-    "W", "Winter", "December, January, February"
-    "R", "Spring", "March, April, May"
-    "S", "Summer", "June, July, August"
-    "F", "Fall", "September, October, November"
-
-**Times of Day**:
-
-.. csv-table::
-    :header: "Code", "Period", "Hours", "Duration"
-    :widths: 15, 25, 35, 25
-
-    "D", "Day", "7:00 - 17:00", "11 hours"
-    "P", "Peak", "18:00 - 19:00", "2 hours"
-    "N", "Night", "20:00 - 6:00", "11 hours"
-
-**12 Timeslices**: WD, WP, WN, RD, RP, RN, SD, SP, SN, FD, FP, FN
+Hourly cluster profiles are aggregated using the instance's timeslice definition
+(see :doc:`timeslice_definitions`). KiNESYS is not locked to a single 12-slice
+structure; the catalog runs from ``ts_12`` to ``ts_72``. The illustrative values
+below use ``ts_12`` (4 calendar quarters × 3 day-blocks: 00–08, 08–18, 18–00).
 
 
 Example COM_FR Values
 ---------------------
 
-.. csv-table:: Sample COM_FR for Solar Cluster (Germany)
-    :header: "Timeslice", "COM_FR", "Interpretation"
-    :widths: 15, 15, 70
+.. csv-table:: Illustrative COM_FR for a solar cluster (Germany, ts_12)
+    :header: "Timeslice", "Hours", "COM_FR", "Interpretation"
+    :widths: 14, 14, 14, 58
 
-    "WD", "0.071", "7.1% of annual solar generation in Winter Day"
-    "WP", "0.000", "No solar generation in Winter Peak (dark)"
-    "WN", "0.000", "No solar generation in Winter Night"
-    "RD", "0.152", "15.2% in Spring Day (longer days)"
-    "RP", "0.025", "2.5% in Spring Peak (evening sun)"
-    "RN", "0.000", "No generation at night"
-    "SD", "0.181", "18.1% in Summer Day (peak solar season)"
-    "SP", "0.043", "4.3% in Summer Peak (long evenings)"
-    "SN", "0.000", "No generation at night"
-    "FD", "0.124", "12.4% in Fall Day"
-    "FP", "0.012", "1.2% in Fall Peak"
-    "FN", "0.000", "No generation at night"
+    "S1.H1", "00–08", "~0", "Winter night: no solar"
+    "S1.H2", "08–18", "0.07", "Winter day: short days, low sun"
+    "S1.H3", "18–00", "~0", "Winter evening: dark"
+    "S3.H1", "00–08", "~0", "Summer night: no solar"
+    "S3.H2", "08–18", "0.18", "Summer day: peak solar season"
+    "S3.H3", "18–00", "0.04", "Summer evening: residual late sun"
 
-**Solar Characteristics**: Zero night generation, peak in summer, minimal peak-hour contribution in winter.
+**Solar characteristics**: Zero night generation, peak in summer, little evening contribution in winter.
 
-**Wind Characteristics**: More uniform across timeslices, often higher in winter, non-zero at night.
+**Wind characteristics**: More uniform across timeslices, often higher in winter, non-zero at night.
 
 
 Firmness Coefficients
@@ -412,7 +386,7 @@ Interpretation
     "ELC_4H", "High capture", "Low capture", "Battery storage value"
     "ELC_8H", "High capture", "Low capture", "Extended storage value"
 
-**Example**: A wind cluster with 25% deficit share in Winter Night requires dispatchable capacity equal to 25% of average output to maintain firm supply during low-wind periods within that timeslice.
+**Example**: A wind cluster with 25% deficit share in a winter night slice (``S1.H1`` under ``ts_12``) requires dispatchable capacity equal to 25% of average output to maintain firm supply during low-wind periods within that timeslice.
 
 
 Connection Costs

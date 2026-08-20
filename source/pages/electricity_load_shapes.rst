@@ -27,7 +27,7 @@ Capturing these patterns is essential for:
 KiNESYS represents these temporal patterns through:
 
 1. **Hourly load profiles** (8760 hours/year) for base year calibration and detailed analysis
-2. **Timeslice aggregation** (12-24 slices) for computational efficiency in long-term optimization
+2. **Timeslice aggregation** (12 to 72 slices, chosen per instance) for computational efficiency in long-term optimization
 3. **Sectoral decomposition** (industrial, commercial, residential) to capture different consumption patterns
 
 
@@ -372,7 +372,9 @@ Transport Sector Load Shape
 Timeslice Aggregation
 ======================
 
-Hourly load shapes (8760 hours) are aggregated into model timeslices (typically 12-24 per year) that balance temporal resolution with computational efficiency. Three key parameters are computed:
+Hourly load shapes (8760 hours) are aggregated into the instance's timeslice definition. KiNESYS ships six definitions, from 12 slices to 72; the choice follows the question, the time available to solve, and the size of the model. See :doc:`timeslice_definitions`.
+
+Three key parameters are computed:
 
 **COM_FR (Commodity Fraction)**: Fraction of annual energy consumed in each timeslice
 

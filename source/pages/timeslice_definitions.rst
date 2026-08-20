@@ -146,7 +146,14 @@ twice.
       <iframe class="timeslice-grids-frame"
               src="../_static/timeslice_grids.html"
               title="KiNESYS timeslice definition grids"
-              loading="lazy"></iframe>
+              scrolling="no"></iframe>
+      <script>
+      window.addEventListener('message', function (e) {
+        if (!e.data || e.data.source !== 'timeslice-grids') return;
+        var f = document.querySelector('.timeslice-grids-frame');
+        if (f) f.style.height = e.data.height + 'px';
+      });
+      </script>
 
 .. only:: latex
 

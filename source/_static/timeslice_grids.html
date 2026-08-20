@@ -29,7 +29,7 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--plane);color:var(--text-primary);
   font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
-.viz-root{max-width:1180px;margin:0 auto;padding:36px 22px 72px}
+.viz-root{max-width:none;margin:0;padding:0}
 h1{font-size:26px;line-height:1.25;margin:0 0 6px}
 h2{font-size:18px;margin:38px 0 10px;padding-top:20px;border-top:1px solid var(--rule)}
 h3{font-size:15px;margin:0 0 2px;font-variant-numeric:tabular-nums}
@@ -68,8 +68,8 @@ td:nth-child(4),td:nth-child(7),td:nth-child(8){text-align:right}
 .foot{color:var(--muted);font-size:12.5px;margin-top:28px}
 details summary{cursor:pointer;color:var(--text-secondary);font-size:13.5px;margin-bottom:10px}
 
-html,body{margin:0;background:transparent}
-.viz-root{padding:8px 4px 16px;max-width:none}
+html,body{margin:0;background:transparent;overflow:hidden}
+.viz-root{padding:4px 2px 8px;max-width:none}
 h3{margin:0 0 2px}
 </style>
 <div class="viz-root">
@@ -2121,5 +2121,13 @@ document.addEventListener('mousemove',e=>{
 document.addEventListener('mouseout',e=>{
   if(e.target.closest('rect.c')) tip.style.opacity=0;
 });
+function reportHeight(){
+  const el=document.querySelector('.viz-root');
+  const h=Math.ceil((el?el.getBoundingClientRect().bottom:document.documentElement.scrollHeight)+4);
+  parent.postMessage({source:'timeslice-grids',height:h},'*');
+}
+window.addEventListener('load',reportHeight);
+window.addEventListener('resize',reportHeight);
+if(window.ResizeObserver) new ResizeObserver(reportHeight).observe(document.body);
 
 </script>

@@ -2,19 +2,21 @@
 Timeslice definitions
 ######################
 
-KiNESYS models are not locked to one temporal resolution. Each instance is built
-with a timeslice definition chosen for **the question**, **the time available to
-solve**, and **the size of the model** (regions × technologies). The catalog
-runs from 12 slices — screening runs and large region sets — to 72 slices, used
-when the question needs the shape of the day and the instance can still solve.
+Each KiNESYS instance is built with a timeslice definition chosen for **the
+question**, **the time available to solve**, and **the size of the model**
+(regions × technologies). The catalog runs from 12 slices — screening runs and
+large region sets — to 72 slices, used when the question needs the shape of the
+day and the instance can still solve.
 
 Every TIMES result is an average over a time slice, so the definition decides
 what the results can show. Load shapes, renewable profiles, and storage all
 aggregate to the same slices; they do not choose a definition of their own.
 
-.. contents:: Table of Contents
-   :local:
-   :depth: 2
+.. seealso::
+
+   How hourly demand is aggregated into these slices: :doc:`electricity_load_shapes`.
+   How renewable cluster profiles are aggregated: :doc:`renewable_energy_characterization`.
+   Power-sector overview: :doc:`power_sector`.
 
 
 The catalog
@@ -51,9 +53,8 @@ spend it differently: ts_48 on seasons, ts_48h on the day.
 Choosing a definition
 =====================
 
-The three axes are not independent. A 70-region global model at 72 slices is a
-different object from a 10-region national model at 72 slices. In practice the
-choice is:
+The three axes interact: a 70-region global model at 72 slices is a different
+object from a 10-region national model at 72 slices. In practice the choice is:
 
 **Question.** What must the results be able to show?
 
@@ -81,7 +82,7 @@ the budget on ts_48h or ts_72.
    "Solar–evening, day-cycling storage, ramps", "ts_48h", "Same 48 slices as ts_48, but 12 day-blocks sitting on the ramps. Four seasons only."
    "Both seasons and the day, instance still tractable", "ts_72", "ts_48h's day crossed with ts_24's seasons."
 
-These are starting points, not rules. Comparing ts_12 with ts_48h on the same
+Treat the table as a starting point. Comparing ts_12 with ts_48h on the same
 instance isolates the day; comparing ts_48h with ts_72 isolates the seasons;
 comparing ts_48 with ts_48h holds solve cost fixed and asks where the 48 slices
 were better spent.
@@ -134,7 +135,8 @@ season reads as one contiguous band.
 
 In ts_48, ts_48h and ts_72 the overnight block wraps midnight, so it appears as
 a band at the top of the grid and another at the bottom — one block, drawn
-twice.
+twice. Clock hours on the grids are interval starts: 06:00 is the hour from
+06:00 to 07:00.
 
 .. only:: html
 
@@ -228,18 +230,3 @@ year.
    :file: tables/timeslice_ts_72.csv
    :header-rows: 1
    :widths: 12, 28, 10, 12, 16, 10, 16
-
-
-Source
-======
-
-Definitions are the columns of ``base_ts_design`` in ``kinesys_mappings.xlsx``.
-Hour indexing follows ``generate_timeslice_data.py``, which maps the sheet's
-hour ``h`` to zero-indexed clock hour ``h-1``: hour 07 is the 06:00-07:00
-interval, which is what the grids show.
-
-.. seealso::
-
-   How hourly demand is aggregated into these slices: :doc:`electricity_load_shapes`.
-   How renewable cluster profiles are aggregated: :doc:`renewable_energy_characterization`.
-   Power-sector overview: :doc:`power_sector`.

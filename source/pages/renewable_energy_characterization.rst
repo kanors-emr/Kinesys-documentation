@@ -299,9 +299,9 @@ Timeslice definition
 --------------------
 
 Hourly cluster profiles are aggregated using the instance's timeslice definition
-(see :doc:`timeslice_definitions`). KiNESYS is not locked to a single 12-slice
-structure; the catalog runs from ``ts_12`` to ``ts_72``. The illustrative values
-below use ``ts_12`` (4 calendar quarters × 3 day-blocks: 00–08, 08–18, 18–00).
+(see :doc:`timeslice_definitions`). The catalog runs from ``ts_12`` to ``ts_72``.
+The illustrative values below use ``ts_12`` (4 calendar quarters × 3 day-blocks:
+00–08, 08–18, 18–00).
 
 
 Example COM_FR Values

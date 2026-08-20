@@ -301,7 +301,7 @@ Timeslice definition
 Hourly cluster profiles are aggregated using the instance's timeslice definition
 (see :doc:`timeslice_definitions`). The catalog runs from ``ts_12`` to ``ts_72``.
 The illustrative values below use ``ts_12`` (4 calendar quarters × 3 day-blocks:
-00–08, 08–18, 18–00).
+00–07, 08–17, 18–23). Hour ranges are inclusive at both ends.
 
 
 Example COM_FR Values
@@ -311,12 +311,12 @@ Example COM_FR Values
     :header: "Timeslice", "Hours", "COM_FR", "Interpretation"
     :widths: 14, 14, 14, 58
 
-    "S1.H1", "00–08", "~0", "Winter night: no solar"
-    "S1.H2", "08–18", "0.07", "Winter day: short days, low sun"
-    "S1.H3", "18–00", "~0", "Winter evening: dark"
-    "S3.H1", "00–08", "~0", "Summer night: no solar"
-    "S3.H2", "08–18", "0.18", "Summer day: peak solar season"
-    "S3.H3", "18–00", "0.04", "Summer evening: residual late sun"
+    "S1.H1", "00–07", "~0", "Winter night: no solar"
+    "S1.H2", "08–17", "0.07", "Winter day: short days, low sun"
+    "S1.H3", "18–23", "~0", "Winter evening: dark"
+    "S3.H1", "00–07", "~0", "Summer night: no solar"
+    "S3.H2", "08–17", "0.18", "Summer day: peak solar season"
+    "S3.H3", "18–23", "0.04", "Summer evening: residual late sun"
 
 **Solar characteristics**: Zero night generation, peak in summer, little evening contribution in winter.
 

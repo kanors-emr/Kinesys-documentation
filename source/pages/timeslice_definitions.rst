@@ -49,6 +49,10 @@ Three relationships follow from that table:
 **ts_48 and ts_48h are the same size** — 48 slices, the same solve cost — but
 spend it differently: ts_48 on seasons, ts_48h on the day.
 
+Hour ranges are inclusive at both ends. A slice labeled 08–17 contains hours 08
+through 17; the next slice begins at 18. A one-hour slice is written with both
+ends the same (06–06).
+
 
 Choosing a definition
 =====================
@@ -94,7 +98,7 @@ What a slice is, and is not
 .. note::
 
    **Every slice is a mean over many days.** The smallest slice in ts_48h,
-   "06:00–07:00 in winter", is the average of 90 winter mornings. There is no
+   06–06 in winter, is the average of 90 winter mornings. There is no
    cold snap in it, no still windless week, no cloudy fortnight — and the annual
    peak hour appears in no slice anywhere. Capacity is therefore sized against
    slice averages plus whatever reserve-margin constraint is imposed, not
@@ -102,7 +106,7 @@ What a slice is, and is not
 
 **Within-block shape disappears.** A generation profile is flattened to its
 block mean. Under ts_12, midday solar output and the 17:00 shoulder sit in one
-10-hour block (08:00–18:00) and are represented by a single number, so the
+10-hour block (08–17) and are represented by a single number, so the
 midday surplus and the evening deficit are both smaller than they are in
 reality. Under ts_48h that same window is six blocks, three of them one hour
 wide.
@@ -135,8 +139,8 @@ season reads as one contiguous band.
 
 In ts_48, ts_48h and ts_72 the overnight block wraps midnight, so it appears as
 a band at the top of the grid and another at the bottom — one block, drawn
-twice. Clock hours on the grids are interval starts: 06:00 is the hour from
-06:00 to 07:00.
+twice. Hour ranges on the grids follow the same inclusive convention as the
+tables: 08–17 is hours 08 through 17.
 
 .. only:: html
 

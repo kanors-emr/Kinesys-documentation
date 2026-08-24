@@ -503,397 +503,498 @@ This level of sectoral detail, integrated within a comprehensive energy system m
 
 A key insight from this integrated approach: steel decarbonization is as much a story about relocating industrial production and restructuring global trade as it is about deploying new technology. The chosen pathway determines whether the world preserves the incumbent iron ore and coking coal shipping complex or rewires it around sponge iron and clean hydrogen. KiNESYS is uniquely positioned to explore these trade-offs because it models both the technology transitions and the trade flows simultaneously, within a single optimisation framework.
 
+Non-Metallic Minerals
+=====================
+
+Cement, brick, lime, glass and ceramics are ISIC 23, which the IEA reports as a
+single ``NONMET`` subtotal. KiNESYS models all five together as one module,
+``INMM``, because they share raw materials, share a statistical envelope, and
+compete for the same alternative fuels. Between them they are the largest source
+of industrial *process* CO₂ in the world economy — CO₂ that comes out of the
+limestone rather than out of the fuel, and which no amount of fuel switching can
+touch.
+
+.. list-table:: Non-metallic minerals as modelled
+   :header-rows: 1
+   :widths: 20,15,15,50
+
+   * - Sub-sector
+     - Output
+     - Energy
+     - Basis of the production estimate
+   * - Cement
+     - 3,881 Mt
+     - 11,304 PJ
+     - Global Energy Monitor plant database, 3,884 plants, calibrated to USGS
+   * - Brick
+     - 2,755 Mt
+     - 5,209 PJ
+     - Six country studies covering 68% of world energy; Olsson et al. 2025
+   * - Lime
+     - 430 Mt
+     - 1,978 PJ
+     - USGS; ten named producers account for 315 Mt
+   * - Ceramics
+     - 326 Mt
+     - 1,560 PJ
+     - Acimac/MECS tile survey, twelve producers
+   * - Glass
+     - 175 Mt
+     - 1,391 PJ
+     - China NBS flat glass, proxies elsewhere
+
+Two things about that table are worth stating plainly, because they shape
+everything downstream.
+
+**Cement is built differently from the other four.** It rests on a plant-level
+asset database — every kiln in the world, with its capacity, vintage and
+technology — so the model carries the existing fleet as vintaged stock with
+country-specific retirement schedules. The other four have no such database
+anywhere. For them the model carries a tonnage, an energy intensity, and a menu
+of kiln technologies with a base-year mix over it. The two halves therefore
+answer different questions well: cement can be asked about stranded assets and
+retirement timing, brick and lime cannot.
+
+**The five do not fit inside the reported statistics.** Modelled energy for the
+five comes to roughly 21,400 PJ against an IEA ``NONMET`` of 16,340 PJ. That is
+not an error to be tuned away — see
+`Reconciliation with the IEA balances`_, where it turns out to be the single
+most informative result the module produces.
+
+Scope and Coverage
+------------------
+
+**How the sector is assembled**
+
+The module is emitted as a pair of workbooks. One is region-generic and carries
+the technology — processes, costs, lifetimes, output coefficients, fuel
+converters. The other carries everything that has a region dimension —
+calibrated energy inputs, base-year activity bounds, and demand. Changing the
+model's region set rebuilds only the second.
+
+Processes for brick, lime, glass and ceramics carry no region in their names.
+This is deliberate and it is a correctness requirement, not a convenience: a
+process named after the region that happened to have it in the base year exists
+only in that region, so a kiln absent from a region's base-year mix could never
+be built there in any later period either. Africa had no zigzag brick kilns in
+2023; under a region-named convention Africa could never build one — the
+cheapest abatement option in the entire sector, foreclosed as a side effect of a
+naming choice. Every kiln therefore exists everywhere from the start, the
+base-year fleet is expressed as bounds rather than as existence, and from the
+second period the model chooses freely.
+
+Cement is the exception: its processes are country-tagged, because there the
+country detail is real observed asset data rather than an artifact.
+
+**Shared raw materials**
+
+Limestone, clay and gypsum are quarried by sector-neutral processes rather than
+by cement's own. Cement pulls about 80% of the world's quarried limestone, but
+lime kilns buy 1.8 tonnes of the same rock per tonne of quicklime, and glass
+takes it in the batch. Quarrying carries diesel for drilling, blasting and
+haulage and electricity for primary crushing — 203 PJ for cement alone, about
+1.8% of its energy.
+
+**Fuel routing**
+
+Each sub-sector has its own kiln-heat commodity, produced from the host
+industrial fuel commodities by explicit converters:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30,70
+
+   * - Heat commodity
+     - Fuels permitted
+   * - ``inm_cem_kilnheat``
+     - coal, gas, oil, biomass (two cost tiers)
+   * - ``inm_brk_kilnheat``
+     - coal, biomass, gas, oil
+   * - ``inm_lim_kilnheat``
+     - coal, gas, oil, biomass
+   * - ``inm_gls_furnheat``
+     - gas, oil, coal
+   * - ``inm_cer_kilnheat``
+     - gas, coal, biomass, oil
+
+They are separate rather than shared because the fuels are not interchangeable.
+A brick clamp kiln burns rice husk and a glass furnace cannot — particulates and
+alkali ash ruin the melt. A single shared heat commodity would let the model
+fire float glass on crop residue. Note in particular that **biomass is not
+available to glass**, and that this is a physical constraint rather than an
+omission.
+
+Which fuel is burnt is otherwise the model's choice. The base-year kiln mix is
+pinned; the base-year fuel mix is reported as an audit trail but is not imposed,
+except in cement where the alternative-fuel share is explicitly bounded.
+
 Cement
-======
-
-Cement is a critical material for infrastructure development but is also one of the most carbon-intensive industrial products. The KiNESYS platform captures the nuances of this sector, enabling an in-depth analysis of its production processes and pathways for decarbonization.
-
-
-Scope and Coverage
-------------------
-
-**Processes and Technologies**
-
-1. **Cement Production**:
-
-   - **Clinker Production**: Models the calcination process where limestone is converted to clinker, the most carbon-intensive step.
-   - **Blending and Grinding**: Represents processes for mixing clinker with additives like gypsum to produce cement.
-   - **Alternative Binders**: Includes supplementary cementitious materials (SCMs) like fly ash, slag, and pozzolans.
-
-2. **Kiln Technologies**:
-
-   - Tracks various kiln types, including wet kilns, dry kilns, and pre-calciner kilns.
-   - Models differences in efficiency and emissions across kiln types.
-
-3. **Regional and Plant-Specific Variations**:
-
-   - Reflects regional differences in kiln technologies and feedstock characteristics (e.g., limestone quality).
-   - Captures variations in operational efficiencies among plants.
-
-**Feedstock and Energy Inputs**
-
-- **Primary Materials**:
-   - Tracks limestone, clay, and other raw materials.
-- **Fuel Inputs**:
-   - Includes traditional fuels like coal, petcoke, and natural gas.
-   - Models the adoption of alternative fuels like biomass, waste-derived fuels, and hydrogen.
-- **Electricity Use**:
-   - Accounts for energy needs in grinding and other auxiliary processes.
-
-**Emissions and By-products**
-
-- **CO₂ Emissions**:
-   - Process emissions from limestone calcination.
-   - Combustion emissions from kiln operations.
-- **Co-products**:
-   - Tracks opportunities for reusing waste heat and recovering CO₂.
-
-
-Key Features for Decarbonization Analysis
------------------------------------------
-
-1. **Process Optimization**
-
-    - **Improved Efficiency**:
-         - Models upgrades to kilns, preheaters, and pre-calciner systems to reduce energy use.
-         - Tracks adoption of high-efficiency grinding technologies.
-    - **Operational Excellence**:
-        - Simulates scenarios for reducing energy waste during production.
-
-2. **Fuel Switching**
-
-   - **Alternative Fuels**:
-         - Models the transition to low-carbon and renewable fuels, such as biomass, hydrogen, and waste-derived fuels.
-         - Evaluates the technical and economic feasibility of various fuel options.
-
-3. **Carbon Capture and Storage (CCS)**
-
-    - Tracks the deployment of CCS technologies to capture emissions from the calcination process.
-    - Models retrofitting existing plants with CCS and its impact on costs and energy use.
-
-4. **Material Substitution**
-
-   - **Reducing Clinker Content**:
-         - Simulates blending strategies with Supplementary Cementitious Materials (SCMs) like fly ash, slag, and natural pozzolans.
-         - Evaluates the potential for reducing the clinker-to-cement ratio while maintaining product quality.
-
-5. **Electrification**
-
-    - Explores electrification opportunities in auxiliary processes like grinding and material transport.
-    - Evaluates the role of renewable electricity in lowering indirect emissions.
-
-6. **Regional Contextualization**
-
-    - Adapts decarbonization pathways to regional infrastructure, policy, and resource availability.
-    - Considers proximity to SCM sources and renewable energy availability.
-
-
-Model Outputs
--------------
-
-- **Energy and Emissions Profiles**:
-   - Detailed breakdown of energy use by source (fossil fuels, alternative fuels, electricity).
-   - Quantification of emissions by process step (calcination, fuel combustion).
-
-- **Cost and Feasibility Analyses**:
-   - Evaluates the costs of adopting low-carbon technologies and alternative fuels.
-   - Assesses financial and operational impacts of reducing clinker content.
-
-- **Scenario Comparisons**:
-   - Tracks the impact of policies like carbon pricing, subsidies for CCS, and renewable energy incentives.
-   - Simulates timelines for achieving emissions reductions under different scenarios.
-
-
-Depth of Analysis
-------------------
-
-1. **Technology Pathways**:
-
-    - Tracks technological upgrades and new installations for energy efficiency and emissions reductions.
-    - Enables long-term planning for the integration of cutting-edge technologies like CCS.
-
-2. **Policy Implications**:
-
-    - Models the effects of regulatory frameworks, including emissions trading schemes and mandatory fuel-switching requirements.
-    - Simulates responses to global and regional carbon border adjustment mechanisms.
-
-3. **Systemic Insights**:
-
-    - Links cement production to other industrial and energy sectors, highlighting co-benefits of integrated strategies.
-    - Enables comprehensive analysis of supply chain sustainability.
-
-
-Making Cement Cleaner
----------------------
-
-The KiNESYS platform provides an essential toolkit for exploring decarbonization in the cement sector. By capturing every aspect of production, emissions, and potential innovation, it empowers stakeholders to craft actionable strategies for reducing the sector’s environmental impact.
-
-
-Ceramics
-========
-
-The ceramics sector is diverse, spanning applications from construction to advanced technologies. KiNESYS models this complexity, capturing the energy-intensive processes, material flows, and potential for decarbonization across various sub-sectors.
-
-Scope and Coverage
-------------------
-
-**Sub-Sectors of Ceramics**
-
-1. **Technical Ceramics**:
-
-   - Used in high-performance applications like electronics, aerospace, and medical devices.
-   - Involves precision manufacturing with specialized materials.
-
-2. **Sanitaryware Ceramics**:
-
-   - Includes sinks, toilets, and other household sanitary products.
-   - Focuses on high-volume production with uniform material and energy requirements.
-
-3. **Construction Ceramics**:
-
-   - Bricks, tiles, and other building materials.
-   - Represents the bulk of ceramic production by volume.
-
-**Processes and Technologies**
-
-1. **Material Preparation**:
-
-   - Models the procurement and processing of raw materials like clay, feldspar, and kaolin.
-   - Includes the addition of additives and preparation for shaping.
-
-2. **Shaping and Forming**:
-
-   - Captures techniques like extrusion, pressing, and casting used across sub-sectors.
-   - Models differences in energy and material intensity for each method.
-
-3. **Drying and Firing**:
-
-   - Tracks energy-intensive kiln operations, which account for the majority of emissions.
-   - Includes temperature profiles and duration for firing based on product type.
-
-4. **Finishing and Coating**:
-
-   - Represents glazing, polishing, and other surface treatments.
-   - Models the additional energy requirements for advanced finishing processes.
-
-**Feedstock and Energy Inputs**
-
-    - **Raw Materials**:
-
-       - Tracks clay, feldspar, and kaolin inputs, along with additives for specific properties.
-    - **Energy Sources**:
-
-       - Dominated by fossil fuels (natural gas, coal) for firing processes.
-       - Incorporates electrification and alternative fuels in advanced scenarios.
-
-**Emissions and By-products**
-
-    - **Greenhouse Gas Emissions**:
-
-       - Process emissions from material reactions during firing.
-       - Combustion emissions from kilns.
-    - **By-products**:
-
-       - Waste heat recovery potential from kiln operations.
-       - Recycled scrap materials from production rejects.
-
-
-Key Features for Decarbonization Analysis
------------------------------------------
-
-1. **Electrification**
-
-   - Models the shift from fossil-fueled kilns to electric kilns powered by renewable energy.
-   - Evaluates the readiness of electric kilns for high-temperature firing.
-
-2. **Alternative Fuels**
-
-   - Tracks the integration of hydrogen, biogas, and waste-derived fuels in kiln operations.
-   - Evaluates the technical and economic feasibility of these fuels in different sub-sectors.
-
-3. **Process Optimization**
-
-   - Includes upgrades to kiln efficiency, such as advanced insulation and regenerative burners.
-   - Simulates improved shaping and drying processes to minimize energy demand.
-
-4. **Material Substitution**
-
-   - Evaluates the use of low-carbon raw materials, such as synthetic or recycled clays.
-   - Models the impact of reducing raw material requirements through lightweight design.
-
-5. **Regional Contextualization**
-
-   - Customizes pathways based on regional raw material availability, energy infrastructure, and policy support.
-   - Reflects variations in kiln technology and product demand across regions.
-
-
-Model Outputs
--------------
-
-- **Energy and Emissions Profiles**:
-
-   - Detailed energy use breakdown for each process stage and energy source.
-   - Comprehensive emission metrics for kilns and other energy-intensive steps.
-
-- **Technology Transition Scenarios**:
-
-   - Tracks adoption rates for electric kilns, alternative fuels, and advanced materials.
-   - Simulates long-term impacts of decarbonization on production costs and competitiveness.
-
-
-Depth of Analysis
-------------------
-
-1. **Sub-Sector Specificity**:
-
-   - Captures the unique characteristics of technical, sanitaryware, and construction ceramics.
-   - Enables detailed decarbonization roadmaps for each sub-sector.
-
-2. **Integrated Systems Approach**:
-
-   - Links ceramic production with energy systems and waste management.
-   - Highlights co-benefits of strategies like waste heat recovery and material efficiency.
-
-3. **Policy and Market Dynamics**:
-
-   - Simulates the impact of carbon pricing, subsidies for advanced technologies, and energy efficiency mandates.
-   - Evaluates market responses to decarbonization strategies, including shifts in demand.
-
-
-Shaping a Sustainable Future for Ceramics
------------------------------------------
-
-KiNESYS provides a powerful platform for analyzing the ceramics sector, offering granular insights into its processes, energy use, and emissions. By modeling innovative technologies and advanced materials, it supports the development of robust decarbonization pathways.
-
+------
+
+Scope
+~~~~~
+
+Cement is represented as four stages, quarry to product, with a technology
+choice at three of them:
+
+.. code-block:: text
+
+   diesel + electricity                        -> quarry   -> limestone, clay, gypsum
+   limestone + clay + electricity              -> raw mill -> raw meal
+   raw meal + kiln heat                        -> kiln     -> clinker + process CO2
+   clinker + SCM + gypsum                      -> grinding -> cement
+   coal/gas/oil/biomass                        -> converters -> kiln heat
+   slag/fly ash/pozzolan/limestone filler      -> blender    -> SCM
+
+That comes to 1,527 processes over 166 countries, built from the Global Energy
+Monitor plant database and calibrated against USGS production.
+
+**Kiln technologies.** Dry precalciner (3.30 GJ/t clinker), dry preheater
+(3.60), and wet (5.50), plus a preheater-to-precalciner retrofit available where
+preheater capacity survives. Kiln type, capacity and vintage come from the plant
+database; where the database does not record precalciner status it is inferred
+within physical bounds rather than assumed.
+
+**Existing stock is vintaged.** Kilns, mills and grinding plants carry
+vintage-specific lifetimes, so a 1970s line retires on its own schedule rather
+than on a sector average. Those schedules are floored so that nothing recorded
+as operating today retires before 2035 — cement plants get refurbished rather
+than replaced, and 1970s kiln shells are routinely still turning.
+
+**Raw grinding is a lever.** Ball mills at 15 kWh/t of meal against vertical
+roller mills at 11, with the base year split 40/60. Separating the stage out of
+the kiln coefficient moves no energy; it makes about 37 PJ of headroom visible
+to the optimiser that was previously buried in an assumption.
+
+Decarbonization levers represented
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Alternative fuels, with an adoption ramp.** Kilns switch fuel by switching
+converters rather than by switching kiln process, so fuel choice is independent
+of kiln technology. The biomass and waste-derived share is bounded by a ceiling
+derived from the kiln stock and its retirement schedule — precalciner kilns can
+take far more alternative fuel than wet kilns can. That ceiling is a technical
+frontier and reaching it takes time, so it is ramped from each region's observed
+base-year substitution rate up to the frontier by 2040. Without the ramp the
+model jumps to the frontier in the first period, which is a statement about
+thermodynamics rather than about how fuel supply chains actually develop.
+
+**Gas access as a physical constraint.** Whether a kiln can switch to natural
+gas depends on whether gas physically reaches it. The share of each country's
+kiln capacity within reach of an existing or under-construction pipeline or LNG
+terminal is computed from plant coordinates and gas infrastructure geography,
+and bounds the gas share accordingly.
+
+**Clinker substitution.** The clinker-to-cement ratio is where the largest
+near-term abatement in the sector sits, and it is modelled as an explicit
+blending decision rather than an assumed trajectory. A blender process takes
+four supplementary cementitious materials and produces the SCM stream that
+grinding consumes:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30,20,50
+
+   * - Material
+     - Cementitious yield
+     - Where it comes from
+   * - Blast furnace slag
+     - 0.85
+     - Endogenous — produced by the iron and steel module
+   * - Fly ash
+     - 0.40
+     - Endogenous — produced by coal-fired power generation
+   * - Natural pozzolan
+     - 1.00
+     - Supply process, volcanic geology
+   * - Limestone filler
+     - 1.00
+     - Supply process, capped at 15% of the binder
+
+The first two are the important ones, because they make cement decarbonization
+depend on decisions taken in other sectors. Slag supply falls as blast furnaces
+give way to direct reduction; fly ash supply falls as coal generation retires.
+Both of those are things the model decides elsewhere, and both tighten exactly
+when cement most needs them. Limestone filler is chemically inert dilution
+rather than a reactive binder, so it is capped at 15% of the binder, consistent
+with ASTM C595 Type IL and EN 197-1 CEM II/A-LL.
+
+**Efficiency and electrification.** Kiln and mill upgrades are available as
+technology choices with their own capital costs. Grinding and raw milling
+consume electricity, so they decarbonize with the grid, but there is no
+fuel-switching choice at those stages.
+
+**Demand to 2050.** Cement is the one sub-sector here with a forward demand
+trajectory rather than a pinned base year. Each region's base-year tonnage is
+scaled by a growth index built from IEA WEO2025 cement production, taking the
+shape of the outlook but not its levels — the base year already reconciles with
+USGS by construction. World cement runs from 3,881 Mt to about 4,250 Mt by 2045
+and then flattens, with China declining by a quarter over the horizon and India
+growing by three quarters. Cement tonnage is scenario-invariant in WEO2025: the
+IEA flexes the sector's energy intensity with policy rather than its output,
+which puts every lever on the supply side where this module models them.
+
+What cement does not yet include
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note::
+
+   **Planned, not yet in the model.** Carbon capture on cement — oxyfuel, amine
+   post-combustion, calcium looping and electrified calcination — is specified
+   against CEMCAP techno-economics but is not yet emitted. Until it is, a
+   carbon-price run has **no lever at all on process CO₂**, which is roughly
+   half of cement's emissions. Also planned: hydrogen kiln firing, LC3
+   calcined-clay cements, and clinker and cement trade — clinker being the
+   traded intermediate that grinding-only regions depend on.
+
+Brick
+-----
+
+Brick is the largest tonnage in non-metallic minerals outside cement — 2,755 Mt,
+close to one and a half times world crude steel production — and until recently
+it was almost invisible in energy system models. It is represented here because
+leaving it out makes the rest of the sector's statistics impossible to
+interpret.
+
+**Kiln technologies.** Six, spanning nearly the whole range of industrial
+formality: clamp kilns, fixed-chimney Bull's trench kilns, zigzag kilns,
+vertical shaft brick kilns, Hoffman kilns and tunnel kilns. Fuels are coal,
+biomass, gas and oil; biomass is about a third of South Asian brick energy and
+more than half of African.
+
+**Why the kiln menu is the whole point.** A South Asian fixed-chimney Bull's
+trench kiln runs at about 1.35 GJ/t. Converting the same kiln to zigzag airflow
+brings it to about 1.05 for a few thousand dollars — close to the cheapest
+industrial abatement available anywhere in the world economy. A model given only
+a sector energy intensity cannot see that this option exists. India's calibrated
+kilns come out at 1.26 GJ/t for Bull's trench, 0.98 for zigzag and 0.79 for
+vertical shaft, weighting to the measured national figure.
+
+**The capital spread is twenty to one** between a clamp kiln and a tunnel kiln
+per tonne of annual capacity, which is why the sector is informal — entry is
+nearly free — and why zigzag conversion is such cheap abatement, since it
+upgrades a kiln that already exists rather than replacing it.
+
+**Process CO₂ is zero**, deliberately. Brick clays do contain carbonates and
+calcareous clays genuinely do emit, but the coefficient previously carried here
+could not be derived from chemistry, and the studies behind the sector's energy
+intensity measure *total* specific consumption — which for Bull's trench and
+clamp kilns already includes the coal mixed into the green brick. That fuel
+carbon was being counted twice. Zero is an assertion too, and it is the one that
+fails visibly.
+
+.. note::
+
+   **Planned, not yet in the model.** A turnover constraint on kiln conversion.
+   With costs but no growth limit the model converts the world fleet to zigzag
+   and vertical shaft kilns almost immediately. That is economically real — the
+   payback is under two years on fuel alone — but behaviourally implausible,
+   because the binding constraints are skills, brick quality, siting and access
+   to credit, none of which is a cost. Also planned: a carbonate-only process
+   CO₂ factor with a source behind it, electric firing, and a demand driver
+   following floor area.
+
+Lime
+----
+
+Lime is the term that gets forgotten, and it is the second-largest source of
+process CO₂ in the model after cement. Calcining CaCO₃ to CaO releases 0.785 t
+of CO₂ per tonne of quicklime by stoichiometry alone, so world lime production
+emits roughly 340 Mt of CO₂ before any fuel is burnt at all.
+
+**Kiln technologies.** Rotary, rotary-with-preheater, mixed-feed shaft, and
+parallel-flow regenerative, spanning 7.20 down to 3.50 GJ/t as global priors and
+calibrated per region from there. Fuels are coal, gas, oil and biomass.
+
+**Coupling to cement.** Lime kilns buy 1.8 tonnes of limestone per tonne of
+quicklime from the same quarry processes that supply cement's raw meal. This is
+where the two sub-sectors genuinely interact: they are both calcination of local
+limestone for local use, they compete for the same rock, and they compete for
+the same alternative fuels.
+
+.. note::
+
+   **Planned, not yet in the model.** Lime demand is exogenous and fixed at the
+   base year. In reality a large share of it is consumed by steelmaking as a
+   flux, so lime demand should follow steel production and route choice — a
+   shift to scrap-EAF changes lime consumption substantially. It currently does
+   not. Electric and hydrogen-fired lime kilns are also absent.
 
 Glass
-======
+-----
 
-The glass industry is pivotal for sectors such as construction, packaging, and automotive. KiNESYS models the nuances of glass production with a focus on energy use, material flows, and emissions. This enables stakeholders to explore decarbonization pathways tailored to the unique needs of the sector.
+**Products.** Flat glass for construction, automotive and solar; container
+glass for packaging; fibre glass for insulation and composites. Each is
+modelled as a distinct product with its own demand.
 
+**Furnace technologies.** Regenerative, recuperative, oxy-fuel, and all-electric
+melting. The electric melter is a genuine technology choice the model can
+select, which makes glass one of the two sub-sectors here where electrification
+is an available decarbonization route rather than an aspiration.
 
-Scope and Coverage
-------------------
+**Fuels.** Gas, oil and coal. Biomass is deliberately excluded for the physical
+reasons given above.
 
-**Processes and Technologies**
+**Process CO₂.** The soda ash and limestone in the batch decompose during
+melting, giving about 0.19 t of CO₂ per tonne of glass, roughly 33 Mt worldwide.
 
-1. **Types of Glass Production**:
+.. note::
 
-   - **Container Glass**: Bottles and jars used in packaging.
-   - **Flat Glass**: Sheets used in windows, automotive, and solar panels.
-   - **Fiber Glass**: Insulation and reinforced composites for construction and manufacturing.
+   **Planned, not yet in the model.** Cullet. Recycled glass is 30–60% of a
+   container glass batch and each 10% of cullet cuts melting energy by about
+   2.5%; it is not represented at all, which means the model cannot see the
+   sector's most established efficiency measure. Soda ash is also not modelled
+   as a produced commodity — it is the one raw material in this sector worth
+   wiring up, being traded, energy-intensive and itself a source of process CO₂.
+   Hydrogen firing is absent.
 
-2. **Manufacturing Steps**:
+Ceramics
+--------
 
-   - **Melting**: High-temperature furnaces melt raw materials into molten glass.
-   - **Forming**: Techniques like molding (container glass), float processes (flat glass), and spinning (fiber glass).
-   - **Annealing and Finishing**: Controlled cooling and surface treatments for strength and quality.
+**Products.** Construction ceramics (tiles, the bulk of the tonnage), technical
+ceramics and refractories, and sanitaryware.
 
-3. **Energy Sources**:
+**Kiln technologies.** Tunnel kilns, roller hearth kilns, and electric kilns.
+As with glass, electric firing is a real choice available to the model. Fuels
+are gas, coal, biomass and oil.
 
-   - Fossil fuels (natural gas, fuel oil) dominate, but electricity is gaining traction in modern systems.
-   - Includes renewable energy integration for electric furnaces.
+**Process CO₂ is zero**, for the same reasons as brick: the coefficient
+previously carried was not derivable from chemistry and risked double-counting
+organics that the energy figures already include.
 
-**Feedstock and Energy Inputs**
+**A known weakness.** Refractories are mapped onto the technical ceramics
+commodity because it is the nearest available product, which is a stretch — 40
+Mt of a different product with a different customer and a different kiln.
 
-- **Primary Raw Materials**:
+.. note::
 
-   - Silica sand, soda ash, limestone, and dolomite.
-   - Models variations in purity and composition for different types of glass.
+   **Planned, not yet in the model.** Hydrogen and biogas firing, low-carbon
+   raw material substitution, and waste-heat recovery, all of which the sector's
+   own roadmaps treat as central. A demand driver following construction
+   activity.
 
-**Emissions and By-products**
+Reconciliation with the IEA balances
+------------------------------------
 
-- **Greenhouse Gas Emissions**:
+The five sub-sectors together demand about 21,400 PJ, against an IEA ``NONMET``
+subtotal of 16,340 PJ. Rather than scale the model down to fit, KiNESYS
+reconciles the two explicitly, and the reconciliation is itself a result.
 
-   - Process emissions from raw material reactions.
-   - Combustion emissions from melting furnaces.
-- **By-products**:
+Cement, lime, glass and ceramics alone come to about 16,300 PJ — which accounts
+for ``NONMET`` to within 2%. There is, in other words, no room in the reported
+statistics for brick at all. And brick is not small: three independent
+triangulations put world fired clay brick at 2.0–2.4 Gt, wanting nearly 5,000 PJ.
 
-   - Waste heat from furnaces and opportunities for its recovery.
+That energy is not hidden in the balance; it never entered it. Informal Bull's
+trench and clamp kilns buy coal outside formal supply chains and burn
+agricultural residue that no energy survey counts. Where any of it is recorded
+at all, it lands in the non-specified industrial catch-alls.
 
+So the model draws that energy from the catch-all pool, under rules that apply
+equally to steel and chemicals:
 
-Key Features for Decarbonization Analysis
------------------------------------------
+- **The trigger is physics, not arithmetic.** A sector may only draw where the
+  reported sub-sector falls below a floor its own physical activity cannot go
+  under — roughly two thirds of world best practice, because our own production
+  estimates are themselves uncertain. A sector that simply exceeds its subtotal
+  does not qualify; it stays visible as an overshoot, which is the point.
+- **Nothing is created.** A country's total industrial energy is pinned by
+  supply-side statistics and is far more reliable than its split across
+  sub-sectors, which is a survey artifact. The reconciliation treats the total
+  as observed and the split as estimated, so this is re-attribution inside a
+  fixed total rather than three sectors helping themselves to energy.
+- **The draw is netted over fuels before being spread across them.** If the
+  model burns coal where the balance reports gas, that is a fuel-mix
+  disagreement, not misbooked energy. The pool is 38% electricity and a cement
+  kiln cannot burn electricity, so this matters.
+- **It is capped** at two thirds of the pool across all sectors, because
+  emptying the catch-alls would assert that a region has no food processing,
+  textiles or machinery.
 
-1. **Electrification**
+The reconciliation moves about 2,984 PJ into non-metallic minerals, India alone
+taking 1,494, and emits an adjusted aggregate-demand table with the catch-alls
+depleted by exactly that amount. This is a build step, not only a diagnostic:
+anything moved here must be moved in the host model too, or the energy is
+counted twice.
 
-   - **Electric Melting**:
-
-     - Models the transition from gas-fired furnaces to electric ones powered by renewable energy.
-     - Analyzes efficiency gains and emission reductions.
-
-2. **Alternative Fuels**
-
-   - **Hydrogen and Biomass**:
-
-     - Models the feasibility of using hydrogen or biomass as fuel for glass furnaces.
-   - **Waste-Derived Fuels**:
-
-     - Evaluates the use of by-products from other industries, such as RDF (Refuse-Derived Fuel).
-
-3. **Energy Efficiency**
-
-   - **Furnace Upgrades**:
-
-     - Tracks technologies like oxy-fuel burners and regenerative furnaces.
-   - **Process Optimization**:
-
-     - Models improvements in forming and annealing processes to reduce energy consumption.
-
-4. **Decarbonization of Raw Materials**
-
-   - **Low-Carbon Soda Ash**:
-
-     - Evaluates the use of carbon-neutral soda ash alternatives.
-   - **Alternative Material Inputs**:
-
-     - Models innovations in reducing emissions from raw material processing.
-
-5. **Regional Contextualization**
-
-   - Reflects regional differences in energy costs, raw material availability, and infrastructure.
-   - Customizes decarbonization pathways to local policy and market conditions.
-
+The geography that falls out was not imposed and is the best evidence that the
+method works — the regions that qualify to draw are the regions with large
+informal brick industries.
 
 Model Outputs
 -------------
 
-- **Energy and Emissions Profiles**:
-   - Detailed breakdown of energy use by source (fossil fuels, electricity, alternative fuels).
-   - Comprehensive emission metrics, highlighting areas for improvement.
+- **Energy and emissions by sub-sector, kiln type and fuel**, with process CO₂
+  reported separately from combustion CO₂ throughout — an essential distinction
+  in a sector where roughly half the emissions come out of the rock.
+- **Kiln fleet composition over time**, including which vintages of cement
+  capacity retire when, and how fast informal brick kilns convert.
+- **Clinker-to-cement ratio and SCM sourcing**, showing how much clinker
+  substitution the model can actually achieve given slag and fly ash supply
+  determined in the steel and power sectors.
+- **Alternative fuel substitution rates** against the technical ceiling, by
+  region.
+- **The reconciliation itself** — which regions overshoot their reported
+  statistics, by how much, and what that implies about the coverage of the
+  underlying energy surveys.
 
-- **Cost and Competitiveness Analysis**:
-   - Tracks the financial implications of transitioning to low-carbon technologies.
-   - Simulates the impact of carbon pricing and subsidies for electrification.
+Cross-sector coupling is the distinguishing feature
+---------------------------------------------------
 
-- **Scenario Analysis**:
-   - Explores the potential for scaling renewable energy and alternative fuel adoption.
-   - Evaluates the long-term impact of decarbonization on market competitiveness.
+The reason this module sits inside a full energy system model rather than
+alongside one is that its two most important abatement levers are not under its
+own control.
 
+Clinker substitution depends on slag from blast furnaces and fly ash from
+coal-fired power stations. Both are byproducts of activities the model is
+simultaneously trying to eliminate. A steel decarbonization pathway that
+replaces blast furnaces with hydrogen direct reduction removes the slag; a power
+decarbonization pathway that retires coal removes the fly ash. Both supplies
+contract precisely when cement most needs them, and a cement model run in
+isolation would never see it. Alternative fuels tell the same story from the
+other side: cement, lime, brick and ceramics all compete for the same limited
+industrial biomass, alongside every other sector that wants it.
 
-Depth of Analysis
+Planned extensions
 ------------------
 
-1. **Technology Pathways**:
+Collected from the sub-sections above, in rough order of how much they would
+change results:
 
-   - Simulates adoption rates for emerging technologies like electric furnaces and hydrogen integration.
-   - Evaluates readiness and feasibility for retrofitting existing plants.
+.. list-table::
+   :header-rows: 1
+   :widths: 30,70
 
-2. **Policy Support**:
-
-   - Models the impact of regulations and incentives for alternative fuels and renewable energy integration.
-
-3. **Systemic Insights**:
-
-   - Links glass production with upstream raw material supply chains and downstream sectors like construction and packaging.
-   - Highlights synergies with energy and waste management systems.
-
-
-Advancing Sustainability in Glass Production
---------------------------------------------
-
-KiNESYS provides a robust framework for analyzing the glass sector, capturing its intricate processes, energy demands, and emissions. By modeling innovative technologies and energy optimization strategies, it supports the development of actionable roadmaps for a sustainable glass industry.
-
+   * - Extension
+     - Why it matters
+   * - Cement CCS and low-carbon clinker
+     - Without oxyfuel, amine capture, calcium looping, electrified calcination
+       or LC3, a carbon price has no lever on process CO₂ — about half of
+       cement's emissions and the largest single industrial process-CO₂ term
+       there is
+   * - Forward demand drivers for the four sub-sectors outside cement
+     - Cement has a WEO-driven trajectory to 2050; brick, lime, glass and
+       ceramics are pinned at the base year. Brick should follow floor area,
+       lime should follow steel and cement
+   * - Kiln turnover constraints
+     - Costs alone let the model convert the world brick fleet in one period,
+       which is economically real and behaviourally impossible
+   * - Lime demand coupled to steel
+     - Lime is a steelmaking flux; a shift to scrap-EAF should move lime demand
+       and currently does not
+   * - Hydrogen firing
+     - Absent across all five sub-sectors, and central to the published
+       roadmaps for glass and ceramics in particular
+   * - Cullet and material recycling
+     - The established efficiency measure in glass, unrepresented
+   * - Soda ash
+     - Traded, energy-intensive, and a process-CO₂ source in its own right
+   * - Electrification of brick and lime
+     - Available to glass and ceramics today, absent from the other two
+   * - Cement and clinker trade
+     - Clinker is the traded intermediate that grinding-only regions depend on
+   * - Carbonate-only process CO₂ for brick and ceramics
+     - Currently zero, which is defensible but wrong for calcareous clays
 
 Aluminium
 ==========

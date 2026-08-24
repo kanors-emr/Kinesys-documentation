@@ -243,7 +243,7 @@ ISO VRE Market-Share Caps
 
 When ISO-level VRE clusters are aggregated into multi-country model regions, a small high-resource country can otherwise flood the regional copper plate. Cluster INVCOST already prices the spur to the nearest demand centre. The remaining limit is a share cap: ``PRC_MARK`` (UP) on ``elcagg_spv_{ISO}``, ``elcagg_won_{ISO}``, and ``elcagg_wof_{ISO}`` together against regional ``ELC``, with group item ``{ISO}_vre_gen``.
 
-The cap is the ISO's last complete Ember generation share of the region, or its SSP2 GDP|PPP share if that is larger (or if Ember is missing). Caps are independent (they are not renormalized). Singleton regions are omitted.
+The cap is the ISO's last complete Ember generation share of the region, or its SSP2 GDP|PPP share if that is larger (or if Ember is missing). Caps are independent (they are not renormalized). Singleton regions are omitted. Year 0 is set to 5 so TIMES interpolates (and extrapolates) if the host period definition uses different years.
 
 Capacity Decay Constraints
 ---------------------------

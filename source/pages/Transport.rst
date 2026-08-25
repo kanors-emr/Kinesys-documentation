@@ -57,4 +57,4 @@ Based on the transportation modes data, KiNESYS models non-road transport exogen
 **Other**:
     - **Non Energy Uses**: Measured in Petajoules
 
-These sectors are modeled with predefined fuel share trajectories that can incorporate biofuels, hydrogen, and other alternative fuels based on scenario assumptions.
+These sectors are modeled with predefined fuel share trajectories that can incorporate biofuels, hydrogen, and other alternative fuels based on scenario assumptions. Drop-in biofuels and synthetic jet/diesel are produced by the conversion routes in :doc:`Liquid fuels processing`.

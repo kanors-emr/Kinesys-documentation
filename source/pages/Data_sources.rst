@@ -114,10 +114,63 @@ Oil and Gas Supply
 Biomass and Land Use
 ====================
 
-**IIASA GLOBIOM**
-    Global Biosphere Management Model output providing biomass potential by type (energy crops, residues, forestry), price tier, and scenario. Downscaled to country level based on IEA primary biomass production.
-    
-    *Reference: Havlik et al. (2014), Global Change Biology*
+See :doc:`Bioenergy resources` for how these sources are combined into feedstock
+pools, and :doc:`Liquid fuels processing` for conversion.
+
+**FAOSTAT**
+    Crop and livestock production (five-year mean 2020–2024 for crop inventories),
+    producer prices, forestry and land-use bulk files. Country-level first-generation
+    inventories, downscaling keys for GLOBIOM energy crops (cropland) and forest
+    variables, and livestock numbers for wet-resource excretion.
+
+    *Update frequency: Annual*
+
+**USDA Production, Supply and Distribution (PSD)**
+    Oilseed crush, industrial use, food use and net trade by country. Closes lipid
+    balances so domestic oil production is not treated as domestic biofuel
+    availability. Anchors existing industrial use (T1) for the FAME/HVO split.
+
+    *Update frequency: Monthly marketing-year cycle; KiNESYS uses MY2024*
+
+**FAPRI**
+    Observed biofuel use by country. Anchors the existing-use (T1) diversion step
+    for sugar, starch and cane.
+
+**World Bank Commodity Markets (Pink Sheet)**
+    World prices for palm, soybean and other vegetable oils. T1 lipid prices;
+    T2/T3 are premiums on this base.
+
+    *Currency: USD 2024*
+
+**LUT biomass potentials**
+    Country-level gross crop-residue inventories. Combined with ENSPRESO removable
+    fractions (Europe) or EU-median rates (elsewhere) to form agricultural-residue
+    supply steps.
+
+**ENSPRESO (JRC)**
+    European sustainable residue and manure/sludge potentials: removable low/median/high
+    fractions, collection-cost sheets, and wet-resource inventories converted to a
+    dry volatile-solids energy basis.
+
+**IEA World Energy Balances**
+    Primary solid biomass production (PRIMSBIO) downscales the cheapest GLOBIOM
+    step (traditional use) and checks base-year totals. Biofuel output
+    (biogasoline, biodiesel including HVO, biojet, biogases) sizes the existing
+    conversion fleet.
+
+**IIASA GLOBIOM–G4M lookup**
+    Lignocellulosic potential by type (energy crops, fuelwood, roundwood, mill and
+    logging residues), seven price tiers, and land-use / sustainability scenario.
+    Default in KiNESYS is scenSDGs; unconstrained scenBASE is an opt-in. Higher
+    steps are downscaled with FAOSTAT resource keys (cropland, roundwood, mill
+    output), not with a single IEA share.
+
+    *Reference: Havlík et al. (2014), Global Change Biology*
+
+**IPCC 2006 Guidelines, Vol. 2**
+    Default carbon contents (kgCO2/GJ) for wood, other primary solid biomass,
+    biogasoline, biodiesel and methane. Crop and oil pool factors that IPCC does
+    not tabulate are derived from composition and the adopted feedstock LHV.
 
 
 Industrial Sector

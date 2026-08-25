@@ -61,7 +61,7 @@ Creating Instances of KiNESYS Models
     KiNESYS integrates a variety of global energy datasets, including:
 
         - **Asset-Level Databases:** Power plants, gas and oil pipelines, LNG terminals, steel and cement plants from sources like Platts and Global Energy Monitor.
-        - **Energy Supply & Demand Data:** IEA energy balances, World Bank WDI (for sectoral GDP shares), SSP Database (for macroeconomic drivers), and GLOBIOM forecasts (for biomass potential).
+        - **Energy Supply & Demand Data:** IEA energy balances, World Bank WDI (for sectoral GDP shares), SSP Database (for macroeconomic drivers), FAOSTAT crop and livestock statistics, and GLOBIOM forecasts (for lignocellulosic biomass potential).
         - **Renewable Resource Data:** Solar/wind potentials from ESMAP, MERRA2 solar/wind profiles, and load shape data.
         - **Sectoral Data:** Renewable power capacities from IRENA, vehicle stocks, industrial production statistics from USGS and FAOStats.
 
@@ -80,7 +80,7 @@ Creating Instances of KiNESYS Models
     2. **Simulation Scenarios:** Analyze system responses to specific policy interventions, such as fossil fleet retrofit or phaseout plans.
 
 **Default Coverage:**
-    The default configuration covers oil, gas, coal, solar, wind, hydropower, biomass potentials, CHP, transport, industrial sectors, and energy demands in buildings. Additional energy-economy sectors with material or energy flow linkages can be added as needed.
+    The default configuration covers oil, gas, coal, solar, wind, hydropower, bioenergy resources and conversion pathways, CHP, transport, industrial sectors, and energy demands in buildings. Additional energy-economy sectors with material or energy flow linkages can be added as needed.
 
 **Process and Workflow**
     1. **Data Integration:** Data remains in its native relational database format, ready for updates.

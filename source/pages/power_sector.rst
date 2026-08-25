@@ -104,7 +104,7 @@ The dataset covers 26 technologies organized into the following groups:
 
 **Nuclear** — A single large-reactor technology with the longest construction time and economic lifetime in the dataset. Regional cost differentiation is particularly wide for nuclear.
 
-**Bioenergy** — Large-scale biomass, biomass cofiring (incremental investment for blending in existing coal plants), biomass CHP, and biomass with CCUS (BECCS) for negative emissions.
+**Bioenergy** — Large-scale biomass, biomass cofiring (incremental investment for blending in existing coal plants), biomass CHP, and biomass with CCUS (BECCS) for negative emissions. These plants compete for the feedstock pools in :doc:`Bioenergy resources`; they do not have a private biomass curve.
 
 **Battery storage** — 4-hour and 8-hour utility-scale Li-ion, sourced entirely from ATB. The same cost trajectory is applied across all regions, reflecting the globally traded nature of battery cells.
 

@@ -26,6 +26,7 @@ It revolutionizes the way we explore energy transition scenarios using energy sy
    pages/introduction
    pages/Applications_and_Impact
    pages/Primary energy supply
+   pages/Bioenergy resources
    pages/power_sector
    pages/timeslice_definitions
    pages/electricity_load_shapes

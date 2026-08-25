@@ -22,486 +22,522 @@ Industry
 Petrochemicals
 ==============
 
-The petrochemical industry is a cornerstone of modern economies, providing essential materials for plastics, fertilizers, and synthetic chemicals. However, it is also a significant source of greenhouse gas emissions. KiNESYS models the petrochemicals sector in detail, capturing the complex processes, energy requirements, and potential pathways for decarbonization.
-
+The petrochemical industry supplies the materials the rest of the economy is
+built from, and it is the one industrial sector where most of the carbon is not
+burnt but embodied — it leaves the refinery as feedstock and ends up in the
+product. That makes it structurally different from steel or cement, and it is
+why the sector is represented here as an explicit chemistry: a network of
+processes converting named molecules into named molecules, rather than an energy
+intensity applied to a tonnage.
 
 Scope and Coverage
 ------------------
 
-**Key Product Categories**
+**How the sector is assembled**
 
-    1. **Basic Chemicals**:
+The chemistry lives in a hand-maintained workbook, ``VT_KiNESYS_petchem.xlsx``:
+66 processes and 62 commodities across 23 sheets, each sheet a product family
+with its own coefficient tables and costs. A small pipeline of six scripts sits
+beside it and regionalises two things — existing steam cracker capacity, and
+product demand. Everything else about the technology is entered by hand and
+reviewed by hand.
 
-       - Ethylene, propylene, and aromatics (benzene, toluene, xylene).
-       - Critical building blocks for a variety of end products.
+This is worth stating because it sets what can be changed quickly and what
+cannot. Adding a region or refreshing demand is a pipeline run. Adding a
+process, a product or a route is an edit to the workbook.
 
-    2. **Intermediates and Derivatives**:
+**Products**
 
-       - Includes methanol, ammonia, and urea, which are widely used in fertilizers and industrial chemicals.
-       - Captures production pathways for polyethylene, PVC, and synthetic rubbers.
+62 commodities, of which 23 carry an explicit demand projection. The chain runs
+from feedstocks through olefins and aromatics to polymers and finished
+intermediates:
 
-    3. **End Products**:
+.. list-table::
+   :header-rows: 1
+   :widths: 28,72
 
-       - Plastics, resins, and fibers used in construction, packaging, and textiles.
+   * - Family
+     - Commodities
+   * - Olefins
+     - ethylene, propylene, butadiene, isobutene
+   * - Aromatics
+     - benzene, toluene, xylene, ethylbenzene, styrene, pygas
+   * - Polymers
+     - LDPE, HDPE, LLDPE, polypropylene, PVC, polystyrene
+   * - Vinyls chain
+     - EDC, VCM, chlorine, caustic soda, HCl
+   * - Nitrogen chain
+     - ammonia, urea
+   * - Oxygenates
+     - methanol, ethylene oxide, ethylene glycol, propylene oxide,
+       propylene glycol, acetic acid, vinyl acetate, 2-EH, MTBE
+   * - Industrial gases
+     - hydrogen, oxygen, nitrogen, argon, carbon monoxide
 
-**Processes and Technologies**
+**Processes**
 
-1. **Steam Cracking**:
-   - Models the primary process for producing ethylene and propylene.
-   - Tracks energy use, feedstock variations (naphtha, ethane, propane), and emissions.
+Steam cracking is modelled on three feedstocks — naphtha, ethane and propane —
+each with a conventional furnace, an electrically heated variant, and a variant
+with carbon capture, so nine cracker processes in all. Around that sit
+propane dehydrogenation, catalytic reforming of naphtha with and without
+capture, hydrodealkylation and toluene disproportionation for aromatics, the
+full chlor-alkali and vinyls chain through three cell technologies, and the
+polymerisation routes: Ziegler-Natta, bulk and emulsion, and dedicated LDPE,
+HDPE, LLDPE and PVC processes.
 
-2. **Ammonia and Urea Production**:
-   - Captures the energy-intensive Haber-Bosch process.
-   - Includes CO₂ utilization in urea production as a decarbonization option.
+Ammonia is Haber-Bosch, fed by hydrogen from either steam methane reforming or
+electrolysis. Methanol has four routes — coal, gas, gas with capture, and green
+hydrogen with captured CO₂. Steam for the whole sector comes from eight boilers
+covering electricity, gas, coal, hydrogen and biomass, five of them with capture
+variants.
 
-3. **Polymerization**:
-   - Tracks processes for converting monomers into polymers like polyethylene and polypropylene.
-   - Includes energy inputs and associated emissions.
+**Feedstocks**
 
-4. **Aromatics and Derivatives**:
-   - Models processes like catalytic reforming and cracking for benzene, toluene, and xylene production.
+Feedstock enters through nine explicit bridge processes that connect the host
+energy system to the sector's internal commodities: ethane, methane, propane,
+naphtha, coal, hydrogen, captured CO₂, coal tar, and a gasoline return stream.
+Keeping the bridge explicit is what lets the sector's feedstock carbon be
+accounted separately from its process energy.
 
-5. **Methanol and Derivatives**:
-   - Covers production from both fossil-based and renewable feedstocks (e.g., green methanol from CO₂ and hydrogen).
+Decarbonization levers represented
+----------------------------------
 
-**Feedstock and Energy Inputs**
+**Electrification of steam cracking.** Electric crackers exist for all three
+feedstocks and are real technology choices, not a scaling assumption. They
+replace furnace fuel with roughly 10–13 units of electricity per unit of
+feedstock throughput, which is the trade the model is being asked to evaluate:
+cracking becomes a large new electricity load in exchange for eliminating the
+furnace flue gas.
 
-- **Fossil Feedstocks**:
-   - Tracks naphtha, natural gas, coal, and LPG.
-- **Renewable Alternatives**:
-   - Includes bio-based feedstocks and hydrogen for green chemicals.
-- **Energy Sources**:
-   - Models electricity, steam, and heat demand across processes.
+**Carbon capture** is available on the three crackers, on gas-based methanol, on
+catalytic reforming of naphtha, and on the gas, coal and biomass boilers.
 
-**Emissions and By-products**
+**Carbon utilisation** is implemented rather than described. Urea production
+consumes CO₂ as a physical input, and green methanol consumes captured CO₂
+together with hydrogen, drawing on a dedicated ``ind-ccu_co2`` commodity that
+carries CO₂ eligible for conversion into fuels and products.
 
-- **Greenhouse Gas Emissions**:
+**Hydrogen** is consumed by ammonia synthesis, by green methanol, and by HCl
+production, and is produced either by reforming or by electrolysis, so the
+grey-to-green transition is a choice inside the sector rather than an assumption
+about it.
 
-   - Process emissions, including CO₂ from reforming and cracking.
-   - Combustion emissions from energy use.
-- **By-products**:
+Emissions and the capturable set
+--------------------------------
 
-   - Tracks co-production of hydrogen, steam, and syngas for use in other sectors.
+Process chemistry emissions are carried on a dedicated ``pc_co2`` commodity
+rather than inferred from fuel — steam methane reforming, coal and gas methanol
+synthesis and the crackers all emit onto it explicitly. Combustion emissions
+from furnace fuel and boilers arrive through the host fuel commodities in the
+usual way. ``pc_co2`` is inside the host's capturable industrial emissions
+group, so petrochemical process CO₂ can genuinely be captured.
 
+Feedstock carbon is tracked separately from process energy. In the reference
+case the sector consumes about 37,700 PJ as feedstock against about 16,100 PJ
+as process energy, and the feedstock figure sits within a few percent of the
+IEA's non-energy use statistics — which is the strongest calibration evidence
+the sector has, since feedstock is stoichiometric and admits no efficiency
+argument.
 
-Key Features for Decarbonization Analysis
------------------------------------------
+Regional coverage, and its main limitation
+------------------------------------------
 
-1. **Electrification**
+Demand is projected for 23 products across the model's regions and the base-year
+world total is about 979 Mt. Existing capacity is a different matter, and this
+is the most important caveat in the sector.
 
-   - **Electric Steam Cracking**:
+**Only steam crackers carry existing capacity.** Operating crackers are placed
+from an ethylene asset database across 35 regions, with committed and
+under-construction units added separately for 9 more. Ammonia, methanol,
+chlor-alkali, the polymers and every downstream intermediate have no existing
+stock at all, so from the model's point of view they can be built anywhere, in
+any quantity, from the first period. Build-rate constraints limit how fast that
+happens, but not where.
 
-     - Models the replacement of conventional furnaces with electric cracking units powered by renewable electricity.
-     - Evaluates technology readiness and scaling challenges.
+The practical consequence is that the sector answers questions about cracker
+siting and feedstock slate much better than it answers questions about where
+ammonia or methanol production is located today and what it would cost to move.
 
-2. **Feedstock Substitution**
+.. note::
 
-   - **Bio-Based Feedstocks**:
+   **Planned, not yet in the model.** Existing capacity for the non-cracker
+   chain — ammonia, methanol and chlor-alkali in particular, all of which have
+   well-documented asset registers. Also planned: a natural gas liquids
+   fractionation step, since ethane supply currently reaches the crackers
+   without passing through the separation that produces it.
 
-     - Includes scenarios for shifting from fossil to biomass-derived naphtha or ethanol.
-   - **Green Hydrogen Integration**:
+Demand
+------
 
-     - Tracks the use of green hydrogen in ammonia, methanol, and other processes.
-
-3. **Carbon Capture and Utilization (CCU)**
-
-   - **Ammonia and Methanol**:
-
-     - Models CO₂ capture and integration into products like urea and methanol.
-   - **Polymer Production**:
-
-     - Explores pathways for producing plastics with embedded carbon.
-
-4. **Process Optimization**
-
-   - **Heat Recovery**:
-
-     - Includes waste heat recovery systems to improve overall energy efficiency.
-   - **Catalyst Upgrades**:
-
-     - Simulates the adoption of advanced catalysts for higher yields and lower emissions.
-
-5. **Regional Contextualization**
-
-   - Reflects regional variations in feedstock availability, energy infrastructure, and policy landscapes.
-   - Customizes decarbonization strategies to align with local market conditions.
-
+Product demand is specified as explicit levels from 2020 to 2030, followed by a
+single annual growth rate carrying each product to 2050. The 2020–2030 levels
+come from market data; the growth rate is fitted to that decade and then damped,
+because an unmodified extrapolation of a single decade's growth over twenty
+further years produces implausible tonnages. The damping is a judgement, and it
+is the largest single discretionary assumption in the sector.
 
 Model Outputs
 -------------
 
-- **Energy and Emissions Profiles**:
+- **Feedstock slate by region** — which molecules the crackers are actually
+  eating, and how that shifts as relative gas and oil prices move.
+- **Process energy and feedstock carbon reported separately**, which is
+  necessary in a sector where most of the carbon never becomes CO₂ inside the
+  model boundary.
+- **Electrification uptake** — how much cracking capacity converts to electric
+  heating, and what that adds to industrial electricity demand.
+- **Capture and utilisation flows**, including CO₂ routed into urea and into
+  green methanol.
+- **Hydrogen demand** split between reforming and electrolysis.
 
-   - Comprehensive analysis of energy use and emissions for each production process.
-   - Highlights the impacts of adopting renewable energy and alternative feedstocks.
-
-- **Technology Scenarios**:
-
-   - Tracks adoption rates for electrification, green hydrogen, and CCU technologies.
-   - Evaluates costs, emissions reductions, and scalability.
-
-
-Depth of Analysis
+Planned extensions
 ------------------
 
-1. **Integrated Pathways**:
+.. list-table::
+   :header-rows: 1
+   :widths: 32,68
 
-   - Links petrochemical production to upstream energy systems and downstream manufacturing industries.
-   - Enables holistic assessments of value chain decarbonization.
-
-2. **Policy and Market Impacts**:
-
-   - Simulates the effects of carbon pricing, subsidies for green hydrogen, and CCU mandates.
-   - Evaluates market shifts under global and regional decarbonization scenarios.
-
-3. **Long-Term Strategies**:
-
-   - Provides insights into the evolution of the sector under different technology and policy trajectories.
-   - Supports planning for net-zero transitions.
-
-
-Driving Change in the Petrochemical Industry
---------------------------------------------
-
-The KiNESYS platform enables detailed analysis of the petrochemical sector, balancing its critical role in modern economies with the urgent need for decarbonization. By modeling advanced technologies and energy optimization strategies, it supports the transition to a sustainable future.
+   * - Extension
+     - Why it matters
+   * - Existing capacity outside crackers
+     - Ammonia, methanol and chlor-alkali are unconstrained greenfield in every
+       region, so the model cannot see stranding or relocation for most of the
+       sector
+   * - Bio-based feedstocks
+     - Bio-naphtha, bioethanol-to-ethylene and methanol-to-olefins are the main
+       defossilisation route for embodied carbon and none of them is
+       represented; biomass currently appears only as a boiler fuel
+   * - Fibres and the polyester chain
+     - PTA, PET and the synthetic fibre chain are absent, which leaves a large
+       share of textile-bound petrochemical demand outside the model
+   * - Synthetic rubbers
+     - Butadiene is produced but has no downstream polymerisation
+   * - Polyethylene grade resolution
+     - LDPE, HDPE and LLDPE exist as separate products but share a single
+       demand series, so grade substitution cannot be examined
+   * - Natural gas liquids fractionation
+     - Ethane reaches crackers without the separation step that produces it,
+       which distorts the feedstock economics
+   * - Process energy calibration
+     - Modelled process energy sits about a third below the IEA's reported
+       figure, a gap that is documented but not closed
+   * - Syngas as a traded intermediate
+     - Co-production is described in the sector's own literature but syngas is
+       not a commodity here
 
 Iron and Steel
 ==============
 
-The iron and steel sector is fundamental to modern infrastructure and industrial development, yet it remains one of the most energy-intensive and carbon-intensive industries globally. Within its multi-sector global energy system framework, KiNESYS models this sector with detailed representation of production routes, material flows, and decarbonization pathways. This granularity—embedded alongside power, transport, buildings, and other industrial sectors—enables integrated analysis of transition strategies from today's high-emission processes to tomorrow's low-carbon alternatives.
-
+Steel is the largest industrial source of CO₂ and the sector where the choice
+between decarbonization pathways has the widest consequences — not only for
+emissions, but for which mines stay open, which ports stay busy, and where
+ironmaking physically happens. KiNESYS models it as a full material chain from
+ore to finished steel, built on a plant-level asset database, and set inside an
+energy system that simultaneously decides the electricity, hydrogen and biomass
+those pathways compete for.
 
 Scope and Coverage
 ------------------
 
-**Production Routes**
+**How the sector is assembled**
 
-KiNESYS models three distinct steelmaking pathways, each with unique characteristics, emission profiles, and decarbonization opportunities:
+The existing fleet comes from the Global Energy Monitor iron and steel tracker:
+every plant, its route, its capacity and its vintage. That becomes a set of
+country-tagged processes carrying vintaged existing capacity, so a 1990s blast
+furnace retires on its own schedule rather than a sector average. Alongside it
+sits a region-generic menu of greenfield technologies the model may build
+anywhere from its start year.
 
-    1. **Blast Furnace - Basic Oxygen Furnace (BF-BOF) Route**:
+As with the other industrial sectors, the output is a pair of workbooks: one
+country-level and region-agnostic, one carrying the model's region set through
+availability mapping, demand and discount rates.
 
-       - The traditional, carbon-intensive pathway using iron ore and metallurgical coke
-       - Modern BF: Advanced blast furnaces with improved efficiency and reduced emissions
-       - Modern BF with CCS: Blast furnaces equipped with carbon capture and storage
-       - Conventional BOF: Traditional basic oxygen furnaces for refining pig iron
-       - Conventional BOF with CCS: BOF systems integrated with carbon capture technology
-       - Coke ovens: Convert coking coal to metallurgical coke, producing valuable by-products
+**Production routes in the existing fleet**
 
-    2. **Direct Reduced Iron (DRI) Route**:
+Ten route types, each instantiated per steel-producing country and per vintage:
 
-       - Cleaner alternative to blast furnaces, producing sponge iron for electric arc furnaces
-       - Natural Gas-Based Midrex: Uses natural gas as the primary reducing agent
-       - Natural Gas-Based Midrex with CCS: Midrex process with integrated carbon capture
-       - Coal-Based Rotary Kiln: Uses coal for reduction in regions with limited gas access
-       - Coal-Based Rotary Kiln with CCS: Coal-based DRI with emissions capture
-       - Hydrogen-Based Reduction: Revolutionary pathway using green hydrogen for near-zero emissions
+.. list-table::
+   :header-rows: 1
+   :widths: 26,74
 
-    3. **Electric Arc Furnace (EAF) Route**:
+   * - Route
+     - What it covers
+   * - Coke ovens
+     - Coking coal to metallurgical coke, with coke oven gas recovered
+   * - Sinter and pellet plants
+     - Agglomeration of ore fines and concentrate for blast furnace or DRI feed
+   * - Blast furnace
+     - Hot metal from coke and agglomerate, with blast furnace gas recovered
+   * - Basic oxygen furnace
+     - Hot metal and scrap to crude steel
+   * - Gas-based DRI
+     - Midrex-type shaft furnace on natural gas
+   * - Coal-based DRI
+     - Rotary kiln, the dominant route where gas is unavailable
+   * - Electric arc furnace
+     - Scrap-based steelmaking
+   * - DRI-fed electric arc furnace
+     - Sponge iron melted with scrap
+   * - Rolling and finishing
+     - Crude to finished steel, returning home scrap at a 94% yield
 
-       - Predominantly scrap-based steelmaking with significantly lower emissions
-       - Electric Arc Furnace: Primary technology for melting scrap and DRI
-       - Induction Furnace: Smaller-scale, high-quality steel production
-       - Ladle Refining Furnace: Secondary refining for precise composition control
-       - Continuous Casting: Efficient conversion of molten steel to semi-finished products
+**The greenfield technology set**
 
-**Supporting Infrastructure**
+Nineteen technologies the model may build, spanning incremental improvement to
+breakthrough:
 
-The model captures essential upstream and downstream processes:
+- Conventional replacements — sinter, pellet, blast furnace, gas and coal DRI,
+  BOF, EAF, DRI-fed EAF, coke ovens, rolling
+- Efficiency variants — coke ovens with heat recovery, electrified rolling,
+  near-net-shape casting
+- Hydrogen routes — hydrogen direct reduction, gas-DRI with hydrogen blending,
+  blast furnace with tuyère hydrogen injection
+- Capture variants — blast furnace and BOF with capture
+- Breakthrough — molten oxide electrolysis, direct electrolytic ironmaking
 
-    - **Ore Preparation**:
-       - Pelletizing plants: Transform concentrated ore into pellets for blast furnaces or DRI
-       - Sintering plants: Agglomerate iron ore fines for blast furnace feed
-       - Crushing and beneficiation: Prepare raw ore for processing
+Hydrogen direct reduction consumes about 6.5 GJ of hydrogen and 0.75 GJ of
+electricity per tonne of sponge iron, on top of 1.42 tonnes of pellets. It and
+molten oxide electrolysis carry explicit cost learning curves rather than static
+capital costs, because both are pre-commercial and their economics in 2050 are
+a function of how much gets built before then.
 
-    - **Material Handling**:
-       - Cooling systems: Cool hot DRI for safe handling and transport
-       - Briquetting: Compact DRI to improve density and handling characteristics
-       - Transport logistics: Rail and truck transport of materials
+**Material commodities**
 
-**Feedstock and Energy Inputs**
+Nine material commodities carry the chain: iron ore, sinter, pellets, pig iron,
+sponge iron, crude steel, scrap, slag, and finished steel as the demand
+commodity. Energy and process gases — electricity, gas, coke, coal, hydrogen,
+blast furnace gas and coke oven gas — are the host system's own carriers, which
+is what puts steel in competition with every other sector for them.
 
-    - **Primary Raw Materials**:
-       - Iron ore (various grades and concentrations)
-       - Coking coal for coke production
-       - Limestone and dolomite as fluxing agents
-       - Steel scrap (quality-graded for different applications)
+Slag is tracked because it leaves the sector: it is the highest-quality
+supplementary cementitious material there is, and the cement module consumes it.
 
-    - **Alternative Inputs**:
-       - Natural gas for DRI production
-       - Green hydrogen for zero-emission reduction
-       - Biomass and alternative fuels for process heat
+**Energy coefficients are calibrated, not assumed**
 
-    - **Energy Systems**:
-       - Electricity: Critical for EAF route and hydrogen production
-       - Process heat: Steam and thermal energy across production stages
-       - By-product gases: Coke oven gas, blast furnace gas for energy recovery
+Rather than apply literature energy intensities uniformly, the sector calibrates
+its coefficients against IEA energy balances. Reported blast furnace, coke oven
+and iron and steel energy for each country is divided by that country's actual
+production from the plant database, and the result is blended with literature
+priors according to how credible the observation is. Capacity utilisation is
+separately calibrated against worldsteel production statistics.
 
-**Material Flows and Commodities**
+This matters because the alternative — nameplate capacity times a global
+intensity — misses by a wide margin in exactly the countries where the sector
+is growing fastest.
 
-The model tracks over 25 distinct material commodities through the steel production chain:
+**Scrap**
 
-    - Upstream: Iron ore, concentrated ore, pellets, sinter, coke
-    - Intermediate: Pig iron, sponge iron (DRI), molten steel
-    - Downstream: Refined steel, slabs, finished products
-    - Additives: Fluxes, ferroalloys, refining agents
-    - By-products: Slag, process gases, waste heat
-
-**International Trade of Steel-Related Commodities**
-
-Steel decarbonization is as much a story about restructuring global trade as it is about changing technology. KiNESYS explicitly models international trade for five key steel-sector commodities, each flowing through a global market mechanism across all regions:
-
-    - **Iron ore** — the dominant seaborne commodity today (~1,580 Mt/yr), connecting mines in Australia, Brazil, and Africa to blast furnaces and DRI plants worldwide
-    - **Coking coal** — essential feedstock for the BF-BOF route (~330 Mt/yr traded), highly concentrated among a few exporters
-    - **Steel scrap** — increasingly traded as EAF capacity grows; availability constrained by accumulated steel stock in each region
-    - **Sponge iron (DRI)** — a commodity that barely features in today's trade (~12 Mt) but emerges as a major flow under decarbonization, as DRI production gravitates to regions with cheap natural gas or renewable hydrogen and ships the intermediate product to steelmakers elsewhere
-    - **Crude steel** — traded as semi-finished product; subject to configurable trade constraints to reflect real-world frictions such as reheating costs, quality-control requirements, and industrial policy preferences
-
-Trade constraints can be applied at the commodity level to test the sensitivity of results to trade openness. For example, restricting crude steel trade forces the model to use sponge iron as the primary mechanism for international material flows — a choice with profound implications for port infrastructure, shipping patterns, and regional industrial structure.
-
-The model reports regional exports (``VAR_FIn`` on global market processes) and imports (``VAR_FOut``), enabling analysis of bilateral trade patterns, net trade positions, and the geopolitical implications of different decarbonization pathways.
-
-**Emissions and By-products**
-
-    - **Greenhouse Gas Emissions**:
-
-       - Process emissions from iron ore reduction (CO₂ from coke combustion)
-       - Calcination emissions from limestone decomposition
-       - Combustion emissions from fossil fuel use in heating and processing
-       - Indirect emissions from electricity generation
-
-    - **Valuable By-products**:
-
-       - Coke oven gas: High-energy gas for process heating or power generation
-       - Blast furnace gas: Lower-energy gas suitable for heating applications
-       - Slag: Reusable in cement production and construction
-       - Waste heat: Recoverable for district heating or power generation
-
+Scrap availability is projected per country to 2050 from steel stock
+accumulation, and enters as an upper bound on a domestic scrap supply process.
+Home scrap returns from rolling within the model. The projection distinguishes
+obsolete, prompt and home streams in its source data, but the model consumes a
+single pooled scrap commodity.
 
 Key Features for Decarbonization Analysis
 -----------------------------------------
 
-This granular representation enables exploration of questions along multiple dimensions:
+**Hydrogen-based direct reduction.** The complete replacement of natural gas or
+coal with hydrogen, producing sponge iron with near-zero direct emissions and a
+very large hydrogen appetite. Because hydrogen is a system commodity here rather
+than a sector assumption, the model prices it against every other hydrogen use
+and against the renewable electricity needed to make it.
 
-1. **Hydrogen-Based Direct Reduction**
+**Molten oxide electrolysis.** Direct electrolytic ironmaking, available late
+and expensive, included so that the long-horizon question — what happens if
+electrochemistry works — can be asked rather than assumed away.
 
-   - **Green Hydrogen Integration**:
+**Scrap-based steelmaking.** The circularity ceiling is a physical result rather
+than an input. Scrap availability is set by how much steel was made in previous
+decades and how long it lasts, and the model consistently finds scrap-EAF
+capping around 40–45% of global crude steel demand even under maximum
+decarbonization pressure. The remainder must come from primary iron, which is
+what keeps iron ore in the picture in every scenario.
 
-        - Models the complete replacement of natural gas or coal with hydrogen in DRI production
-        - Produces high-purity sponge iron with near-zero direct CO₂ emissions
-        - Requires integration with renewable electricity for hydrogen production
-        - Tracks infrastructure requirements and scaling challenges
+**Process efficiency.** Modern blast furnaces, heat-recovery coke ovens,
+electrified rolling and near-net-shape casting, each with its own capital cost,
+so efficiency competes against fuel switching on economics rather than being
+imposed.
 
-   - **Technology Readiness**:
+**Regional contextualisation.** Capital costs are differentiated by region
+through industry-specific discount rates derived from sector betas, with
+first-of-a-kind premiums applied to pre-commercial technologies. Iron ore supply
+carries country-level mining costs. Resource endowment, not just technology
+cost, decides where routes locate.
 
-        - Evaluates pilot-scale demonstrations and commercial deployment timelines
-        - Analyzes cost trajectories as hydrogen production scales
-        - Assesses regional suitability based on renewable energy availability
+Carbon capture
+~~~~~~~~~~~~~~
 
-2. **Carbon Capture and Storage (CCS)**
+Capture is represented, but it is worth being precise about where.
 
-   - **BF-BOF with CCS**:
+Steel's combustion emissions arrive on the host system's industrial CO₂
+commodities, and those sit inside the host's capturable industrial emissions
+group, with a dedicated commodity for CO₂ captured from fossil combustion in
+iron and steel. So capture is available to the sector and does real work in
+scenario comparisons — the results below were produced this way.
 
-        - Captures up to 90% of process emissions from blast furnaces and steel plants
-        - Models both post-combustion and pre-combustion capture technologies
-        - Tracks retrofitting costs for existing facilities
-        - Analyzes energy penalties and efficiency impacts
+What that mechanism cannot do is distinguish one blast furnace from another. It
+acts on the sector's emissions in aggregate rather than on a specific process,
+so the model decides how much steel CO₂ to capture, not which plant captures it.
 
-   - **DRI with CCS**:
+.. note::
 
-        - Captures emissions from natural gas or coal-based DRI production
-        - Evaluates technical feasibility and economic viability
-        - Models integration with CO₂ transport and storage infrastructure
+   **Planned, not yet in the model.** Process-level capture. Blast furnace and
+   BOF capture variants are defined with 90% capture rates, but as currently
+   emitted they carry the capital cost and energy penalty of capture **without
+   the captured CO₂ flow** — which makes them strictly worse than their
+   unabated equivalents and means they will never be built. Wiring the capture
+   flow through is what would let retrofit economics, capture rates by route
+   and the survival of specific incumbent assets be examined properly, rather
+   than only the sector-level question of how much to capture.
 
-   - **CCS as an infrastructure-preservation choice**:
+International trade
+-------------------
 
-        - A distinguishing feature of KiNESYS's integrated approach: CCS availability does not merely reduce emissions — it determines whether the entire incumbent raw-material complex (iron ore mining, coking coal supply chains, blast furnace infrastructure, associated port and shipping capacity) survives the transition. Two pathways with identical carbon prices and similar emissions outcomes can produce completely different industrial structures depending on CCS availability, with far-reaching consequences for trade flows, regional employment, and infrastructure investment
+Steel decarbonization is as much a story about restructuring global trade as
+about changing technology, and five commodities carry that story: iron ore,
+coking coal, steel scrap, sponge iron and crude steel.
 
-3. **Scrap-Based Steelmaking**
+Iron ore is the dominant seaborne dry bulk today. Coking coal is concentrated
+among a few exporters and disappears entirely under deep decarbonization. Scrap
+trade grows with EAF capacity. Sponge iron barely features in today's trade but
+becomes a major flow when direct reduction gravitates to regions with cheap gas
+or renewable hydrogen and ships the intermediate product to steelmakers
+elsewhere. Crude steel is traded as semi-finished product, subject to
+constraints reflecting reheating costs, quality control and industrial policy.
 
-   - **EAF Route Expansion**:
+Restricting crude steel trade forces the model to use sponge iron as the primary
+mechanism for international material flow — a choice with large consequences for
+ports, shipping and regional industrial structure.
 
-        - Tracks the evolution of scrap availability across 30 global regions
-        - Models scrap quality grades and their suitability for different steel products
-        - Analyzes the ~70% emissions reduction compared to primary steelmaking
-        - Projects scrap supply growth based on historical steel production and stock accumulation
+.. note::
 
-   - **Scrap Availability Dynamics**:
-
-        - Time horizon: 2019-2050 with annual resolution
-        - Regional differentiation: China, India, USA, EU, Brazil, and 25 other regions
-        - Quality considerations: Obsolete scrap, prompt scrap, and home scrap
-        - Circularity constraints: Physical limits on scrap-based production — model results consistently show scrap-EAF capping at around 40–45% of global crude steel demand even under maximum decarbonization, confirming that there is no purely circular future for steel. The remaining demand must be met by primary iron (via DRI or BF-BOF), which in turn drives continued iron ore trade
-
-4. **Process Efficiency Improvements**
-
-   - **Modern Technologies**:
-
-        - Advanced blast furnaces with pulverized coal injection
-        - Top-pressure recovery turbines for energy efficiency
-        - Optimized coke oven designs with improved thermal efficiency
-        - High-efficiency electric arc furnaces with scrap preheating
-
-   - **Energy Recovery**:
-
-        - Waste heat recovery from coke ovens, blast furnaces, and steel furnaces
-        - By-product gas utilization for power generation
-        - Integration with industrial symbiosis networks
-
-5. **Material Efficiency**
-
-   - **Yield Optimization**:
-
-        - Improved casting technologies to reduce material losses
-        - Near-net-shape manufacturing to minimize downstream processing
-        - Precision steel grades to reduce over-specification
-
-   - **Circular Economy**:
-
-        - Slag valorization for cement and construction applications
-        - Dust and sludge recycling within steel plants
-        - Extended product lifespans through high-performance steel grades
-
-6. **Regional Contextualization**
-
-   - **Technology Costs**:
-
-        - Regional variations in capital costs (CAPEX) and operating costs (OPEX)
-        - Reflects differences in labor costs, equipment prices, and financing conditions
-        - Captures economies of scale and learning rates
-
-   - **Resource Endowments**:
-
-        - Iron ore quality and accessibility (Australia, Brazil, India)
-        - Coking coal availability and quality
-        - Natural gas infrastructure for DRI production
-        - Renewable energy potential for green hydrogen
-
-   - **Infrastructure Readiness**:
-
-        - Electricity grid capacity for EAF expansion
-        - CO₂ transport and storage infrastructure for CCS
-        - Hydrogen production and distribution networks
-        - Scrap collection and processing systems
-
+   Trade links for these commodities are configured in the host model rather
+   than emitted by the steel sector build. A host assembled from the sector
+   workbooks alone will have the full production chain but no trade, and its
+   regions will each have to meet their own demand.
 
 Model Outputs
 -------------
 
-Different types of outputs can be readily configured on dashboards that hold output from rich scenario experiments—ready for what-if analysis with presolved cases by diverse stakeholders and domain experts:
-
-- **Energy and Emissions Profiles**:
-
-   - Detailed energy consumption by source (electricity, coal, natural gas, hydrogen)
-   - Comprehensive emissions accounting: direct process emissions, combustion emissions, indirect emissions
-   - Technology-specific emission intensities (kg CO₂/ton steel)
-   - Regional emission profiles reflecting local energy mixes
-
-- **Technology Adoption Scenarios**:
-
-   - Penetration rates for hydrogen-based DRI under different policy scenarios
-   - CCS deployment timelines and capacity additions
-   - EAF capacity expansion constrained by scrap availability
-   - Investment requirements and financing needs
-
-- **Cost and Competitiveness Analysis**:
-
-   - Production cost breakdowns by technology route
-   - Impact of carbon pricing on technology competitiveness
-   - Green premium for low-carbon steel
-   - Trade implications under carbon border adjustment mechanisms
-
-- **Material Flow Analysis**:
-
-   - Iron ore demand projections by region and quality grade
-   - Coking coal requirements and potential for substitution
-   - Scrap flows and circularity rates
-   - Hydrogen demand for steel sector decarbonization
-
-- **Visualisation and Communication**:
-
-   - Sankey diagrams of material flows (raw materials → steelmaking routes → crude steel, with CO₂ exit flows) for any scenario and region, enabling direct visual comparison of structurally distinct futures
-   - Time-series trajectory charts showing how key metrics (production, CO₂ intensity, route shares, hydrogen consumption, steel cost, trade volumes) evolve from present to 2050 across large scenario ensembles
-   - Trade composition charts decomposing global steel-related seaborne trade by commodity, revealing how the cargo on ships changes under different policy settings
-   - Regional trade butterfly charts showing net exporter/importer positions for each commodity under multiple scenarios, exposing the geopolitical dimension of decarbonization
-
+- **Energy and emissions by route and region**, including technology-specific
+  emission intensities and the indirect emissions that follow from electricity
+  and hydrogen sourcing.
+- **Technology adoption** — hydrogen DRI penetration, EAF expansion against the
+  scrap ceiling, capture volumes, and the investment those imply.
+- **Cost and competitiveness** — production cost by route, the green premium on
+  crude steel, and the effect of carbon border adjustment.
+- **Material flows** — ore demand by region, coking coal requirements, scrap
+  circularity rates, and hydrogen demand for steel.
+- **Visualisation** — Sankey diagrams of material flow for any scenario and
+  region, trajectory charts across large scenario ensembles, and trade
+  composition and net-position charts.
 
 Illustrative Findings
 ---------------------
 
-The following results illustrate the type of insight the model produces when scenario dimensions (carbon price, CCS availability, technology cost assumptions) are varied systematically. These are representative, not prescriptive — actual results depend on the specific scenario configuration and regional calibration.
+The following illustrate the kind of insight the model produces when scenario
+dimensions — carbon price, capture availability, technology cost, trade regime —
+are varied systematically. They are representative, not prescriptive.
 
 .. figure:: images/steel_sankey_quartet.png
    :width: 100%
    :align: center
 
-   **Sankey quartet — four structurally distinct steel futures at 2050.** Each panel traces material flows from raw inputs (left) through steelmaking routes (centre) to crude steel output (right), with CO₂ exit flows shown upward. The 2023 baseline (top-left) is dominated by blast furnaces; the four 2050 scenarios show how the system transforms under different carbon price and CCS availability assumptions. Panels sharing the same carbon price (bottom pair) achieve similar emissions reductions but with completely different supply chains.
+   **Sankey quartet — four structurally distinct steel futures at 2050.** Each
+   panel traces material flows from raw inputs (left) through steelmaking routes
+   (centre) to crude steel output (right), with CO₂ exit flows shown upward. The
+   2023 baseline (top-left) is dominated by blast furnaces; the four 2050
+   scenarios show how the system transforms under different carbon price and
+   capture availability assumptions. Panels sharing the same carbon price
+   (bottom pair) achieve similar emissions reductions with completely different
+   supply chains.
 
-**Structurally distinct futures at the same carbon price.** Under a moderate carbon price with CCS available, the BF-BOF route can survive — preserving the iron ore and coking coal supply chain, with CCS capturing several hundred Mt CO₂. Under the same carbon price without CCS, blast furnaces are eliminated entirely: DRI-EAF and Scrap-EAF dominate, coal disappears, and the energy mix shifts to gas, hydrogen, and electricity. Both pathways achieve comparable emissions reductions (75–85% below baseline), but the industrial structures — and therefore the infrastructure, trade, and employment implications — are completely different.
+**Structurally distinct futures at the same carbon price.** Under a moderate
+carbon price with capture available, the blast furnace route can survive,
+preserving the iron ore and coking coal supply chain. Under the same carbon
+price without capture, blast furnaces are eliminated entirely: direct reduction
+and scrap-based EAF dominate, coal disappears, and the energy mix shifts to gas,
+hydrogen and electricity. Both achieve comparable emissions reductions of 75–85%
+below baseline, but the industrial structures — and therefore the
+infrastructure, trade and employment implications — are completely different.
+
+This is the sector's central finding, and it is an argument for modelling
+capture availability as a scenario dimension in its own right rather than
+folding it into a carbon price.
 
 .. figure:: images/steel_trade_composition.png
    :width: 100%
    :align: center
 
-   **Global steel-related trade composition — from today to five carbon-price futures.** Each bar decomposes total seaborne trade by commodity. Iron ore (blue) dominates today; under decarbonization, coking coal disappears, sponge iron (teal) surges, and the total initially rises before falling. Crude steel trade is constrained to reflect reheating and quality frictions.
+   **Global steel-related trade composition — from today to five carbon-price
+   futures.** Each bar decomposes total seaborne trade by commodity. Iron ore
+   dominates today; under decarbonization coking coal disappears, sponge iron
+   surges, and the total initially rises before falling.
 
-**Trade reshuffling, not just trade reduction.** Steel-related global trade (iron ore + coking coal + sponge iron + scrap + crude steel) can initially *increase* under low-to-moderate carbon prices as DRI production concentrates in gas- and renewables-rich regions and ships sponge iron globally. At higher carbon prices, total trade volumes decline — but the composition is unrecognisable: coking coal disappears, iron ore demand halves, and sponge iron becomes the dominant traded intermediate. The model shows that the decarbonization pathway chosen determines whether the world preserves the incumbent raw-material shipping complex or rewires it.
+**Trade reshuffling, not just trade reduction.** Steel-related global trade can
+initially *increase* under low-to-moderate carbon prices, as direct reduction
+concentrates in gas- and renewables-rich regions and ships sponge iron globally.
+At higher carbon prices total volumes decline, but the composition is
+unrecognisable: coking coal disappears, iron ore demand halves, and sponge iron
+becomes the dominant traded intermediate.
 
-**Bounded green premium.** Across a wide range of scenarios, the model-implied cost of crude steel (shadow price from the optimisation) increases by roughly 20–35% under ambitious decarbonization relative to a no-policy baseline. This is significant for a commodity-grade product but far below the 2–3× premiums sometimes cited in public discourse.
+**Bounded green premium.** Across a wide range of scenarios the model-implied
+cost of crude steel rises by roughly 20–35% under ambitious decarbonization
+relative to a no-policy baseline — significant for a commodity-grade product,
+but far below the two- to three-fold premiums sometimes cited.
 
-**No purely circular future.** Even under maximum scrap utilisation, EAF-based production from scrap caps at around 40–45% of global crude steel demand — constrained by the physics of steel stock accumulation and scrap availability. The remaining 55–60% must come from primary iron, which means iron ore continues to be mined and traded in all futures. The question is whether that ore feeds blast furnaces or DRI plants.
+**No purely circular future.** Even under maximum scrap utilisation, EAF
+production from scrap caps around 40–45% of global crude steel demand. The
+remaining 55–60% must come from primary iron, so ore continues to be mined and
+traded in every future. The question is whether it feeds blast furnaces or
+direct reduction plants.
 
-**Hydrogen consumption at scale.** Deep decarbonization scenarios imply hydrogen consumption by the steel sector alone on the order of 25–60 Mt H₂ per year by 2050 — a substantial fraction of projected global clean hydrogen supply and a critical input for hydrogen infrastructure planning.
+**Hydrogen consumption at scale.** Deep decarbonization implies hydrogen
+consumption by steel alone on the order of 25–60 Mt per year by 2050 — a
+substantial fraction of projected global clean hydrogen supply, and a critical
+input to hydrogen infrastructure planning.
 
+Cross-sector coupling
+---------------------
 
-Depth of Analysis
+Steel does not decarbonize in isolation, and the couplings run in both
+directions.
+
+It competes for electricity, hydrogen, biomass and capture capacity with every
+other sector, and those competitions decide which route is affordable. It also
+supplies: blast furnace slag is the best supplementary cementitious material
+available, and the cement sector depends on it to reduce clinker content. A
+steel pathway that eliminates blast furnaces therefore removes cement's cheapest
+abatement option at the same time. Neither sector modelled alone would see it.
+
+Planned extensions
 ------------------
 
-1. **Comprehensive Technology Portfolio**:
+.. list-table::
+   :header-rows: 1
+   :widths: 32,68
 
-   - Models the full spectrum from conventional high-emission routes to breakthrough technologies
-   - Captures technology-specific parameters: energy inputs, material coefficients, costs, emissions
-   - Reflects regional variations in technology performance and economics
-   - Tracks technology evolution through learning curves and efficiency improvements
-
-2. **Integrated Decarbonization Pathways**:
-
-   - Analyzes synergies and trade-offs between different decarbonization strategies
-   - Models competition for limited resources (scrap, hydrogen, CO₂ storage capacity)
-   - Evaluates timing and sequencing of technology transitions
-   - Assesses system-wide implications for energy demand and infrastructure
-
-3. **Policy and Market Dynamics**:
-
-   - Simulates impacts of carbon pricing, emissions trading, and regulatory mandates
-   - Models subsidies and incentives for low-carbon technologies
-   - Analyzes trade flows under differentiated carbon policies
-   - Evaluates competitiveness impacts and carbon leakage risks
-
-4. **Systemic Integration**:
-
-   - Links steel production with upstream mining and downstream manufacturing
-   - Connects with electricity systems for EAF demand and hydrogen production
-   - Integrates with hydrogen economy for green steel pathways
-   - Couples with CO₂ transport and storage infrastructure for CCS
-
-5. **Scenario Exploration**:
-
-   - **Multi-dimensional scenario design**: Carbon price levels, CCS availability toggles, technology cost assumptions, and trade regime constraints can be combined to generate large scenario ensembles, enabling systematic exploration of the solution space
-   - Net-zero pathways: Technology mixes and timelines to achieve zero emissions
-   - Resource constraints: Scrap availability, hydrogen production capacity, CCS potential
-   - Regional transitions: Different pathways for each of the 30+ regions based on local resource endowments, existing infrastructure, and accumulated steel stock
-   - Disruptive innovation: Breakthrough technologies and accelerated deployment scenarios
-   - **Country-level deep dives**: The model supports extraction and visualisation of results for individual regions, revealing how global decarbonization pathways translate into country-specific industrial transformations — including stranding risk for existing capacity, shifts in import dependency, and changes in trade partnerships
-
-
-Building a Low-Carbon Future for Iron and Steel
------------------------------------------------
-
-Within KiNESYS's multi-sector global energy system optimization framework, the steel sector representation captures the complete production chain — from iron ore to finished steel — across multiple technology routes and 30+ regions, with explicit international trade of five key commodities. The model includes emerging technologies like hydrogen-based DRI and CCS-equipped facilities, alongside realistic constraints on scrap availability, trade frictions, and infrastructure development.
-
-This level of sectoral detail, integrated within a comprehensive energy system model that simultaneously optimizes power generation, transport, buildings, and other industries, enables analysis of cross-sectoral interactions and competition for limited resources. The steel sector doesn't operate in isolation — it competes for electricity, hydrogen, biomass, and CO₂ storage capacity with other sectors, and these interactions shape realistic decarbonization pathways.
-
-A key insight from this integrated approach: steel decarbonization is as much a story about relocating industrial production and restructuring global trade as it is about deploying new technology. The chosen pathway determines whether the world preserves the incumbent iron ore and coking coal shipping complex or rewires it around sponge iron and clean hydrogen. KiNESYS is uniquely positioned to explore these trade-offs because it models both the technology transitions and the trade flows simultaneously, within a single optimisation framework.
+   * - Extension
+     - Why it matters
+   * - Process-level capture flow
+     - Capture variants are defined but emitted without the captured CO₂, so
+       they are currently unbuildable and retrofit economics cannot be examined
+   * - Trade links emitted with the sector
+     - The five traded commodities are configured host-side, so a host built
+       from the sector workbooks alone has no steel trade at all
+   * - Scrap quality grades
+     - Obsolete, prompt and home scrap are distinguished in the source data but
+       pooled into one commodity, so scrap quality cannot constrain product mix
+   * - Fluxes and refining agents
+     - Limestone and dolomite are consumed in reality and carry calcination
+       emissions; neither is a commodity here
+   * - Secondary refining and casting as stages
+     - Ladle refining and continuous casting are absorbed into rolling, so
+       their energy and their electrification potential are not visible
+   * - Existing-fleet retrofit economics
+     - Existing capacity enters through vintaged stock without investment
+       costs, so the choice between retrofitting and replacing an asset is not
+       priced
 
 Non-Metallic Minerals
 =====================

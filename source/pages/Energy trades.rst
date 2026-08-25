@@ -14,7 +14,7 @@ Trade Coverage
     Gas pipelines and LNG terminals from Global Energy Monitor data are aggregated into model regions to represent natural gas trade flows.
 
 **Global Commodity Markets**
-    Generic global markets are included for crude oil and petroleum products, coal and coal products, biofuels, and hydrogen.
+    Generic global markets are included for crude oil and petroleum products, coal and coal products, drop-in biofuels, and hydrogen. Dedicated feedstock trade (vegetable oils, waste lipids, molasses) is an opt-in on multi-region instances — see :doc:`Bioenergy resources`.
 
 
 Electricity Trade Methodology

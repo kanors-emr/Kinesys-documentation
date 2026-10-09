@@ -1,0 +1,355 @@
+# Data Sources
+
+KiNESYS integrates data from leading international organizations and research institutions. This page documents the primary sources used to construct model instances.
+
+!!! note
+
+    Data is stored in a relational database in its native form, enabling straightforward updates when new versions become available. SQL scripts process and transform this data into VEDA-TIMES compatible formats.
+
+## Energy Balances and Statistics
+
+**IEA World Energy Balances (2025)**
+
+:   Comprehensive energy statistics covering production, transformation, and final consumption by country, fuel, and flow. The foundation for base year calibration across all sectors.
+
+    *Update frequency: Annual*
+
+**IEA World Energy Statistics**
+
+:   Detailed statistics on gas production, trade, and consumption. Supports gas sector calibration.
+
+## Macroeconomic Projections
+
+**IIASA SSP Database (Version 3)**
+
+:   Shared Socioeconomic Pathways projections for GDP (PPP) and population under five socioeconomic narratives (SSP1-SSP5). Provides projections from base year to 2100 at country level.
+
+    *Reference: Riahi et al. (2017), Global Environmental Change*
+
+**World Bank World Development Indicators**
+
+:   GDP sectoral composition — agriculture, industry, services, and manufacturing as percentage of GDP. Used to disaggregate total GDP into sector-specific drivers with structural convergence assumptions.
+
+## Power Sector
+
+**S&P Global Platts WEPP**
+
+:   World Electric Power Plants database with unit-level details including capacity, fuel type, commissioning year, and cooling technology. Provides the foundation for vintaged existing stock representation.
+
+**IRENA Renewable Capacity Statistics**
+
+:   Installed renewable electricity capacity by country and technology. Used for renewable capacity calibration and validation.
+
+    *Update frequency: Annual*
+
+**IEA World Energy Outlook**
+
+:   Technology cost assumptions and regional scenario projections. Used for scenario benchmarking (Stated Policies, Announced Pledges, Net Zero scenarios).
+
+    *Update frequency: Annual*
+
+**IEA Global Energy and Climate (GEC) Model Dataset (WEO 2023)**
+
+:   Regionally differentiated techno-economic parameters for 26 power generation technologies across 9 world regions under the Stated Policies (STEPS) scenario. Provides overnight capital costs, fixed O&M, thermal efficiency, capacity factors, and construction times. Primary source for regional absolute cost levels used in the unified reference cost dataset.
+
+    *Technologies:* Gas (CCGT, gas turbine, CCGT-CHP, fuel cell, CCGT+CCS), Coal (subcritical, supercritical, ultra-supercritical, IGCC, three CCS variants), Nuclear, Renewables (solar PV, CSP, wind on/offshore, hydro, biomass, geothermal)
+
+    *Regions:* European Union, United States, Japan, Russia, China, India, Middle East, Africa, Brazil
+
+    *Time points:* 2022, 2030, 2050
+
+    *Currency:* USD 2022
+
+**NREL Annual Technology Baseline (ATB) 2024v3**
+
+:   US-specific technology cost projections under Conservative, Moderate, and Advanced scenarios reflecting different rates of technological progress. Used to derive hi/lo cost uncertainty spread multipliers (ratio of Conservative/Advanced to Moderate) applied to IEA GEC regional costs. Also the sole source for utility-scale battery storage costs (4-hour and 8-hour Li-ion), which are applied uniformly across all regions.
+
+    *Technologies:* All major generation technologies plus utility-scale battery storage
+
+    *Time points:* Annual from 2022 to 2050
+
+    *Currency:* USD 2022
+
+## Gas and LNG Infrastructure
+
+**Global Energy Monitor - Global Gas Infrastructure Tracker**
+
+:   Pipeline capacity, operational status, start years, and routes for gas pipelines worldwide. Used to construct interregional gas trade links.
+
+    *Update frequency: Quarterly*
+
+**Global Energy Monitor - Global LNG Infrastructure Tracker**
+
+:   Liquefaction and regasification terminal capacity by country. Used for LNG trade infrastructure.
+
+## Electricity Transmission and Trade
+
+**ENTSO-E Net Transfer Capacity (NTC)**
+
+:   Official forward and reverse net transfer capacities for European bidding zones and neighbouring interconnectors. Primary source for European electricity trade links in KiNESYS. Processed from `NTSOe_NetTransferCap.xlsx` with base-year and incremental 2025/2030 vintages.
+
+**Global Transmission Database (GTD v1.0)**
+
+:   Comprehensive global dataset of existing and planned cross-border electricity transmission capacities (MW), collated from TSO reports, regulatory filings, and academic sources. Used for all non-ENTSO-E trade links and for Europe–non-Europe borders not covered by NTC.
+
+    *Reference: Brinkerink et al. (2024), Data in Brief, doi:10.1016/j.dib.2024.110420*
+
+    *Repository:* <https://zenodo.org/doi/10.5281/zenodo.10063445>
+
+    *Coverage: 164 countries; national aggregation; existing (~2023) and planned capacities with commissioning years*
+
+    *Stored in VerveStacks:* `data/Electricity Transmission Database/`
+
+## Oil and Gas Supply
+
+**KAPSARC analysis**
+
+:   Oil and gas production projections by breakeven price category. Accessed via KAPSARC partnership. Used to construct supply curves with price-responsive behavior.
+
+## Biomass and Land Use
+
+See [Bioenergy resources](bioenergy-resources.md) for how these sources are combined into feedstock pools, and [Liquid fuels processing](liquid-fuels-processing.md) for conversion.
+
+**FAOSTAT**
+
+:   Crop and livestock production (five-year mean 2020–2024 for crop inventories), producer prices, forestry and land-use bulk files. Country-level first-generation inventories, downscaling keys for GLOBIOM energy crops (cropland) and forest variables, and livestock numbers for wet-resource excretion.
+
+    *Update frequency: Annual*
+
+**USDA Production, Supply and Distribution (PSD)**
+
+:   Oilseed crush, industrial use, food use and net trade by country. Closes lipid balances so domestic oil production is not treated as domestic biofuel availability. Anchors existing industrial use (T1) for the FAME/HVO split.
+
+    *Update frequency: Monthly marketing-year cycle; KiNESYS uses MY2024*
+
+**FAPRI**
+
+:   Observed biofuel use by country. Anchors the existing-use (T1) diversion step for sugar, starch and cane.
+
+**World Bank Commodity Markets (Pink Sheet)**
+
+:   World prices for palm, soybean and other vegetable oils. T1 lipid prices; T2/T3 are premiums on this base.
+
+    *Currency: USD 2024*
+
+**LUT biomass potentials**
+
+:   Country-level gross crop-residue inventories. Combined with ENSPRESO removable fractions (Europe) or EU-median rates (elsewhere) to form agricultural-residue supply steps.
+
+**ENSPRESO (JRC)**
+
+:   European sustainable residue and manure/sludge potentials: removable low/median/high fractions, collection-cost sheets, and wet-resource inventories converted to a dry volatile-solids energy basis.
+
+**IEA World Energy Balances**
+
+:   Primary solid biomass production (PRIMSBIO) downscales the cheapest GLOBIOM step (traditional use) and checks base-year totals. Biofuel output (biogasoline, biodiesel including HVO, biojet, biogases) sizes the existing conversion fleet.
+
+**IIASA GLOBIOM–G4M lookup**
+
+:   Lignocellulosic potential by type (energy crops, fuelwood, roundwood, mill and logging residues), seven price tiers, and land-use / sustainability scenario. Default in KiNESYS is scenSDGs; unconstrained scenBASE is an opt-in. Higher steps are downscaled with FAOSTAT resource keys (cropland, roundwood, mill output), not with a single IEA share.
+
+    *Reference: Havlík et al. (2014), Global Change Biology*
+
+**IPCC 2006 Guidelines, Vol. 2**
+
+:   Default carbon contents (kgCO2/GJ) for wood, other primary solid biomass, biogasoline, biodiesel and methane. Crop and oil pool factors that IPCC does not tabulate are derived from composition and the adopted feedstock LHV.
+
+## Industrial Sector
+
+**USGS Mineral Commodity Summaries**
+
+:   Mineral production statistics by country covering non-ferrous metals, non-metallic minerals, and other industrial commodities.
+
+    *Update frequency: Annual*
+
+**FAO FAOSTAT**
+
+:   Agricultural and forestry production statistics including paper and pulp production. Used for industrial demand calibration.
+
+    *Update frequency: Annual*
+
+**Global Energy Monitor - Global Steel Plant Tracker**
+
+:   Steel plant capacities by technology route (BF-BOF, EAF, DRI) with coordinates. Used for steel sector calibration and as the steel emitter set in the CCS supply curves (see below).
+
+    *Update frequency: Semi-annual*
+
+## Transport
+
+**OICA - Global Vehicle Population Data**
+
+:   *Source to be confirmed: OICA / IEA Mobility Model / National statistics*
+
+    Vehicle stocks by type (cars, trucks, buses, 2-wheelers, 3-wheelers) and country. Used for transport demand calibration.
+
+## Renewable Energy Potential
+
+**World Bank ESMAP REZoning**
+
+:   Renewable energy potential by zone and cost class, covering solar PV and onshore wind. Provides technical and economic potential with spatial granularity.
+
+**CM SAF SARAH + ECMWF ERA5**
+
+:   Satellite-derived solar irradiance (SARAH) and reanalysis wind speed (ERA5) data. Provides hourly capacity factor profiles for solar and wind resources at grid-cell level.
+
+## Renewable Resource Characterization
+
+KiNESYS employs detailed spatial data for renewable energy characterization, enabling cluster-specific generation profiles and supply curves.
+
+**Atlite Grid-Cell Capacity Factors**
+
+:   Hourly capacity factor profiles (8760 hours) for solar, wind onshore, and wind offshore at 50km² grid-cell resolution. Derived from ERA5 (wind) and SARAH (solar) reanalysis data through the Atlite library.
+
+    *Technologies*: Solar PV, Wind Onshore, Wind Offshore
+
+    *Resolution*: 50km² grid cells, hourly (8760 values per cell per year)
+
+    *Weather Years*: 2010, 2013 (default), 2016, 2019
+
+    *Coverage*: Global, 211 countries
+
+    *Reference*: Hofmann et al. (2021), Journal of Open Source Software
+
+**REZoning Economic Potential Database**
+
+:   Grid-cell level renewable energy potential by cost class, including land availability after exclusions (protected areas, urban, water bodies), terrain factors, and grid connection distance estimates. Derived from PyPSA-Earth preprocessing methodology.
+
+    *Attributes per cell*: Technical potential (MW), cost class tier, coordinates, land availability
+
+    *Technologies*: Solar PV, Wind Onshore, Wind Offshore
+
+    *Source*: KanORS-EMR compilation based on PyPSA-Earth methodology
+
+**IRENA Renewable Capacity and Generation Statistics**
+
+:   National-level installed renewable electricity capacity and annual generation by technology. Used for base year calibration, validation of potential estimates, and allocation of existing capacity to spatial clusters.
+
+    *Technologies*: Solar PV, Wind Onshore, Wind Offshore, Hydro, Biomass, Geothermal
+
+    *Update frequency*: Annual
+
+    *Usage*: Existing capacity allocation to clusters based on capacity factor matching
+
+**Global Energy Monitor - Solar and Wind Power Trackers**
+
+:   Unit-level existing and planned solar PV, onshore wind, and offshore wind installations worldwide. Provides coordinates, capacity (MW), status, and technology type. Each unit is mapped to its nearest REZoning grid cell within the same country, and its capacity is subtracted from the cell's technical potential before clustering to ensure supply curves reflect only greenfield potential.
+
+    *Update frequency*: Quarterly
+
+    *Usage*: Greenfield potential adjustment (existing capacity deduction from REZoning grid cells)
+
+**City Population Database**
+
+:   Coordinates and population of major cities (\>100,000 population) worldwide. Used to compute connection costs from renewable resource clusters to nearest demand centers.
+
+    *Source*: Natural Earth / UN World Urbanization Prospects
+
+## Carbon Capture and Storage
+
+The legacy ETSAP-TIAM storage assessment (Hendriks 2004 / Dooley 2005 downscaling) has been replaced by a supply-curve dataset built from the sources below. See the [CCS chapter](carbon-capture-and-storage-ccs.md) for methods.
+
+**OGCI CO2 Storage Resource Catalogue (Cycle 5, 2025)**
+
+:   Site-level global storage capacity assessments (P10/P50/P90) with coordinates, formation type, basin, and discovery status. The capacity spine of the dataset.
+
+    *Repository:* <https://www.ogci.com/ccus/co2-storage-catalogue>
+
+**Gidden et al. (2025) — Prudent Planetary Limit for Geologic Carbon Storage**
+
+:   Country-level nesting of technical potential, suitability-screened (prudent) limit, and O&G-infrastructure-overlapped potential, on/offshore; plus a 0.01° global raster of sedimentary basin footprints (assessed/unassessed classes). Used for quality-tier quantification, capacity gap-fill, and sink geometry.
+
+    *Reference: Gidden et al. (2025), Nature 645; data: doi:10.5281/zenodo.15657542*
+
+**Smith, Hampson & Krevor (2024) — Pressure-Limited Global Storage Analysis**
+
+:   765-basin global skeleton (SI mmc1: names, centroids, countries, data sufficiency) and published global physical maxima used as the Tier-1 calibration anchor; country result tables used for validation. Basin-level parameters are proprietary (Wood Mackenzie) and are re-derived from open sources instead.
+
+    *Reference: Smith et al. (2024), IJGGC 137*
+
+**CO2BLOCK (De Simone & Krevor 2021)**
+
+:   Analytical basin-scale pressure-buildup model; run with open parameters (CO2StoP reservoir properties, OGCI site kh, CRUST1.0 sediment thickness, IHFC heat flow) to derive pressure-limited injection-rate ceilings per basin.
+
+    *Repository:* <https://github.com/co2block/CO2BLOCK>
+
+**Zhang, Jackson & Krevor (2024) — CCS Deployment Growth Model**
+
+:   Monte Carlo logistic-growth fits of storage deployment by country and scenario. Calibrates the global Tier-2 build-rate ramp (Low/Central/High).
+
+    *Reference: Nature Communications 15; code+data: doi:10.5281/zenodo.11446272*
+
+**Fan et al. (2025) — China Fine-Grid Storage Dataset**
+
+:   5-km gridded storage potential and explicit injection-rate capacity for China (24 basins, 1,181 oilfields). Used as an explicit override for China.
+
+    *Reference: Scientific Data 12*
+
+**CO2StoP (EU JRC), NETL NatCarb, OGIM v2.7**
+
+:   EU storage-unit reservoir properties (depth/thickness/porosity/permeability); US saline polygons and grids (informational cross-check only); global oil & gas field geometries for depleted-field proxies and basin areas.
+
+**Global Energy Monitor — Steel, Cement, and Power Plant Trackers**
+
+:   Plant coordinates and capacities for the capturable-emitter side of the source-sink matching (7,529 plants; route-resolved emission factors; grinding-only cement plants excluded).
+
+    *Update frequency: Quarterly/semi-annual*
+
+**Transport & storage cost literature**
+
+:   Pipeline engineering economics: McCoy & Rubin (2008), diameter tiers Kim et al. (2024), regional factors Baek et al. (2026); storage unit costs ZEP (2011), NETL (2017); shipping chains Element Energy/BEIS (2018), VITO. The pessimistic cost scenario additionally draws on Anderson (2019/2020) for active pressure management and the Rubin FOAK/NOAK convention (overrun evidence per Rasool 2025).
+
+**IEA CCUS Projects Database (2026 edition)**
+
+:   1,110 announced/operating CCUS projects with capacities, status, and operation year. The storage-side pipeline (Storage, T&S, Full-chain projects) anchors the 2030 point of the per-country deployment ceilings.
+
+**Kazlou, Cherp & Jewell (2024) — CCS Feasibility and Growth Analogs**
+
+:   Historical CCS project attrition and technology-analog growth ladders (wind, nuclear). Sets the growth phase of the deployment ceilings; attrition weighting supported by Abdulla et al. (2020) and Wang et al. (2021).
+
+    *Reference: Nature Climate Change 14*
+
+**Gütschow et al. (2021) — Country-Resolved SSP Emission Pathways**
+
+:   PRIMAP-downscaled SSP scenarios for all countries (SSP2 baseline used). Projects the capturable-emissions asymptotes of the deployment ceilings.
+
+    *Reference: Earth System Science Data 13, 1005-1040; data: doi:10.5281/zenodo.3638137*
+
+## Climate Data
+
+**IEA/KAPSARC Heating and Cooling Degree Days**
+
+:   Population-weighted heating degree days (HDD) and cooling degree days (CDD) by country. Used to inform space heating and cooling demand and fuel-to-end-use splits in buildings.
+
+## Electricity Demand Load Curves
+
+**ECMWF ERA5 Climate Reanalysis (2013)**
+
+:   Modeled hourly electricity load for 211 countries based on temperature-driven demand patterns. Provides globally consistent 8760-hour load profiles for weather year 2013. Used as the primary source for countries without high-quality measured data.
+
+    *Reference: Hersbach et al. (2020), Quarterly Journal of the Royal Meteorological Society*
+
+    *Update frequency: Available for multiple weather years, 2013 as standard*
+
+**WuHaochi China Provincial Load Data (2016-2020)**
+
+:   Actual hourly electricity load by province (31 provinces). Aggregated to national level to replace ERA5 modeled data for China, ensuring realistic representation of industrial and residential patterns in the world's largest electricity consumer.
+
+    *Source: Zenodo open data repository*
+
+    *Coverage: 5 years of provincial data, 43,800 hourly observations per province*
+
+**ENTSO-E Transparency Platform**
+
+:   Actual hourly load data for European countries and bidding zones. Used for ERA5 validation, quality assessment, and as reference for evaluating sectoral disaggregation methodology accuracy.
+
+    *Update frequency: Real-time, historical archives available from 2015*
+
+    *Coverage: 35+ European countries with transmission system operator data*
+
+**Atlite Hourly Capacity Factor Profiles (2013)**
+
+:   Solar photovoltaic and wind (onshore/offshore) generation profiles at country level derived from MERRA2 and ERA5 climate reanalysis. Provides synchronized temporal correlation between renewable generation potential and electricity demand.
+
+    *Reference: Based on Atlite toolkit for renewable energy modeling*
+
+    *Resolution: Country-level aggregation of grid-cell capacity factors*

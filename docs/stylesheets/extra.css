@@ -1,0 +1,221 @@
+/* KanORS brand styles (shared with Veda 2.0 and Veda Online documentation) */
+
+/* KanORS brand colours — primary #2A3E68, accent #FC8462 */
+[data-md-color-primary="custom"] {
+  --md-primary-fg-color: #2a3e68;
+  --md-primary-fg-color--light: #6976aa;
+  --md-primary-fg-color--dark: #1f2f4f;
+  /* fg = brand surfaces (header, primary buttons); bg = text/icons on those surfaces */
+  --md-primary-bg-color: #fff;
+  --md-primary-bg-color--light: #ffffffb3;
+  --md-primary-bg-color--dark: #ffffffde;
+}
+
+[data-md-color-accent="custom"] {
+  --md-accent-fg-color: #fc8462;
+  --md-accent-fg-color--transparent: rgba(252, 132, 98, 0.12);
+  /* fg = accent surfaces (hover); bg = text/icons on those surfaces */
+  --md-accent-bg-color: #fff;
+  --md-accent-bg-color--light: #ffffffb3;
+  --md-accent-bg-color--dark: #ffffffde;
+}
+
+/* Dark mode — brand navy is too dark for body links and outline buttons */
+[data-md-color-scheme="slate"][data-md-color-primary="custom"] {
+  --md-typeset-a-color: #9caedb;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .md-button:not(.md-button--primary) {
+  color: #9caedb;
+  border-color: #9caedb;
+}
+
+/* Header tabs — active tab stays white on navy bar (not orange) */
+.md-tabs__item--active .md-tabs__link {
+  color: inherit !important;
+  opacity: 1 !important;
+}
+
+/* Sidebar — section headings stay default when active */
+.md-nav--primary .md-nav__item--section.md-nav__item--active > .md-nav__link[for] {
+  color: var(--md-default-fg-color--light) !important;
+}
+
+/* Sidebar — orange only on the clicked page link, not the parent section heading */
+.md-nav--primary .md-nav__item--active:not(.md-nav__item--section) > .md-nav__link--active,
+.md-nav--primary .md-nav__item--active:not(.md-nav__item--section) a.md-nav__link--active {
+  color: var(--md-accent-fg-color) !important;
+}
+
+/* Header — documentation-issue link instead of the GitHub repo badge */
+.md-header .md-source__facts {
+  display: none;
+}
+
+.md-header__source {
+  width: auto;
+  max-width: none;
+}
+
+.md-header .md-source__repository {
+  max-width: none;
+  overflow: visible;
+  text-overflow: unset;
+  white-space: nowrap;
+}
+
+/* Wider content area for tables */
+.md-grid {
+  max-width: 1400px;
+}
+
+/* Tables — two strategies depending on column count.
+ *
+ * Default (≤5 columns): wrap text inside cells so the table fits the page
+ * width without forcing horizontal scroll.
+ *
+ * Wide tables (6+ columns): keep the native auto layout and let the parent
+ * wrapper scroll horizontally, so cells are not crushed to one character
+ * per line.
+ */
+
+.md-typeset table:not([class]) {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.md-typeset table:not([class]) td,
+.md-typeset table:not([class]) th {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  vertical-align: top;
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
+  line-height: 1.4;
+}
+
+.md-typeset table:not([class]):has(thead tr th:nth-child(6)) {
+  display: table;
+  width: auto;
+  table-layout: auto;
+}
+
+.md-typeset table:not([class]):has(thead tr th:nth-child(6)) td,
+.md-typeset table:not([class]):has(thead tr th:nth-child(6)) th {
+  white-space: nowrap;
+}
+
+/* Slightly tighter heading sizes (matching the prior Sphinx layout) */
+.md-typeset h1 {
+  font-size: 2em;
+  font-weight: 800;
+}
+
+.md-typeset h2 {
+  font-size: 1.5em;
+  font-weight: 800;
+}
+
+.md-typeset h3 {
+  font-size: 1.2em;
+  font-weight: 700;
+}
+
+.md-typeset h1 strong,
+.md-typeset h2 strong,
+.md-typeset h3 strong {
+  font-weight: inherit;
+}
+
+/* Nested ordered lists under bullets: Material uses lower-alpha (a, b) for
+   `li > ol`. Force decimal (1, 2) for procedure steps in nested lists. */
+.md-typeset ul ol,
+.md-typeset li > ol {
+  list-style-type: decimal !important;
+}
+
+.md-typeset ul ol ol,
+.md-typeset li > ol ol {
+  list-style-type: decimal !important;
+}
+
+/* Keep screenshots block-level inside list items (avoids inline float/overlap). */
+.md-typeset li > img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-top: 0.75em;
+  clear: both;
+}
+
+.md-typeset figure img {
+  max-width: 100%;
+}
+
+/* Table names sit centred above the table, as in the Veda 2.0 docs */
+.md-typeset figure:has(> .md-typeset__scrollwrap) {
+  display: flex;
+  flex-direction: column;
+}
+
+.md-typeset figure:has(> .md-typeset__scrollwrap) > figcaption {
+  order: -1;
+  align-self: center;
+  margin: 0 auto 0.4em;
+}
+
+.md-typeset figure:has(> .md-typeset__scrollwrap) > .md-typeset__scrollwrap {
+  align-self: stretch;
+}
+
+/* KanORS header logo — theme.logo supplies the white PNG on the navy header */
+.md-header__button.md-logo img,
+.md-nav__button.md-logo img {
+  height: 1.85rem;
+  width: auto;
+}
+
+/* Mobile drawer on light pages: dark logo on light background */
+:not([data-md-color-scheme="slate"]) .md-nav__button.md-logo img {
+  content: url("../images/brand/kanors-logo-black.png");
+}
+
+/* Analogy box styling - for illustrative asides */
+.analogy-box {
+  background-color: #f8f9fa;
+  border-left: 4px solid #6c757d;
+  padding: 1.2em 1.5em;
+  margin: 2em 0;
+  font-style: italic;
+  color: #495057;
+}
+
+.analogy-box p:first-child {
+  font-style: normal;
+  font-weight: 600;
+  color: #343a40;
+  margin-bottom: 0.8em;
+  font-size: 1.05em;
+}
+
+.analogy-box ul {
+  font-style: italic;
+  margin-top: 0.8em;
+}
+
+.analogy-box li {
+  margin-bottom: 0.3em;
+}
+
+/* Interactive timeslice definition grids (iframe on timeslice-definitions).
+   Height is set by postMessage from the iframe; this is only a first-paint floor. */
+.timeslice-grids-frame {
+  width: 100%;
+  height: 900px;
+  border: 1px solid #e1e0d9;
+  border-radius: 10px;
+  background: transparent;
+  overflow: hidden;
+}

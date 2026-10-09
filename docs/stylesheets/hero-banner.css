@@ -1,0 +1,151 @@
+/* --------------------------------------------------------------------------
+ * Homepage hero banner (reference energy system: resources -> conversion -> demand)
+ * Pairs with overrides/partials/hero-banner.html.
+ * -------------------------------------------------------------------------- */
+
+.kn-hero-banner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 168px;
+  margin: 0 0 1.5rem;
+  padding: 1.5rem 2rem;
+  box-sizing: border-box;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(90deg, #2a3e68 0%, #fc8462 55%, #f8b26a 100%);
+}
+
+.md-typeset .kn-hero-banner__network {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+}
+
+.kn-hero-banner__base {
+  opacity: 0.3;
+}
+
+/* Shine across the top edge, plus one light sweep after the network draws in */
+.kn-hero-banner::before,
+.kn-hero-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.kn-hero-banner::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 45%);
+}
+
+.kn-hero-banner::after {
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.16) 50%, transparent 65%);
+  transform: translateX(-100%);
+  animation: kn-hero-sweep 1.4s ease-in-out 1.8s both;
+}
+
+/* Draw-in on load: nodes pop, then each tier of flows draws left to right */
+.kn-hero-banner__node {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: kn-hero-pop 0.4s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+  animation-delay: calc(0.1s + var(--i) * 0.04s);
+}
+
+.kn-hero-banner__link {
+  stroke-dasharray: 1;
+  animation: kn-hero-draw 0.7s ease-out both;
+  animation-delay: calc(0.4s + var(--t) * 0.35s + var(--i) * 0.03s);
+}
+
+/* Energy moving through the system after the draw-in */
+.kn-hero-banner__pulse {
+  stroke-width: 2.5;
+  stroke-opacity: 0.9;
+  stroke-dasharray: 0.015 0.235;
+  animation:
+    kn-hero-fade-in 0.6s ease-out 1.8s both,
+    kn-hero-flow 4s linear infinite;
+  animation-delay: 1.8s, calc(var(--i) * -0.5s);
+}
+
+@keyframes kn-hero-pop {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes kn-hero-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes kn-hero-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes kn-hero-flow {
+  from { stroke-dashoffset: 0.25; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes kn-hero-sweep {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kn-hero-banner *,
+  .kn-hero-banner::after {
+    animation: none !important;
+  }
+
+  .kn-hero-banner::after {
+    display: none;
+  }
+}
+
+.md-typeset h1.kn-hero-banner__title {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #fff;
+  font-size: 2em;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45), 0 0 24px rgba(255, 255, 255, 0.12);
+}
+
+.md-content__inner.md-typeset:has(.kn-hero-banner) > h1:not(.kn-hero-banner__title) {
+  display: none;
+}
+
+@media screen and (max-width: 76.1875em) {
+  .kn-hero-banner {
+    min-height: 148px;
+  }
+
+  .md-typeset h1.kn-hero-banner__title {
+    font-size: 1.75em;
+  }
+}
+
+@media screen and (max-width: 37.5em) {
+  .kn-hero-banner {
+    min-height: 128px;
+    padding: 1rem;
+  }
+
+  .md-typeset h1.kn-hero-banner__title {
+    font-size: 1.4em;
+  }
+}

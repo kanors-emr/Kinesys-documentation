@@ -1,0 +1,239 @@
+# Power sector
+
+The KiNESYS power sector module represents electricity generation, capacity investment, and system operation across all model regions. It covers five main areas: representation of the existing generation fleet, characterization of new renewable and conventional investment options, electricity demand and timeslice design, and operational constraints that govern VRE integration, capacity retirement, and build rates.
+
+Renewable electricity is modeled at country level regardless of the model's regional aggregation, for wind (onshore and offshore), solar PV, hydro, biomass, and geothermal. Conventional and nuclear technologies are characterized with regionally differentiated costs from IEA and NREL sources. Electricity demand is represented through hourly load curves disaggregated by sector and aggregated into configurable timeslice structures.
+
+## Existing Stock Representation
+
+The existing generation fleet is constructed from plant-level databases with vintaged capacity entries:
+
+-   **Thermal and nuclear plants**: Built up from the S&P Global Platts WEPP (World Electric Power Plants) database, which provides unit-level details including capacity, fuel type, technology subtype, commissioning year, and cooling technology. Each plant enters the model at its actual commissioning year with technology-specific efficiency and cost parameters, preserving the vintage structure of the fleet.
+-   **Existing renewable capacity**: Individual solar and wind plants are mapped to REZoning grid cells using the Global Energy Monitor (GEM) power trackers, enabling plant-level spatial allocation. Their capacity is subtracted from grid-cell technical potential before clustering to avoid double-counting in supply curves. National totals are calibrated to IRENA Renewable Capacity Statistics, with existing capacity allocated to clusters based on capacity factor matching (see [Renewable Energy Characterization](renewable-energy-characterization.md)).
+
+### Cooling Technologies
+
+Cooling technologies are identified for existing thermal power plants. This enables water withdrawal and consumption accounting, and supports scenarios where plant operation may be curtailed due to water shortages.
+
+| Cooling Technology                            | Code |
+|-----------------------------------------------|------|
+| Once through cooling                          | OT   |
+| Once through cooling using brackish water     | OTB  |
+| Once through cooling using fresh water        | OTF  |
+| Once through cooling using saline water       | OTS  |
+| Cooling lake or cooling pond                  | CP   |
+| Air (dry) main condenser cooling              | AIR  |
+| Mechanical and natural draft cooling towers   | DT   |
+| Mechanical draft cooling tower using seawater | DTS  |
+
+## Renewable Resource Characterization
+
+KiNESYS employs a sophisticated spatial clustering approach to represent variable renewable energy (VRE) resources. Rather than treating each country as a single homogeneous resource, the methodology captures the diversity of solar and wind resource quality through fine-grained spatial analysis.
+
+**Key Features:**
+
+-   **50km² grid-cell resolution**: Atlite/REZoning data provides hourly capacity factors at high spatial resolution
+-   **Smart clustering**: Grid cells with similar hourly profiles are grouped into representative clusters
+-   **Configurable granularity**: 2,700 to 9,000 clusters globally (controlled by exponent parameter)
+-   **Multi-year weather support**: Weather years 2010, 2013, 2016, and 2019 available for climate sensitivity analysis
+
+**Technologies Covered:**
+
+| Technology    | Code | Min CF Threshold | Typical Global Clusters          |
+|---------------|------|------------------|----------------------------------|
+| Solar PV      | spv  | 5%               | ~1,200 (n=0.4) to ~4,000 (n=0.6) |
+| Wind Onshore  | won  | 8%               | ~1,000 (n=0.4) to ~3,500 (n=0.6) |
+| Wind Offshore | wof  | 20%              | ~400 (n=0.4) to ~1,500 (n=0.6)   |
+
+**Clustering Methodology:**
+
+The clustering algorithm groups grid cells with similar generation profiles:
+
+1.  **PCA reduction**: 8760-hour profiles reduced to 50 principal components
+2.  **Spatial weighting**: Coordinates added to encourage geographic coherence
+3.  **Ward's clustering**: Hierarchical clustering minimizing within-cluster variance
+4.  **Capacity-weighted profiles**: Cluster profiles are MW-weighted averages of member cells
+
+**Firmness Coefficients:**
+
+In addition to energy shares (COM_FR), the model computes firmness metrics that quantify dispatchable backup and storage requirements:
+
+-   **DEF (Deficit Energy)**: Energy shortfall below timeslice average — represents backup dispatch requirement
+-   **ELC_4H**: Surplus energy capturable by 4-hour duration storage
+-   **ELC_8H**: Surplus energy capturable by 8-hour duration storage
+
+These metrics enable accurate representation of VRE integration costs at high penetrations, ensuring the model properly values flexible generation, storage, and demand response.
+
+**Connection Costs:**
+
+Each cluster includes distance-based connection costs computed from the cluster centroid to the nearest major city (demand center proxy), added to cluster INVCOST. These adders are the model's grid-connection cost; there is no separate national staircase.
+
+For detailed methodology, mathematical formulations, and implementation details, see [Renewable Energy Characterization](renewable-energy-characterization.md).
+
+## Conventional Technology Characterization
+
+KiNESYS represents new investment options for conventional (dispatchable) power generation, CCS-equipped plants, and battery storage. Technology costs and performance parameters are regionally differentiated and provided at three uncertainty levels (hi/mid/lo) to support parametric scenario analysis.
+
+### Data Sources and Compilation Strategy
+
+The techno-economic dataset is compiled from two primary sources:
+
+-   **IEA Global Energy and Climate (GEC) Model (WEO 2023)** — provides regionally differentiated overnight capital costs, fixed O&M, thermal efficiency, and capacity factors under the Stated Policies (STEPS) scenario across 9 world regions (European Union, United States, Japan, Russia, China, India, Middle East, Africa, Brazil) at three time points (2022, 2030, 2050).
+-   **NREL Annual Technology Baseline (ATB) 2024v3** — provides US-specific cost projections under Conservative, Moderate, and Advanced scenarios. These are used to derive hi/lo spread multipliers that are applied to the IEA regional mid values, preserving regional cost differentiation while adding uncertainty characterization. ATB is also the sole source for battery storage costs.
+
+All costs are overnight costs in USD 2022. Construction time is provided separately; TIMES computes interest during construction endogenously where applicable. Data points are kept at native source years with no interpolation — TIMES handles internal interpolation.
+
+An earlier approach using IPCC AR6 scenario database costs was abandoned due to model heterogeneity, missing technologies, and implausible entries (particularly for offshore wind).
+
+### Technology Menu
+
+The dataset covers 26 technologies organized into the following groups:
+
+**Gas** — CCGT, open-cycle gas turbine (peaking), CCGT-CHP (combined heat and power), gas fuel cell, and CCGT with CCS. CCGT-CHP co-produces electricity and useful heat; its reported efficiency reflects total energy output on an LHV basis. CHP plants are assigned to the CHP model set with both electricity and heat commodity outputs.
+
+**Coal** — Four unabated steam cycle variants (subcritical, supercritical, ultra-supercritical, IGCC) and three CCS-equipped variants (post-combustion, oxyfuel, IGCC+CCS). CCS variants carry a significant capital cost premium and an efficiency penalty relative to their unabated counterparts.
+
+**Nuclear** — A single large-reactor technology with the longest construction time and economic lifetime in the dataset. Regional cost differentiation is particularly wide for nuclear.
+
+**Bioenergy** — Large-scale biomass, biomass cofiring (incremental investment for blending in existing coal plants), biomass CHP, and biomass with CCUS (BECCS) for negative emissions. These plants compete for the feedstock pools in [Bioenergy resources](bioenergy-resources.md); they do not have a private biomass curve.
+
+**Battery storage** — 4-hour and 8-hour utility-scale Li-ion, sourced entirely from ATB. The same cost trajectory is applied across all regions, reflecting the globally traded nature of battery cells.
+
+**Renewables** — Solar PV, CSP, wind onshore, wind offshore, hydropower (large and small scale), and geothermal. These base cost assumptions complement the spatially detailed resource characterization described in [Renewable Energy Characterization](renewable-energy-characterization.md), which provides cluster-specific capacity factors, connection costs, and firmness metrics.
+
+### Regional Differentiation
+
+Costs vary substantially across the 9 IEA regions, driven by differences in labour costs, materials supply chains, regulatory environments, and construction productivity. In general, China and India have the lowest costs, the EU and Japan the highest, with other regions in between. The pattern is broadly consistent across technology groups, though nuclear exhibits particularly wide regional dispersion.
+
+### Cost Uncertainty
+
+For each technology, the **mid** scenario equals the IEA GEC STEPS value directly. The **hi** and **lo** scenarios are computed by multiplying the mid value by the ratio of ATB Conservative (or Advanced) to ATB Moderate costs for the corresponding technology. This produces three internally consistent cost trajectories per region. Technologies without a direct ATB match use mid-only (no spread).
+
+The detailed compilation methodology, technology-by-technology parameter values, and full regional coverage are documented in `METHODOLOGY.md` within the reference costs directory.
+
+## Electricity Demand Load Shapes and Timeslice Design
+
+KiNESYS models electricity demand with hourly granularity (8760 hours per year), capturing both seasonal and diurnal variation across different consumer sectors. This temporal resolution is critical for accurately representing the value of flexible resources, storage, renewable integration, and system adequacy. The hourly profiles are then aggregated into a chosen timeslice definition (12 to 72 slices per year) that preserves key temporal characteristics while remaining computationally tractable. See [Timeslice definitions](timeslice-definitions.md) for the catalog and how a definition is chosen.
+
+For detailed methodology, mathematical formulations, and validation results, see [Electricity Load Shapes](electricity-load-shapes.md).
+
+### Data Sources and Integration
+
+**ERA5 Climate Reanalysis**
+
+:   ECMWF ERA5 provides modeled hourly electricity load curves for 211 countries based on temperature-driven demand patterns. This ensures globally consistent coverage for the standard weather year (2013).
+
+**Actual Load Data Where Available**
+
+:   When high-quality measured data exists, it replaces modeled estimates:
+
+    -   **China**: Provincial hourly load data (2016-2020) from Zenodo repository, aggregated to national level
+    -   **Europe**: ENTSO-E transparency platform data for validation and quality assessment
+
+**Sectoral Consumption Shares**
+
+:   IEA Energy Balances provide annual electricity consumption by sector (industrial, commercial, residential), which are used to disaggregate total load into sectoral components.
+
+### Sectoral Disaggregation Approach
+
+Total hourly load is decomposed into three main sectors using assumptions about sector-specific temporal patterns:
+
+**Industrial Sector**
+
+:   Industrial loads exhibit less diurnal variation than other sectors due to continuous-process operations (chemicals, refining, metals). However, batch manufacturing and shift-based operations create systematic time-of-day patterns, particularly in manufacturing-heavy economies.
+
+    The methodology applies **adaptive damping factors** that vary by region based on industrial electricity share:
+
+    | Industrial Share | Damping Factor | Typical Load Variation | Example Regions |
+    |---------------|---------------|------------------|-------------------------|
+    | \< 40% | 0.10 | Minimal (1.1-1.2x) | USA, France, UK |
+    | 40-60% | 0.15 | Moderate (1.2-1.4x) | Germany, India, Brazil |
+    | 60-70% | 0.20 | Significant (1.4-1.7x) | Poland, Turkey, Austria |
+    | \> 70% | 0.25 | High (1.5-2.0x) | China, Iceland |
+
+    /// table-caption
+    Regional Industrial Load Variation
+    ///
+
+    This approach reflects empirical findings from industrial load factor studies:
+
+    -   Continuous processes: 60-90% load factor → minimal diurnal variation
+    -   Batch manufacturing: 40-70% load factor → significant time-of-day patterns
+    -   Shift-based operations: 20-40% overnight load reduction in manufacturing economies
+
+    For very high-industrial regions (\>60% share), additional hour-of-day adjustment factors capture two-shift operational patterns common in manufacturing sectors.
+
+**Commercial Sector**
+
+:   Commercial loads follow strong business-hours patterns with peak demand during daytime. An hour-of-day factor increases load during business hours (6 AM - 10 PM) and reduces it overnight, reflecting office buildings, retail, and service sector operations.
+
+**Residential Sector**
+
+:   Residential loads are computed as the residual after subtracting industrial and commercial components. This approach ensures mass balance while capturing the characteristic dual-peak pattern (morning and evening) driven by household activities, cooking, lighting, and heating/cooling.
+
+### Timeslice Aggregation
+
+Hourly load shapes are aggregated into the instance's timeslice definition (see [Timeslice definitions](timeslice-definitions.md)). Three essential parameters are computed for each region, sector, and timeslice:
+
+**COM_FR (Commodity Fraction)**
+
+:   The fraction of annual energy consumed in each timeslice:
+
+    $$\text{COM\_FR}_{r,s,ts} = \frac{\sum_{h \in ts} \text{Load}_{r,s,h}}{\sum_{h=1}^{8760} \text{Load}_{r,s,h}}$$
+
+    These fractions ensure that sector-specific seasonal and diurnal patterns are preserved in the optimization model. COM_FR values sum to 1.0 for each region-sector combination.
+
+**COM_PKFLX (Peak Flexibility)**
+
+:   Measures the ratio of peak-to-average load within each timeslice, computed for total electricity demand:
+
+    $$\text{COM\_PKFLX}_{r,ts} = \frac{\max_h(\text{Load}_{r,h}) - \text{avg}_h(\text{Load}_{r,h})}{\text{avg}_h(\text{Load}_{r,h})} \quad \text{for } h \in ts$$
+
+    This parameter enables the model to properly value peaking capacity, storage, and demand response resources based on their ability to serve within-timeslice peak demands.
+
+**G_YRFR (Year Fraction)**
+
+:   The fraction of total annual hours in each timeslice:
+
+    $$\text{G\_YRFR}_{ts} = \frac{\text{hours in timeslice}}{8760}$$
+
+### Validation and Quality Control
+
+All generated load shapes undergo rigorous validation:
+
+-   **Mass Balance**: COM_FR values sum to 1.0 (±0.001) for each region-sector combination
+-   **Non-Negativity**: All sectoral loads remain positive at every hour
+-   **Cross-Region Consistency**: Load patterns checked against empirical studies and actual data
+-   **Timeslice Adequacy**: Peak demands within timeslices reflect realistic system stress periods
+
+When actual load data is available (China, Europe), generated profiles are validated against measured patterns to ensure methodology accuracy.
+
+### Regional Customization
+
+Load shapes can be generated for any regional aggregation defined in KiNESYS mapping files:
+
+-   **Single countries**: Individual country load profiles with national characteristics
+-   **Multi-country regions**: Aggregated profiles capturing diverse load patterns
+-   **Custom aggregations**: Flexible regional definitions for specific analytical needs
+
+The temporal representation automatically adjusts to match the spatial scope of the model instance, ensuring consistency between regional aggregation and load curve detail.
+
+## Operational Constraints and Integration Limits
+
+KiNESYS includes several constraint mechanisms that represent real-world limits on VRE integration, capacity expansion, and fleet retirement. These operate alongside the technology characterization and demand representation described above.
+
+### ISO VRE Market-Share Caps
+
+When ISO-level VRE clusters are aggregated into multi-country model regions, a small high-resource country can otherwise flood the regional copper plate. Cluster INVCOST already prices the spur to the nearest demand centre. The remaining limit is a share cap: `PRC_MARK` (UP) on `elcagg_spv_{ISO}`, `elcagg_won_{ISO}`, and `elcagg_wof_{ISO}` together against regional `ELC`, with group item `{ISO}_vre_gen`.
+
+The cap is the ISO's last complete Ember generation share of the region, or its SSP2 GDP\|PPP share if that is larger (or if Ember is missing). Caps are independent (they are not renormalized). Singleton regions are omitted. Year 0 is set to 5 so TIMES interpolates (and extrapolates) if the host period definition uses different years.
+
+### Capacity Decay Constraints
+
+Non-economic capacity is often retained in practice due to local must-run considerations, institutional inertia, and other factors. Decay constraints limit the rate of decrease of coal, gas, and oil capacity. The constraints include a maximum annual percentage rate of decline, as well as a representative unit size that can be retired above and beyond the annual percentage rate, in order to allow the capacity to reach zero.
+
+### Build Rate Constraints
+
+Three-step cost curves represent the costs incurred when rapid capacity expansions cause shortages of key inputs or skilled labour. These constraints have been implemented for renewable technologies, whose economics are rapidly changing, to more realistically limit their rate of expansion as costs fall. The constraints include a cap on investment in the first projection year, based on recent regional additions, and a maximum annual capacity investment growth rate in subsequent periods.
+
+The current constraint permits additions to capacity to grow at an annual maximum rate of 15% without incurring additional cost. Further steps of 70% and another 15% are available at an extra cost to the model.

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  <meta name="robots" content="index, follow" />
+  {% set _desc = (page.meta.description if page and page.meta and page.meta.description else config.site_description) %}
+  {% set _title = (
+      page.meta.title if page and page.meta and page.meta.title
+      else (page.title | striptags if page and page.title and not page.is_homepage else "KiNESYS+ Documentation")
+  ) %}
+  {% if _desc %}
+  <meta property="og:type" content="{% if page and page.is_homepage %}website{% else %}article{% endif %}" />
+  <meta property="og:title" content="{% if page and page.is_homepage %}KiNESYS+ Documentation{% else %}{{ _title }} - KiNESYS+ Documentation{% endif %}" />
+  <meta property="og:description" content="{{ _desc }}" />
+  <meta property="og:url" content="{{ page.canonical_url }}" />
+  <meta property="og:site_name" content="KiNESYS+ Documentation" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="{% if page and page.is_homepage %}KiNESYS+ Documentation{% else %}{{ _title }} - KiNESYS+ Documentation{% endif %}" />
+  <meta name="twitter:description" content="{{ _desc }}" />
+  {% endif %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "KiNESYS+ Documentation",
+    "url": {{ config.site_url | tojson }},
+    "description": {{ config.site_description | tojson }}
+  }
+  </script>
+{% endblock %}
+
+{% block htmltitle %}
+  {%- if page and page.meta and page.meta.title -%}
+    <title>{{ page.meta.title }} - KiNESYS+ Documentation</title>
+  {%- elif page and page.title and not page.is_homepage -%}
+    <title>{{ page.title | striptags }} - KiNESYS+ Documentation</title>
+  {%- else -%}
+    <title>KiNESYS+ Documentation</title>
+  {%- endif %}
+{% endblock %}
+
+{% block content %}
+  {% if page.is_homepage or page.file.src_uri == "index.md" %}
+    {% include "partials/hero-banner.html" %}
+  {% endif %}
+  {% include "partials/content.html" %}
+{% endblock %}

@@ -10,7 +10,7 @@ Users access pre-configured instances of KiNESYS models, tailored to specific re
 
 A KiNESYS instance is a practical starting point for users new to Veda-TIMES, especially those interested in conducting sectoral or regional analyses using normative (policy objectives) or simulation (policy measures) scenarios. **It is particularly suited for users whose primary goal is not to become modeling experts but to effectively use a robust energy model to inform policy development, strategic planning, or investment analysis.**
 
-Here are some <a href="https://vedaonline.cloud/kanors/kinesys.html" target="_blank"><b>examples</a></b> of KiNESYS models.
+Here are some <a href="https://vedaonline.cloud/kanors/kinesys.html" target="_blank"><b>examples</b></a> of KiNESYS models.
 
 ## Motivation
 

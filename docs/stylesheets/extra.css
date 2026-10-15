@@ -1,5 +1,38 @@
 /* KanORS brand styles (shared with Veda 2.0 and Veda Online documentation) */
 
+/* Header metrics match Veda 2.0. The theme font supplies Inter. */
+.md-header__topic {
+  font-size: 0.9rem;
+  line-height: 2.4rem;
+}
+
+.md-header__topic:first-child {
+  font-weight: 700;
+}
+
+.md-tabs,
+.md-tabs__link {
+  font-size: 0.7rem;
+  font-weight: 400;
+}
+
+/* Homepage: keep the site name fixed and bold. The page title is the same
+   words, so the second topic must not slide over it. Other pages still show
+   their own title when the reader scrolls. */
+body:has(.kn-hero-banner) .md-header__topic:first-child,
+body:has(.kn-hero-banner) .md-header__title--active .md-header__topic:first-child {
+  opacity: 1;
+  transform: none;
+  transition: none;
+  font-weight: 700;
+  pointer-events: auto;
+  z-index: 0;
+}
+
+body:has(.kn-hero-banner) .md-header__topic + .md-header__topic {
+  display: none;
+}
+
 /* KanORS brand colours — primary #2A3E68, accent #FC8462 */
 [data-md-color-primary="custom"] {
   --md-primary-fg-color: #2a3e68;
@@ -218,4 +251,29 @@
   border-radius: 10px;
   background: transparent;
   overflow: hidden;
+}
+
+/* Same-page anchors: native jump fallback. The script applies the real offset. */
+html {
+  scroll-behavior: smooth;
+}
+
+.md-typeset :is(h1, h2, h3, h4, h5, h6)[id] {
+  scroll-margin-top: 4.8rem;
+}
+
+@keyframes anchor-up {
+  from {
+    opacity: 0.35;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.anchor-motion,
+:target {
+  animation: anchor-up 0.65s ease-out;
 }

@@ -44,8 +44,8 @@ theme:
         icon: material/weather-sunny
         name: Switch to light mode
   font:
-    text: Roboto
-    code: Roboto Mono
+    text: Inter
+    code: JetBrains Mono
 
 extra:
   social:
@@ -66,6 +66,7 @@ extra_css:
 extra_javascript:
   - javascripts/mathjax.js
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - _static/smooth-anchor.js
 
 markdown_extensions:
   - abbr
@@ -94,31 +95,31 @@ nav:
   - Home: index.md
 
   - Getting Started:
-    - Introduction: pages/introduction.md
-    - Institutional and Research Applications: pages/applications-and-impact.md
-    - The Zen of GESM: pages/the-zen-of-gesm.md
+    - Introduction: introduction.md
+    - Institutional and Research Applications: applications-and-impact.md
+    - The Zen of GESM: the-zen-of-gesm.md
 
   - Energy Supply:
-    - Primary energy supply: pages/primary-energy-supply.md
-    - Bioenergy resources: pages/bioenergy-resources.md
-    - Liquid fuels processing: pages/liquid-fuels-processing.md
-    - Hydrogen: pages/hydrogen.md
-    - Energy trades: pages/energy-trades.md
-    - Carbon capture and storage (CCS): pages/carbon-capture-and-storage-ccs.md
+    - Primary energy supply: primary-energy-supply.md
+    - Bioenergy resources: bioenergy-resources.md
+    - Liquid fuels processing: liquid-fuels-processing.md
+    - Hydrogen: hydrogen.md
+    - Energy trades: energy-trades.md
+    - Carbon capture and storage (CCS): carbon-capture-and-storage-ccs.md
 
   - Power Sector:
-    - Overview: pages/power-sector.md
-    - Timeslice definitions: pages/timeslice-definitions.md
-    - Electricity Load Shapes: pages/electricity-load-shapes.md
-    - Renewable Energy Characterization: pages/renewable-energy-characterization.md
+    - Overview: power-sector.md
+    - Timeslice definitions: timeslice-definitions.md
+    - Electricity Load Shapes: electricity-load-shapes.md
+    - Renewable Energy Characterization: renewable-energy-characterization.md
 
   - Demand Sectors:
-    - Demand Projection: pages/demand-projection.md
-    - Transport: pages/transport.md
-    - Industry: pages/industry.md
-    - Residential and commercial buildings: pages/residential-and-commercial-buildings.md
-    - Agriculture: pages/agriculture.md
+    - Demand Projection: demand-projection.md
+    - Transport: transport.md
+    - Industry: industry.md
+    - Residential and commercial buildings: residential-and-commercial-buildings.md
+    - Agriculture: agriculture.md
 
   - Reference:
-    - Data Sources: pages/data-sources.md
-    - GitHub Desktop Guide: pages/github-desktop-guide.md
+    - Data Sources: data-sources.md
+    - GitHub Desktop Guide: github-desktop-guide.md

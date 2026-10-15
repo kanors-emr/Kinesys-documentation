@@ -86,9 +86,9 @@ In ts_48, ts_48h and ts_72 the overnight block wraps midnight, so it appears as 
 
 Hover any cell for its slice and weight.
 
-<p><a href="../../assets/timeslice_grids.html" target="_blank">Open the grids in a new tab</a>.</p>
+<p><a href="../assets/timeslice_grids.html" target="_blank">Open the grids in a new tab</a>.</p>
 <iframe class="timeslice-grids-frame"
-        src="../../assets/timeslice_grids.html"
+        src="../assets/timeslice_grids.html"
         title="KiNESYS timeslice definition grids"
         scrolling="no"></iframe>
 <script>

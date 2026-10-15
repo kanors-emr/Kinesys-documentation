@@ -35,7 +35,7 @@ Hydrogen modeling in KiNESYS covers production pathways for "grey", "blue", "tur
     -   **Import regions**: Major demand centers including Europe, Asia, and North America
     -   **Trade costs**: Distance-based costs for production, conversion, transport, and reconversion
 
-Hydrogen End-Use Applications ============================
+## Hydrogen End-Use Applications
 
 **Industrial Sector Applications**
 

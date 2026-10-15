@@ -31,7 +31,7 @@ For countries covered by ENTSO-E transparency data, **Net Transfer Capacity (NTC
 -   **Directionality:** NTC forward and reverse capacities are preserved as separate exporter-to-importer links
 -   **Aggregation:** country-pair capacities (ISO alpha-2) are mapped to ISO3 via `TIAM_RegionMap.xlsx`, then summed to the active model region column
 
-Tier 2 — Global Transmission Database (rest of world) ----------------------------------------------------
+### Tier 2 — Global Transmission Database (rest of world)
 
 All non-ENTSO-E links, and cross-border links involving at least one non-ENTSO-E country, are sourced from the **Global Transmission Database (GTD v1.0)**.
 
